@@ -1,0 +1,192 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{title}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+    <div *ngIf="form">
+        <!-- <h4 *ngIf="questions && questions.length">{{title}}</h4> -->
+        <form (ngSubmit)="onSubmit()" [formGroup]="form">
+            <div *ngFor="let question of questions" class="form-row">
+                <df-question [changeEvent]="changeEvent" [question]="question" [form]="form"></df-question>
+            </div>
+
+            <div *ngIf="hasSubmit" class="form-row">
+
+                <button full ion-button color="calm" type="submit" [disabled]="!form.valid">Get Diagnostic</button>
+
+            </div>
+        </form>
+
+
+        <!-- ASK WATSON DISCOVERY -->
+        <div *ngIf="payLoad && !payLoad.data.prediction && payLoad.data.usage" class="form-row">
+            <pre>{{ payLoad.data | json }}</pre>
+        </div>
+        <div *ngIf="payLoad && !payLoad.data.prediction && !payLoad.data.usage && payLoad.data.results" class="form-row">
+            <ion-card>
+                <ion-card-header>
+                    <h1 ion-text>WATSON</h1>
+                </ion-card-header>
+                <ion-card-content>
+                    <h1 *ngIf="payLoad.data.results.length == 0">No results were found</h1>
+                    <!-- <h1 *ngIf="payLoad.data.results.length">{{payLoad.data.results.length}} results...</h1> -->
+                    <h1 *ngIf="payLoad.data.results.length">Categories:</h1>
+                    <ion-item-group *ngFor="let res of payLoad.data.results">
+                        <ion-item-divider color="light"><strong>Result score: {{res.result_metadata.score}}</strong></ion-item-divider>
+                        <ion-item *ngFor="let cat of res.enriched_text.categories">
+
+                            <p class="label-result-watson-discovery"><strong>Category label:</strong> <span>{{cat.label}}</span></p>
+                            <p class="label-result-watson-discovery"><strong>Category score:</strong> <span>{{cat.score}}</span></p>
+
+                        </ion-item>
+                        <ion-item-divider color="light"><strong>Concepts</strong></ion-item-divider>
+                        <ion-item *ngFor="let concpt of res.enriched_text.concepts">
+
+                            <p class="label-result-watson-discovery"><strong>Concept: </strong><span>{{concpt.text}}</span></p>
+                            <p class="label-result-watson-discovery"><strong>Concept relevance: </strong><span>{{concpt.relevance}}</span></p>
+
+                            <strong>Concept source: </strong>
+                            <a class="label-result-watson-discovery" [href]="concpt.dbpedia_resource" target="_blank"><span>{{concpt.dbpedia_resource}}</span></a>
+                        </ion-item>
+                    </ion-item-group>
+                    <h1 *ngIf="payLoad.data.results.length">Passages:</h1>
+                    <ion-item-group *ngFor="let passage of payLoad.data.passages">
+                        <ion-item-divider color="light"><strong>Relevance score: {{passage.passage_score.toFixed(2)}}</strong></ion-item-divider>
+                        <ion-item>
+                            <p class="label-result-watson-discovery" [innerHTML]="passage.passage_text"></p>
+                        </ion-item>
+                    </ion-item-group>
+                </ion-card-content>
+            </ion-card>
+
+        </div>
+
+
+        <!-- FLU DIAGNOSIS -->
+        <div *ngIf="payLoad && !payLoad.data.score && !payLoad.data.prediction && !payLoad.data.usage && !payLoad.data.results" class="form-row">
+
+            <ion-card [style.backgroundColor]="payLoad.data.message ? '#ffdada' : '#e6ffe6'">
+
+                <ion-card-header>
+                    <!-- <h1>Diagnosis:</h1> -->
+                </ion-card-header>
+
+                <ion-card-content>
+                    <!-- Add card content here! -->
+                    <h1 ion-text [style.color]="payLoad.data.message ? 'red' : 'green'">
+                        <ion-icon name="{{payLoad.data.message ? 'alert' : 'checkmark'}}"></ion-icon> {{payLoad.data.message ? payLoad.data.message : 'This patient does not seem to have the flu'}}</h1>
+                    <span *ngIf="payLoad.data.recommendations && payLoad.data.recommendations.length">
+                        <ion-item-group>
+                            <ion-item-divider color="light"><strong>Recommendations:</strong></ion-item-divider>
+                            <ion-item *ngFor="let rec of payLoad.data.recommendations">
+                                    <ion-icon name="alert"></ion-icon> {{rec}}
+                            </ion-item>
+                        </ion-item-group>
+                    </span>
+                </ion-card-content>
+
+            </ion-card>
+        </div>
+
+        <!-- MENTAL HEALTH DIAGNOSIS -->
+        <div *ngIf="payLoad && payLoad.data.score && !payLoad.data.prediction && !payLoad.data.usage && !payLoad.data.results" class="form-row">
+
+            <ion-card [style.backgroundColor]="payLoad.data.score >= 15 ? '#ffdada' : '#e6ffe6'">
+
+                <ion-card-header>
+                    <!-- <h1>Diagnosis:</h1> -->
+                </ion-card-header>
+
+                <ion-card-content>
+                    <!-- Add card content here! -->
+                    <h1 ion-text [style.color]="payLoad.data.score >= 15 ? 'red' : 'green'">
+                        <!-- <ion-icon name="{{payLoad.data.message ? 'alert' : 'checkmark'}}"></ion-icon> {{payLoad.data.message ? payLoad.data.message : 'This patient does not seem to have the flu'}}</h1> -->
+                        <ion-icon name="{{payLoad.data.score >= 15 ? 'alert' : 'checkmark'}}"></ion-icon> {{'Score: ' + payLoad.data.score}}</h1>
+                    <h2 ion-text [style.color]="payLoad.data.score >= 15 ? 'red' : 'green'">
+                        <ion-icon name="{{payLoad.data.score >= 15 ? 'alert' : 'checkmark'}}"></ion-icon> Hi, {{payLoad.data.event.params.message}}</h2>
+                    <span *ngIf="payLoad.data.recommendations && payLoad.data.recommendations.length">
+                        <ion-item-group>
+                            <ion-item-divider color="light"><strong>Recommendations:</strong></ion-item-divider>
+                            <ion-item *ngFor="let rec of payLoad.data.recommendations">
+                                    <ion-icon name="alert"></ion-icon> {{rec}}
+                            </ion-item>
+                        </ion-item-group>
+                    </span>
+                </ion-card-content>
+
+            </ion-card>
+        </div>
+
+
+        <!-- PRESENCE OF HEART DISEASE AI NEURAL NETWORK -->
+        <div *ngIf="payLoad && payLoad.data.prediction && !payLoad.data.usage && !payLoad.data.results" class="form-row">
+
+            <ion-card [style.backgroundColor]="payLoad.data.prediction[0][0] > 5 ? '#ffdada' : '#e6ffe6'">
+
+                <ion-card-header>
+                    <h1 ion-text>AI Predicted:</h1>
+                </ion-card-header>
+
+                <ion-card-content>
+                    <span *ngIf="payLoad.data.prediction && payLoad.data.prediction.length">
+                            <ion-item-group>
+                                <ion-item>
+                                    <p style="font-size:1.2em; text-align:center; justify-content:center; margin: 0 auto; color:rgb(19, 19, 38)"><strong>Presence of Heart Disease score from 0 to 10 where 0 means no presence and 10 means <br>absolute presence of some Heart Disease:</strong></p><br>
+                                </ion-item>
+                                <ion-item>
+                                    <p style="font-size:2em; text-align:center; justify-content:center; margin: 0 auto; color:rgb(19, 19, 38)"><strong>Score: {{payLoad.data.prediction[0][0].toFixed(2)}}</strong></p>
+                                <br>
+                                    <p style="font-size:1.4em; text-align:center; justify-content:center; margin: 0 auto;" [style.color]='payLoad.data.prediction[0][0] > 5 ? "red" : "green"'>
+                                        <ion-icon name="{{payLoad.data.prediction[0][0] > 5 ? 'alert' : 'checkmark'}}"></ion-icon> Hi, {{payLoad.data.event.params.message}}
+                                    </p>
+                                </ion-item>
+                                <ion-item>
+                                    <strong>Accuracy:</strong>
+                                    {{payLoad.data.accuracy.toFixed(2)}}%
+                                </ion-item>
+                            </ion-item-group>
+                        </span>
+                </ion-card-content>
+
+            </ion-card>
+            <ion-card *ngIf="payLoad.data.prediction[0][0] > 5" [style.backgroundColor]="payLoad.data.prediction[0][0] > 5 ? '#ffdada' : '#e6ffe6'">
+
+                <ion-card-header>
+                    <h1>Suggestions for treatment:</h1>
+                </ion-card-header>
+
+                <ion-card-content>
+                    <span *ngIf="payLoad.data.prediction && payLoad.data.prediction.length">
+                            <ion-item-group>
+                                <ion-item>
+                                    <p><ion-icon name="alert"></ion-icon> <strong>Excess weight causes your heart to work harder and increases the risk for heart disease,<br> 
+                                        high blood pressure, diabetes and high cholesterol. Exercising regularly and eating smaller 
+                                        portions of nutrient-rich foods may help you maintain a healthy weight.<br> 
+                                        Learn the warning signs of a heart attack and stroke.</strong></p>
+                                </ion-item>
+                                <ion-item>
+                                    <p><ion-icon name="alert"></ion-icon> <strong>Don’t smoke or expose yourself to second-hand smoke.</strong></p>
+                                </ion-item>
+                                <ion-item>
+                                    <p><ion-icon name="alert"></ion-icon> <strong>Maintain a healthy blood pressure.</strong></p>
+                                </ion-item>
+                                <ion-item>
+                                    <p><ion-icon name="alert"></ion-icon> <strong>Monitor your cholesterol (blood lipids).</strong></p>
+                                </ion-item>
+                                <ion-item>
+                                    <p><ion-icon name="alert"></ion-icon> <strong>Make exercise a daily habit.</strong></p>
+                                </ion-item>
+                                <ion-item>
+                                    <p><ion-icon name="alert"></ion-icon> <strong>Reduce stress.</strong></p>
+                                </ion-item>
+                            </ion-item-group>
+                        </span>
+                </ion-card-content>
+
+            </ion-card>
+        </div>
+    </div>
+</ion-content>

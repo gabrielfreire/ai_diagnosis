@@ -1,0 +1,22 @@
+df-question {
+    .question-label[stacked] {
+        color: #2b5b73;
+    }
+    .question-label-sm[stacked] {
+        font-size: 1.0em;
+    }
+    .question-label-md[stacked] {
+        font-size: 1.3em;
+    }
+    .question-label-lg[stacked] {
+        font-size: 1.7em;
+    }
+    .question-input {
+        background-color: transparent;
+    }
+    /* Class replacements */
+    .item-ios.item-label-stacked .text-input,
+    .item-ios.item-label-floating .text-input {
+        font-size: 1.7em;
+    }
+}

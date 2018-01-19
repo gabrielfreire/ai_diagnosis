@@ -1,0 +1,23 @@
+<!-- Item wrapper -->
+<ion-item [hidden]="question.visibility == 'hidden'" [formGroup]="form" [ngSwitch]="question.controlType">
+    <!-- Label -->
+    <ion-label class="question-label question-label-sm" stacked [attr.for]="question.key">{{question.label}}</ion-label>
+
+    <!-- Input text field -->
+    <ion-input class="question-input" *ngSwitchCase="'textbox'" [formControlName]="question.key" [id]="question.key" [type]="question.type"></ion-input>
+
+    <!-- Input text area -->
+    <ion-textarea rows="8" class="question-input" *ngSwitchCase="'textarea'" [formControlName]="question.key" [id]="question.key" [type]="question.type"></ion-textarea>
+
+    <!-- Input combobox area -->
+    <ion-select [id]="question.key" *ngSwitchCase="'dropdown'" [formControlName]="question.key">
+        <ion-option *ngFor="let opt of question.options" [value]="opt.key">{{opt.value}}</ion-option>
+    </ion-select>
+
+    <!-- Input true/false toggle area -->
+    <ion-toggle (ionChange)="onChangeAnswer($event, question)" *ngSwitchCase="'toggle'" [formControlName]="question.key" [id]="question.key" [(ngModel)]="question.value"></ion-toggle>
+
+</ion-item>
+<!-- Required label -->
+<!-- <div class="errorMessage" *ngIf="!isValid">{{question.label}} is required</div> -->
+<div class="errorMessage" *ngIf="!isValid">Required</div>

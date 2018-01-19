@@ -1,0 +1,37 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Ask Dr. Watson
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content #content class="scroll-content" padding class="home">
+
+    <ion-list #list padding no-lines>
+        <span *ngFor="let message of messages">
+                <ion-item *ngIf="message.indexOf('Dr. Watson:') !== -1">
+                    <ion-card class="chat-baloon" color="white" item-left>
+                        <ion-card-content>
+                            <h2 [style.color]="'black'" [innerHTML]="message"></h2>
+                        </ion-card-content>
+                    </ion-card>
+                </ion-item>
+                <ion-item *ngIf="message.indexOf('Dr. Watson:') == -1">
+                    <ion-card class="chat-baloon" color="white" item-right>
+                        <ion-card-content>
+                            <h2 [style.color]="'gray'" [innerHTML]="message"></h2>
+                        </ion-card-content>
+                    </ion-card>
+                </ion-item>
+            </span>
+    </ion-list>
+
+</ion-content>
+<ion-footer>
+    <ion-item-group>
+        <ion-input item-left class="chat-input" type="text" [(ngModel)]="chatBox" placeholder="Your message...">
+        </ion-input>
+        <button block item-right ion-button (click)="send(chatBox)">Send</button>
+    </ion-item-group>
+</ion-footer>

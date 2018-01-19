@@ -1,0 +1,20 @@
+app-form {
+    ion-card .item-ios {
+        background-color: rgba(255, 255, 255, 0.7);
+    }
+    ion-card .item-ios-light,
+    .item-divider-ios-light {
+        background-color: rgba(244, 244, 244, 0.7);
+    }
+    p {
+        white-space: pre-line;
+    }
+    .label-result-watson-discovery span {
+        font-size: 1.2em;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        color: rgb(15, 56, 15);
+    }
+    .label-result-watson-discovery strong {
+        color: black;
+    }
+}
