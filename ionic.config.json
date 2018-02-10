@@ -1,6 +1,6 @@
 {
-  "name": "expert_system",
-  "app_id": "",
-  "type": "ionic-angular",
-  "integrations": {}
+    "name": "expert_system",
+    "app_id": "",
+    "type": "ionic-angular",
+    "integrations": {}
 }
