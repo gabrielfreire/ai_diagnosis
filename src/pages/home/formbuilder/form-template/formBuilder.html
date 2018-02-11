@@ -124,7 +124,7 @@
         <!-- PRESENCE OF HEART DISEASE AI NEURAL NETWORK -->
         <div *ngIf="payLoad && payLoad.data.prediction && !payLoad.data.usage && !payLoad.data.results" class="form-row">
 
-            <ion-card [style.backgroundColor]="payLoad.data.prediction[0][0] > 5 ? '#ffdada' : '#e6ffe6'">
+            <ion-card [style.backgroundColor]="payLoad.data.prediction[0] > 5 ? '#ffdada' : '#e6ffe6'">
 
                 <ion-card-header>
                     <h1 ion-text>AI Predicted:</h1>
@@ -139,8 +139,8 @@
                                 <ion-item>
                                     <p style="font-size:2em; text-align:center; justify-content:center; margin: 0 auto; color:rgb(19, 19, 38)"><strong>Score: {{payLoad.data.prediction[0].toFixed(2)}}</strong></p>
                                 <br>
-                                    <p style="font-size:1.4em; text-align:center; justify-content:center; margin: 0 auto;" [style.color]='payLoad.data.prediction[0][0] > 5 ? "red" : "green"'>
-                                        <ion-icon name="{{payLoad.data.prediction[0][0] > 5 ? 'alert' : 'checkmark'}}"></ion-icon> Hi, {{payLoad.data.event.params.message}}
+                                    <p style="font-size:1.4em; text-align:center; justify-content:center; margin: 0 auto;" [style.color]='payLoad.data.prediction[0] > 5 ? "red" : "green"'>
+                                        <ion-icon name="{{payLoad.data.prediction[0] > 5 ? 'alert' : 'checkmark'}}"></ion-icon> Hi, {{payLoad.data.event?.params?.message}}
                                     </p>
                                 </ion-item>
                                 <ion-item>
@@ -152,7 +152,7 @@
                 </ion-card-content>
 
             </ion-card>
-            <ion-card *ngIf="payLoad.data.prediction[0][0] > 5" [style.backgroundColor]="payLoad.data.prediction[0][0] > 5 ? '#ffdada' : '#e6ffe6'">
+            <ion-card *ngIf="payLoad.data.prediction[0] > 5" [style.backgroundColor]="payLoad.data.prediction[0] > 5 ? '#ffdada' : '#e6ffe6'">
 
                 <ion-card-header>
                     <h1>Suggestions for treatment:</h1>
