@@ -137,7 +137,7 @@
                                     <p style="font-size:1.2em; text-align:center; justify-content:center; margin: 0 auto; color:rgb(19, 19, 38)"><strong>Presence of Heart Disease score from 0 to 10 where 0 means no presence and 10 means <br>absolute presence of some Heart Disease:</strong></p><br>
                                 </ion-item>
                                 <ion-item>
-                                    <p style="font-size:2em; text-align:center; justify-content:center; margin: 0 auto; color:rgb(19, 19, 38)"><strong>Score: {{payLoad.data.prediction[0][0].toFixed(2)}}</strong></p>
+                                    <p style="font-size:2em; text-align:center; justify-content:center; margin: 0 auto; color:rgb(19, 19, 38)"><strong>Score: {{payLoad.data.prediction[0].toFixed(2)}}</strong></p>
                                 <br>
                                     <p style="font-size:1.4em; text-align:center; justify-content:center; margin: 0 auto;" [style.color]='payLoad.data.prediction[0][0] > 5 ? "red" : "green"'>
                                         <ion-icon name="{{payLoad.data.prediction[0][0] > 5 ? 'alert' : 'checkmark'}}"></ion-icon> Hi, {{payLoad.data.event.params.message}}
