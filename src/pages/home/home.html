@@ -19,4 +19,6 @@
     <button *ngIf="!selected" full ion-button color="calm" (click)="goToChat()">Ask Watson in a Conversation</button>
     <!--<button full ion-button light (click)="appForm.getForm('2')">Example Form</button>-->
     <!-- <app-form #appForm></app-form> -->
+    <button full ion-button color="red" (click)="takePicture()">Take Picture</button>
+    <img [src]="base64Image" *ngIf="base64Image" />
 </ion-content>

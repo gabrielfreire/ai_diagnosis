@@ -1,3 +1,4 @@
+// import { load } from 'webdnn';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -13,8 +14,26 @@ const SERVER_URL = server.url;
 @Injectable()
 export class QuestionService {
 
-    constructor(public http: Http, public questionMapper: QuestionMapper){}
+    constructor(public http: Http, public questionMapper: QuestionMapper){
+        // this.init();
+    }
 
+    init() {
+        // traditional JavaScript version
+        // load('./../../assets/neural_network/output')
+        // .then(function(runner){
+        //     console.log('loaded');
+        //     console.log(runner.backendName);
+        //     console.log(runner.inputs);
+        //     console.log(runner.outputs);
+        //     // add your code here.
+        // });
+        
+        // WebDNN.Image.getImageArray('./../../assets/imgs/logo.png').then((value) => {
+        //   console.log(value);
+        // }); // Load image RGB data as Float32Array
+        // // runner.inputs[0].set(imageArray); // Write data
+    }
     /**
      * Get flu form questions metadata
      * 

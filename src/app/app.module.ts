@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule }          from '@angular/forms';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
@@ -21,6 +20,7 @@ import { DiagnosticsService } from './diagnostics/diagnostic.service';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
+import { Camera } from '@ionic-native/camera';
 // const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 const config: SocketIoConfig = { url: 'https://imsdiag.herokuapp.com', options: {} };
 
@@ -36,8 +36,7 @@ const config: SocketIoConfig = { url: 'https://imsdiag.herokuapp.com', options: 
     DynamicFormQuestionComponent
   ],
   imports: [
-  
-  BrowserModule,
+    BrowserModule,
     ReactiveFormsModule,
     HttpModule,
     BrowserAnimationsModule,
@@ -58,6 +57,7 @@ const config: SocketIoConfig = { url: 'https://imsdiag.herokuapp.com', options: 
   providers: [
     StatusBar,
     SplashScreen,
+    Camera,
     QuestionControlService,
     QuestionService,
     QuestionMapper,

@@ -1,0 +1,116 @@
+{
+  "converted_at": 1519050772,
+  "weight_encoding": "raw",
+  "memory_layout": {
+    "static": {
+      "size": 13956,
+      "allocations": {
+        "a9": {
+          "name": "a9",
+          "offset": 13931,
+          "size": 24
+        },
+        "a11": {
+          "name": "a11",
+          "offset": 13881,
+          "size": 50
+        },
+        "a12": {
+          "name": "a12",
+          "offset": 13831,
+          "size": 50
+        },
+        "a13": {
+          "name": "a13",
+          "offset": 13491,
+          "size": 100
+        },
+        "a14": {
+          "name": "a14",
+          "offset": 13591,
+          "size": 100
+        },
+        "a15": {
+          "name": "a15",
+          "offset": 13691,
+          "size": 70
+        },
+        "a16": {
+          "name": "a16",
+          "offset": 13761,
+          "size": 70
+        },
+        "a18": {
+          "name": "a18",
+          "offset": 13955,
+          "size": 1
+        },
+        "a1": {
+          "name": "a1",
+          "offset": 0,
+          "size": 1200
+        },
+        "a2": {
+          "name": "a2",
+          "offset": 1200,
+          "size": 50
+        },
+        "a3": {
+          "name": "a3",
+          "offset": 1250,
+          "size": 5000
+        },
+        "a4": {
+          "name": "a4",
+          "offset": 6250,
+          "size": 100
+        },
+        "a5": {
+          "name": "a5",
+          "offset": 6350,
+          "size": 7000
+        },
+        "a6": {
+          "name": "a6",
+          "offset": 13350,
+          "size": 70
+        },
+        "a7": {
+          "name": "a7",
+          "offset": 13420,
+          "size": 70
+        },
+        "a8": {
+          "name": "a8",
+          "offset": 13490,
+          "size": 1
+        }
+      }
+    },
+    "dynamic": {
+      "size": 0,
+      "allocations": {}
+    }
+  },
+  "placeholders": {},
+  "unresolved_value_lists": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "inputs": [
+    "a9"
+  ],
+  "outputs": [
+    "a18"
+  ],
+  "licenses": {
+    "webdnn": "(C) Machine Intelligence Laboratory (The University of Tokyo), MIT License",
+    "eigen": "(C) Eigen authors, MPL 2.0 License"
+  }
+}

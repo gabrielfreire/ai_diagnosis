@@ -1,6 +1,8 @@
 {
-    "name": "expert_system",
-    "app_id": "18be0a85",
-    "type": "ionic-angular",
-    "integrations": {}
+  "name": "expert_system",
+  "app_id": "18be0a85",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
 }

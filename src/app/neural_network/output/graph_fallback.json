@@ -1,0 +1,429 @@
+{
+  "converted_at": 1519050805,
+  "kernel_source": "\ndnn_fallback_kernel={\n\n\ntensordot: function(input_arrays, output_arrays, option) {\nvar A = input_arrays[0];\nvar B = input_arrays[1];\nvar C = output_arrays[0];\n\nvar index2pos = function(index, stride, shape) {\n    var i = 0, pos = [];\n    for (i = 0; i < stride.length; i++) pos[i] = Math.floor(index / stride[i]) % shape[i];\n    return pos;\n};\n\nvar pos2index = function(pos, stride) {\n    var i = 0, index = 0;\n    for (i = 0; i < stride.length; i++) index += pos[i] * stride[i];\n    return index;\n};\n\nvar c_index, c_pos;\nvar a_base_index, a_offset;\nvar b_base_index, b_offset;\nvar i;\nvar sum = 0;\nfor (c_index = 0; c_index < C.length; c_index++) {\n    c_pos = index2pos(c_index, option.stride_C, option.shape_C);\n    a_base_index = pos2index(c_pos, option.stride_A_for_C_axes);\n    b_base_index = pos2index(c_pos, option.stride_B_for_C_axes);\n\n    sum = 0;\n    for (i = 0; i < option.reduction_size; i++) {\n        a_offset = pos2index(index2pos(i, option.stride_A_reduced_axes, option.shape_A_reduced_axes), option.stride_A_reduced_axes_whole);\n        b_offset = pos2index(index2pos(i, option.stride_B_reduced_axes, option.shape_B_reduced_axes), option.stride_B_reduced_axes_whole);\n\n        sum += A[a_base_index + a_offset] * B[b_base_index + b_offset];\n    }\n    C[c_index] = sum;\n}\n\n},\n\n\n\n\nelementwiseadd_a390ad2e078fc68ac251d2f594dc0f96834a1e57429714605dbf3a02: function(input_arrays, output_arrays, option) {\n    var v1 = input_arrays[0];\n    var v2 = input_arrays[1];\n    var v3 = input_arrays[2];\n    var D0 = option['7'];\n    var d0;\n    for (d0 = 0; d0 < D0; d0 += 1) {\n        var v4 = v1[d0];\n        var v5 = v2[d0];\n        var v6;\n        (function(){\n            v6 = v5 + v4;\n        })();\n        v3[d0] = v6;\n    }\n},\n\nrelu_3693ec08de79c27ab35127ab0a10897afa2249f09efd879f2a8158d1: function(input_arrays, output_arrays, option) {\n    var v1 = input_arrays[0];\n    var v2 = input_arrays[1];\n    var D0 = option['5'];\n    var d0;\n    for (d0 = 0; d0 < D0; d0 += 1) {\n        var v3 = v1[d0];\n        var v4;\n        (function(){\n            v4 = v3 > 0 ? v3 : 0;\n        })();\n        v2[d0] = v4;\n    }\n},\n\n};\n",
+  "exec_infos": [
+    {
+      "entry_func_name": "tensordot",
+      "inputs": [
+        "a9",
+        "a1"
+      ],
+      "outputs": [
+        "a11"
+      ],
+      "call_option": {
+        "reduction_size": 24,
+        "stride_A": [
+          24,
+          1
+        ],
+        "stride_B": [
+          50,
+          1
+        ],
+        "stride_C": [
+          50,
+          1
+        ],
+        "shape_C": [
+          1,
+          50
+        ],
+        "stride_A_for_C_axes": [
+          24,
+          0
+        ],
+        "stride_B_for_C_axes": [
+          0,
+          1
+        ],
+        "shape_A_reduced_axes": [
+          24
+        ],
+        "stride_A_reduced_axes": [
+          1
+        ],
+        "stride_A_reduced_axes_whole": [
+          1
+        ],
+        "shape_B_reduced_axes": [
+          24
+        ],
+        "stride_B_reduced_axes": [
+          1
+        ],
+        "stride_B_reduced_axes_whole": [
+          50
+        ]
+      }
+    },
+    {
+      "entry_func_name": "elementwiseadd_a390ad2e078fc68ac251d2f594dc0f96834a1e57429714605dbf3a02",
+      "inputs": [
+        "a2",
+        "a11",
+        "a12"
+      ],
+      "outputs": [],
+      "call_option": {
+        "7": 50
+      }
+    },
+    {
+      "entry_func_name": "relu_3693ec08de79c27ab35127ab0a10897afa2249f09efd879f2a8158d1",
+      "inputs": [
+        "a12",
+        "a13"
+      ],
+      "outputs": [],
+      "call_option": {
+        "5": 50
+      }
+    },
+    {
+      "entry_func_name": "tensordot",
+      "inputs": [
+        "a13",
+        "a3"
+      ],
+      "outputs": [
+        "a14"
+      ],
+      "call_option": {
+        "reduction_size": 50,
+        "stride_A": [
+          50,
+          1
+        ],
+        "stride_B": [
+          100,
+          1
+        ],
+        "stride_C": [
+          100,
+          1
+        ],
+        "shape_C": [
+          1,
+          100
+        ],
+        "stride_A_for_C_axes": [
+          50,
+          0
+        ],
+        "stride_B_for_C_axes": [
+          0,
+          1
+        ],
+        "shape_A_reduced_axes": [
+          50
+        ],
+        "stride_A_reduced_axes": [
+          1
+        ],
+        "stride_A_reduced_axes_whole": [
+          1
+        ],
+        "shape_B_reduced_axes": [
+          50
+        ],
+        "stride_B_reduced_axes": [
+          1
+        ],
+        "stride_B_reduced_axes_whole": [
+          100
+        ]
+      }
+    },
+    {
+      "entry_func_name": "elementwiseadd_a390ad2e078fc68ac251d2f594dc0f96834a1e57429714605dbf3a02",
+      "inputs": [
+        "a4",
+        "a14",
+        "a15"
+      ],
+      "outputs": [],
+      "call_option": {
+        "7": 100
+      }
+    },
+    {
+      "entry_func_name": "relu_3693ec08de79c27ab35127ab0a10897afa2249f09efd879f2a8158d1",
+      "inputs": [
+        "a15",
+        "a16"
+      ],
+      "outputs": [],
+      "call_option": {
+        "5": 100
+      }
+    },
+    {
+      "entry_func_name": "tensordot",
+      "inputs": [
+        "a16",
+        "a5"
+      ],
+      "outputs": [
+        "a17"
+      ],
+      "call_option": {
+        "reduction_size": 100,
+        "stride_A": [
+          100,
+          1
+        ],
+        "stride_B": [
+          70,
+          1
+        ],
+        "stride_C": [
+          70,
+          1
+        ],
+        "shape_C": [
+          1,
+          70
+        ],
+        "stride_A_for_C_axes": [
+          100,
+          0
+        ],
+        "stride_B_for_C_axes": [
+          0,
+          1
+        ],
+        "shape_A_reduced_axes": [
+          100
+        ],
+        "stride_A_reduced_axes": [
+          1
+        ],
+        "stride_A_reduced_axes_whole": [
+          1
+        ],
+        "shape_B_reduced_axes": [
+          100
+        ],
+        "stride_B_reduced_axes": [
+          1
+        ],
+        "stride_B_reduced_axes_whole": [
+          70
+        ]
+      }
+    },
+    {
+      "entry_func_name": "elementwiseadd_a390ad2e078fc68ac251d2f594dc0f96834a1e57429714605dbf3a02",
+      "inputs": [
+        "a6",
+        "a17",
+        "a18"
+      ],
+      "outputs": [],
+      "call_option": {
+        "7": 70
+      }
+    },
+    {
+      "entry_func_name": "relu_3693ec08de79c27ab35127ab0a10897afa2249f09efd879f2a8158d1",
+      "inputs": [
+        "a18",
+        "a19"
+      ],
+      "outputs": [],
+      "call_option": {
+        "5": 70
+      }
+    },
+    {
+      "entry_func_name": "tensordot",
+      "inputs": [
+        "a19",
+        "a7"
+      ],
+      "outputs": [
+        "a20"
+      ],
+      "call_option": {
+        "reduction_size": 70,
+        "stride_A": [
+          70,
+          1
+        ],
+        "stride_B": [
+          1,
+          1
+        ],
+        "stride_C": [
+          1,
+          1
+        ],
+        "shape_C": [
+          1,
+          1
+        ],
+        "stride_A_for_C_axes": [
+          70,
+          0
+        ],
+        "stride_B_for_C_axes": [
+          0,
+          1
+        ],
+        "shape_A_reduced_axes": [
+          70
+        ],
+        "stride_A_reduced_axes": [
+          1
+        ],
+        "stride_A_reduced_axes_whole": [
+          1
+        ],
+        "shape_B_reduced_axes": [
+          70
+        ],
+        "stride_B_reduced_axes": [
+          1
+        ],
+        "stride_B_reduced_axes_whole": [
+          1
+        ]
+      }
+    },
+    {
+      "entry_func_name": "elementwiseadd_a390ad2e078fc68ac251d2f594dc0f96834a1e57429714605dbf3a02",
+      "inputs": [
+        "a8",
+        "a20",
+        "a10"
+      ],
+      "outputs": [],
+      "call_option": {
+        "7": 1
+      }
+    }
+  ],
+  "weight_encoding": "raw",
+  "memory_layout": {
+    "static": {
+      "size": 14177,
+      "allocations": {
+        "a9": {
+          "name": "a9",
+          "offset": 14151,
+          "size": 24
+        },
+        "a11": {
+          "name": "a11",
+          "offset": 14101,
+          "size": 50
+        },
+        "a12": {
+          "name": "a12",
+          "offset": 14001,
+          "size": 50
+        },
+        "a13": {
+          "name": "a13",
+          "offset": 14051,
+          "size": 50
+        },
+        "a14": {
+          "name": "a14",
+          "offset": 13691,
+          "size": 100
+        },
+        "a15": {
+          "name": "a15",
+          "offset": 13591,
+          "size": 100
+        },
+        "a16": {
+          "name": "a16",
+          "offset": 13491,
+          "size": 100
+        },
+        "a17": {
+          "name": "a17",
+          "offset": 13791,
+          "size": 70
+        },
+        "a18": {
+          "name": "a18",
+          "offset": 13861,
+          "size": 70
+        },
+        "a19": {
+          "name": "a19",
+          "offset": 13931,
+          "size": 70
+        },
+        "a20": {
+          "name": "a20",
+          "offset": 14175,
+          "size": 1
+        },
+        "a10": {
+          "name": "a10",
+          "offset": 14176,
+          "size": 1
+        },
+        "a1": {
+          "name": "a1",
+          "offset": 0,
+          "size": 1200
+        },
+        "a2": {
+          "name": "a2",
+          "offset": 1200,
+          "size": 50
+        },
+        "a3": {
+          "name": "a3",
+          "offset": 1250,
+          "size": 5000
+        },
+        "a4": {
+          "name": "a4",
+          "offset": 6250,
+          "size": 100
+        },
+        "a5": {
+          "name": "a5",
+          "offset": 6350,
+          "size": 7000
+        },
+        "a6": {
+          "name": "a6",
+          "offset": 13350,
+          "size": 70
+        },
+        "a7": {
+          "name": "a7",
+          "offset": 13420,
+          "size": 70
+        },
+        "a8": {
+          "name": "a8",
+          "offset": 13490,
+          "size": 1
+        }
+      }
+    },
+    "dynamic": {
+      "size": 0,
+      "allocations": {}
+    }
+  },
+  "placeholders": {},
+  "inputs": [
+    "a9"
+  ],
+  "outputs": [
+    "a10"
+  ],
+  "licenses": {
+    "webdnn": "(C) Machine Intelligence Laboratory (The University of Tokyo), MIT License"
+  }
+}
