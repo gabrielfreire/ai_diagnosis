@@ -36,7 +36,7 @@ export class FormBuilderCustom implements OnInit{
         public viewCtrl : ViewController){}
 
     ngOnInit() {
-        this.onChangeListener();
+        this.listenToQuestionEvents();
         let params = this.viewCtrl.getNavParams();
         if(params && params.data) {
             this.getForm(params.data.form);
@@ -61,7 +61,7 @@ export class FormBuilderCustom implements OnInit{
     /**
      * Listener for the change event of a df-question
      */
-    onChangeListener(): void {
+    listenToQuestionEvents(): void {
         //listen for the event from df-question
         this.changeEvent.subscribe((action: EventBody) => {
 
@@ -79,38 +79,19 @@ export class FormBuilderCustom implements OnInit{
 
     /**
      * Get a specific form
-     * @param option type of form ['flu','hd','watson']   hd == Heart Disease
+     * @param option type of form ['flu','hd','watson']   hd == Heart Disease form
      */
     getForm(option: string): void {
         let loading = this.loadingCtrl.create(LoaderConfigs.loading);
-        let callbackDone = (questionnaire: QuestionBody) => {
+        loading.present();
+        this.questionService.makeForm(option).subscribe((questionnaire: QuestionBody) => {
             this.title = questionnaire.additional_information.title ? questionnaire.additional_information.title : UNTITLED_QUESTIONNAIRE;
             this.hasSubmit = true;
             this.payLoad = '';
             this.form = this.questionControlService.toFormGroup(questionnaire.questions);
             this.questions = questionnaire.questions;
             loading.dismiss();
-        }
-
-        loading.present();
-        switch(option) {
-            case 'flu': // Flu Diagnosis
-                //build the form and load the questions
-                this.questionService.getFluQuestions().subscribe(callbackDone);
-                break;
-            case 'hd':// Heart Disease Diagnosis
-                this.questionService.getHeartDiseaseQuestions().subscribe(callbackDone);
-                break;
-            case 'mh': // Mental Health Depression Diagnosis
-                this.questionService.getMentalHealthQuestions().subscribe(callbackDone);
-                break;
-            case 'watson': // Watson Discovery
-                this.questionService.getWatsonQuestions().subscribe(callbackDone);
-                break;
-            default:
-                break;
-
-        }
+        });
     }
 
     /**

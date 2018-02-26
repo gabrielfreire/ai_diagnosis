@@ -8,23 +8,12 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
   templateUrl: 'home.html'
 })
 export class HomePage implements OnInit{
-  selected: boolean = false;
   model: any;
   options: CameraOptions;
   base64Image: string;
   constructor(public navCtrl: NavController, public camera: Camera) {}
   
-  ngOnInit() {
-    this.selected = false;
-  }
-
-  select() {
-    this.selected = true;
-  }
-  
-  unselect() {
-    this.selected = false;
-  }
+  ngOnInit() {}
 
   goToChat(){
     this.navCtrl.push(ChatPage);
@@ -47,6 +36,8 @@ export class HomePage implements OnInit{
     this.camera.getPicture(this.options).then((imageData) => {
      // imageData is either a base64 encoded string or a file URI
      // If it's base64:
+     // TODO start a websocket connection to a server
+     // TODO send image to some server via websocket in a real-time manner and use a neural network to classify something
      this.base64Image = 'data:image/jpeg;base64,' + imageData;
     }, (err) => {
      // Handle error

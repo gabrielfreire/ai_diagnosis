@@ -15,12 +15,14 @@ const SERVER_URL = server.url;
 export class QuestionService {
 
     constructor(public http: Http, public questionMapper: QuestionMapper){
-        // this.init();
-    }
-
-    init() {
+        // load('./../../assets/neural_network/output').then(runner => {
+        //     console.log('loaded');
+        //     console.log(runner.backendName);
+        //     console.log(runner.inputs);
+        //     console.log(runner.outputs);
+        // });
         // traditional JavaScript version
-        // load('./../../assets/neural_network/output')
+        // WebDNN.load('./../../assets/neural_network/output')
         // .then(function(runner){
         //     console.log('loaded');
         //     console.log(runner.backendName);
@@ -34,12 +36,36 @@ export class QuestionService {
         // }); // Load image RGB data as Float32Array
         // // runner.inputs[0].set(imageArray); // Write data
     }
+
+    makeForm(option: string): Observable<QuestionBody> {
+        let fn;
+        switch(option) {
+            case 'flu': // Flu Diagnosis
+                //build the form and load the questions
+                fn = this.getFluQuestions();
+                break;
+            case 'hd':// Heart Disease Diagnosis
+                fn = this.getHeartDiseaseQuestions();
+                break;
+            case 'mh': // Mental Health Depression Diagnosis
+                fn = this.getMentalHealthQuestions();
+                break;
+            case 'watson': // Watson Discovery
+                fn = this.getWatsonQuestions();
+                break;
+            default:
+                break;
+
+        }
+        return fn;
+    }
+
     /**
      * Get flu form questions metadata
      * 
      * TODO separate question mapping logic from http request
      */
-    getFluQuestions(): Observable<QuestionBody> {
+    private getFluQuestions(): Observable<QuestionBody> {
         return this.http.get(SERVER_URL + '/questions/flu').map((res) => this.questionMapper.map(res));
     }
 
@@ -48,7 +74,7 @@ export class QuestionService {
      * 
      * TODO separate question mapping logic from http request
      */
-    getHeartDiseaseQuestions(): Observable<QuestionBody> {
+    private getHeartDiseaseQuestions(): Observable<QuestionBody> {
         return this.http.get(SERVER_URL + '/questions/heartdisease').map((res) => this.questionMapper.map(res));
     }
     /**
@@ -56,7 +82,7 @@ export class QuestionService {
      * 
      * TODO separate question mapping logic from http request
      */
-    getMentalHealthQuestions(): Observable<QuestionBody> {
+    private getMentalHealthQuestions(): Observable<QuestionBody> {
         return this.http.get(SERVER_URL + '/questions/mentalhealth').map((res) => this.questionMapper.map(res));
     }
 
@@ -65,7 +91,7 @@ export class QuestionService {
      * 
      * TODO separate question mapping logic from http request
      */
-    getWatsonQuestions(): Observable<QuestionBody> {
+    private getWatsonQuestions(): Observable<QuestionBody> {
         return this.http.get(SERVER_URL + '/questions/askwatson').map((res) => this.questionMapper.map(res));
     }
 }
