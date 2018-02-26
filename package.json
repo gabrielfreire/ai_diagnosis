@@ -47,7 +47,7 @@
     "devDependencies": {
         "@types/node": "^9.4.6",
         "@types/pako": "^1.0.0",
-        "typescript": "2.3.4"
+        "typescript": "^2.7.2"
     },
     "description": "An Ionic project",
     "cordova": {

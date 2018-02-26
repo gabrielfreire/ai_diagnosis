@@ -4,6 +4,14 @@ import { Injectable } from "@angular/core";
 const ERROR_NO_PARAMETER = "Event parameter or type is missing";
 const ERROR_NO_MATCH_ACTION = "This action does not match any possible action";
 
+enum Events {
+    Visibility = 'visibility'
+}
+enum Actions {
+    Visible = 'visible',
+    Hidden = 'hidden'
+}
+
 @Injectable()
 export class QuestionEventMapper {
 
@@ -34,12 +42,4 @@ export class QuestionEventMapper {
 
         return question;
     }
-}
-
-enum Events {
-    Visibility = 'visibility'
-}
-enum Actions {
-    Visible = 'visible',
-    Hidden = 'hidden'
 }

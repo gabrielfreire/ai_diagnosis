@@ -1,3 +1,4 @@
+import { load } from 'webdnn';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -14,12 +15,12 @@ const SERVER_URL = server.url;
 export class QuestionService {
 
     constructor(public http: Http, public questionMapper: QuestionMapper){
-        // load('./../../assets/neural_network/output').then(runner => {
-        //     console.log('loaded');
-        //     console.log(runner.backendName);
-        //     console.log(runner.inputs);
-        //     console.log(runner.outputs);
-        // });
+        load('./../../assets/neural_network/output').then(runner => {
+            console.log('loaded');
+            console.log(runner.backendName);
+            console.log(runner.inputs);
+            console.log(runner.outputs);
+        });
         // traditional JavaScript version
         // WebDNN.load('./../../assets/neural_network/output')
         // .then(function(runner){
