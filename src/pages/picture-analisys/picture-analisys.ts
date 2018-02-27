@@ -58,17 +58,17 @@ export class PictureAnalisysPage {
             reader.readAsDataURL(request.response);
             reader.onload =  async function(e){
               this.picture = 'data:image/jpeg;base64,' + reader.result;
-              await this.cognitiveService.analyzeImage(picture).then(description => {
-                descriptionAnalyzedImage = description;
-                this.imageDescription = descriptionAnalyzedImage;
-              }, error => {
-                console.error(error);
-                this.error = error;
-              });
             }.bind(this);
-        };
-        request.send();
-      }
+          };
+          request.send();
+        }
+        await this.cognitiveService.analyzeImage(picture).then(description => {
+          descriptionAnalyzedImage = description;
+          this.imageDescription = descriptionAnalyzedImage;
+        }, error => {
+          console.error(error);
+          this.error = error;
+        });
   
       if (!this.isMute) {
         // this.nativeActionsProvider.playAudio(this.translateTexts[1].text, this.language);
