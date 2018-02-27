@@ -48,7 +48,7 @@ export class PictureAnalisysPage {
     try {
       await this.cameraProvider.getPictureFromCamera().then(picture => {
         if (picture) {
-          this.picture = picture;
+          this.picture = 'data:image/jpeg;base64,' + picture;
         }
   
         if (!this.isMute) {
@@ -60,6 +60,7 @@ export class PictureAnalisysPage {
 
       await this.cognitiveService.analyzeImage(this.picture).then(description => {
         descriptionAnalyzedImage = description;
+        this.imageDescription = descriptionAnalyzedImage;
       }, error => {
         console.error(error);
       });
