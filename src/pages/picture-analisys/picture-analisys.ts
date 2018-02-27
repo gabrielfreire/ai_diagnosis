@@ -56,8 +56,15 @@ export class PictureAnalisysPage {
         request.onload = () => {
             var reader = new FileReader();
             reader.readAsDataURL(request.response);
-            reader.onload =  function(e){
+            reader.onload =  async function(e){
               this.picture = 'data:image/jpeg;base64,' + reader.result;
+              await this.cognitiveService.analyzeImage(picture).then(description => {
+                descriptionAnalyzedImage = description;
+                this.imageDescription = descriptionAnalyzedImage;
+              }, error => {
+                console.error(error);
+                this.error = error;
+              });
             }.bind(this);
         };
         request.send();
@@ -66,15 +73,6 @@ export class PictureAnalisysPage {
       if (!this.isMute) {
         // this.nativeActionsProvider.playAudio(this.translateTexts[1].text, this.language);
       }
-
-      await this.cognitiveService.analyzeImage(this.picture).then(description => {
-        descriptionAnalyzedImage = description;
-        this.imageDescription = descriptionAnalyzedImage;
-      }, error => {
-        console.error(error);
-        this.error = error;
-      });
-
       loading.dismiss();
 
     } catch(error) {
