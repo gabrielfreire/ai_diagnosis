@@ -49,7 +49,18 @@ export class PictureAnalisysPage {
     try {
       let picture = await this.cameraProvider.getPictureFromCamera();
       if (picture) {
-        this.picture = picture;
+        // this.picture = picture;
+        let request = new XMLHttpRequest();
+        request.open('GET', picture, true);
+        request.responseType = 'blob';
+        request.onload = () => {
+            var reader = new FileReader();
+            reader.readAsDataURL(request.response);
+            reader.onload =  function(e){
+              this.picture = 'data:image/jpeg;base64,' + reader.result;
+            }.bind(this);
+        };
+        request.send();
       }
   
       if (!this.isMute) {
@@ -71,6 +82,17 @@ export class PictureAnalisysPage {
       this.error = error;
     }
   }
+
+  getBase64(file: any, cb: any): void {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+        cb(reader.result);
+    };
+    reader.onerror = function (error) {
+        console.log('Error: ', error);
+    };
+}
 
 
 }
