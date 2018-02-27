@@ -57,7 +57,7 @@ export class PictureAnalisysPage {
             var reader = new FileReader();
             reader.readAsDataURL(request.response);
             reader.onload =  async function(e){
-              this.picture = 'data:image/jpeg;base64,' + reader.result;
+              this.picture = reader.result;
             }.bind(this);
           };
           request.send();
