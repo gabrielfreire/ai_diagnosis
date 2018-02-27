@@ -17,7 +17,6 @@
     <img *ngIf="picture" [src]="picture" />
     <div class="container-description" (click)="takePicture()">
         <p class="image-description">{{imageDescription}}</p>
-        <p>{{picture}}</p>
         <p *ngIf="error" class="error">{{error}}</p>
     </div>
 </ion-content>
