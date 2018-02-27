@@ -17,6 +17,7 @@ export class PictureAnalisysPage {
   isMute: boolean = false;
   loading: string = 'Loading';
   picture: boolean|string = false;
+  rawPicture;
   imageDescription: string = '';
   isSpeak: boolean = false;
   constructor(public navCtrl: NavController, 
@@ -49,6 +50,7 @@ export class PictureAnalisysPage {
       await this.cameraProvider.getPictureFromCamera().then(picture => {
         if (picture) {
           this.picture = 'data:image/jpeg;base64,' + picture;
+          this.rawPicture = picture;
         }
   
         if (!this.isMute) {
@@ -58,7 +60,7 @@ export class PictureAnalisysPage {
         console.error(error);
       });
 
-      await this.cognitiveService.analyzeImage(this.picture).then(description => {
+      await this.cognitiveService.analyzeImage(this.rawPicture).then(description => {
         descriptionAnalyzedImage = description;
         this.imageDescription = descriptionAnalyzedImage;
       }, error => {
