@@ -17,9 +17,9 @@ export class PictureAnalisysPage {
   isMute: boolean = false;
   loading: string = 'Loading';
   picture: boolean|string = false;
-  rawPicture;
   imageDescription: string = '';
   isSpeak: boolean = false;
+  error: boolean|string = false;
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
               public cameraProvider: CameraProvider, 
@@ -49,25 +49,26 @@ export class PictureAnalisysPage {
     try {
       let picture = await this.cameraProvider.getPictureFromCamera();
       if (picture) {
-        this.picture = 'data:image/jpeg;base64,' + picture;
-        this.rawPicture = picture;
+        this.picture = picture;
       }
   
       if (!this.isMute) {
         // this.nativeActionsProvider.playAudio(this.translateTexts[1].text, this.language);
       }
 
-      await this.cognitiveService.analyzeImage(this.rawPicture).then(description => {
+      await this.cognitiveService.analyzeImage(this.picture).then(description => {
         descriptionAnalyzedImage = description;
         this.imageDescription = descriptionAnalyzedImage;
       }, error => {
         console.error(error);
+        this.error = error;
       });
 
       loading.dismiss();
 
     } catch(error) {
       console.error(`${JSON.stringify(error)}`);
+      this.error = error;
     }
   }
 

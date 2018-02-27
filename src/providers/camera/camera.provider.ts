@@ -15,15 +15,10 @@ export class CameraProvider {
     const options: CameraOptions = {
       quality,
       saveToPhotoAlbum,
+      sourceType: pictureSourceType,
       destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG
     };
-
-    // return this.camera.getPicture(options).then(imageData => {
-    //   return imageData;
-    // }, error => {
-    //   console.error(`CAMERA ERROR -> ${JSON.stringify(error)}`);
-    // });
     return this.camera.getPicture(options);
   }
 

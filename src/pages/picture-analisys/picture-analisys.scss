@@ -46,4 +46,17 @@ page-picture-analisys {
         font-size: 3rem;
         transform: translate(-50%, -50%);
     }
+    .error {
+        position: relative;
+        top: 30%;
+        left: 50%;
+        z-index: 3;
+        float: left;
+        padding: 10px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 2rem;
+        color: red;
+        transform: translate(-50%, -50%);
+    }
 }
