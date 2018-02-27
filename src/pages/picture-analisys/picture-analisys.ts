@@ -66,8 +66,8 @@ export class PictureAnalisysPage {
           descriptionAnalyzedImage = description;
           this.imageDescription = descriptionAnalyzedImage;
         }, error => {
-          console.error(error);
-          this.error = error;
+          console.error(`Error: ${error}`);
+          this.error = `Error: ${error}`;
         });
   
       if (!this.isMute) {
@@ -77,7 +77,7 @@ export class PictureAnalisysPage {
 
     } catch(error) {
       console.error(`${JSON.stringify(error)}`);
-      this.error = error;
+      this.error = `Error: ${error}`;
     }
   }
 
