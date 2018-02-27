@@ -23,6 +23,8 @@
         "@angular/platform-browser-dynamic": "4.4.3",
         "@ionic-native/camera": "^4.5.3",
         "@ionic-native/core": "4.3.2",
+        "@ionic-native/file-transfer": "^4.5.3",
+        "@ionic-native/native-storage": "^4.5.3",
         "@ionic-native/splash-screen": "4.3.2",
         "@ionic-native/status-bar": "4.3.2",
         "@ionic/app-scripts": "^3.1.8",
@@ -45,6 +47,7 @@
         "zone.js": "0.8.18"
     },
     "devDependencies": {
+        "@ionic-native/text-to-speech": "^4.5.3",
         "@types/node": "^9.4.6",
         "@types/pako": "^1.0.0",
         "typescript": "^2.7.2"

@@ -1,4 +1,4 @@
-import { Event } from './../../../../app/models/event.model';
+import { Event } from './../../../../models/event.model';
 
 export class Question {
     value: string;

@@ -3,12 +3,13 @@ import { FormGroup } from '@angular/forms';
 import { QuestionService } from '../questions/question.service';
 import { Question } from '../questions/question.model';
 import { QuestionControlService } from '../questions/question-control.service';
-import { DiagnosticsService } from '../../../../app/diagnostics/diagnostic.service';
+import { DiagnosticsService } from '../../../../providers/diagnostics/diagnostic.service';
 import { LoadingController, ViewController } from 'ionic-angular';
 import { LoaderConfigs } from './loaders/loaders';
-import { QuestionEventMapper } from './../../../../app/mappers/event-mapper.service';
-import { EventBody } from './../../../../app/models/eventbody.model';
-import { QuestionBody } from './../../../../app/models/questionbody.model';
+import { QuestionEventMapper } from './../../../../mappers/event-mapper.service';
+import { EventBody } from './../../../../models/eventbody.model';
+import { QuestionBody } from './../../../../models/questionbody.model';
+import { ActionOptions } from './../../../../models/actionoptions.model';
 
 const ERROR_NO_EVENT_TO_TRIGGER = "No event was passed to the trigger";
 const UNTITLED_QUESTIONNAIRE = 'Untitled Questionnaire';
@@ -44,7 +45,7 @@ export class FormBuilderCustom implements OnInit{
     }
     
     /**
-     * submit data to get action back from server, in this case: Diagnostic
+     * Submit data to get action back from server, in this case: Diagnostic
      */
     onSubmit(): void {
         let loading = this.loadingCtrl.create(LoaderConfigs.submit);
@@ -63,23 +64,26 @@ export class FormBuilderCustom implements OnInit{
      */
     listenToQuestionEvents(): void {
         //listen for the event from df-question
-        this.changeEvent.subscribe((action: EventBody) => {
+        this.changeEvent.subscribe((eventBody: EventBody) => {
 
-            if(!action) throw ERROR_NO_EVENT_TO_TRIGGER;
-            let eventAction = action.question.event.action || "visible";
-            let eventType = action.question.event.type || "visibility";
-            let eventTarget = action.question.event.target;
-
+            if(!eventBody) throw ERROR_NO_EVENT_TO_TRIGGER;
+            let eventTarget = eventBody.question.event.target;
             let targetQuestion = this.getQuestion(eventTarget);
-            
-            let newQuestion = this.eventMapper.applyAction(eventType, eventAction, targetQuestion);
+            let options: ActionOptions = {
+                event: eventBody.question.event.type || "visibility",
+                action: eventBody.question.event.action || "visible",
+                target: targetQuestion
+            }
+            let newQuestion = this.eventMapper.applyAction(options);
             this.updateQuestion(targetQuestion.key, newQuestion);
         })
     }
 
     /**
-     * Get a specific form
-     * @param option type of form ['flu','hd','watson']   hd == Heart Disease form
+     * Get a specific form by name
+     * 
+     * Questionnaire names -> 'flu', 'hd', 'mh' and 'watson'
+     * @param option A questionnaire name
      */
     getForm(option: string): void {
         let loading = this.loadingCtrl.create(LoaderConfigs.loading);
@@ -103,8 +107,9 @@ export class FormBuilderCustom implements OnInit{
     /**
      * Returns a question by key
     * @param key question key
+    * @return A Question
     */
-    getQuestion(key): Question {
+    getQuestion(key: string|Number): Question {
         for(var i = 0; i < this.questions.length; i++) {
             if(this.questions[i].key === key){
                 return this.questions[i];
@@ -117,7 +122,7 @@ export class FormBuilderCustom implements OnInit{
      * Update a specific question
     * @param key question key
     */
-    updateQuestion(key, newQuestion): void {
+    updateQuestion(key: string|Number, newQuestion: Question): void {
         for(var i = 0; i < this.questions.length; i++) {
             if(this.questions[i].key === key){
                 this.questions[i] = newQuestion;
@@ -126,7 +131,7 @@ export class FormBuilderCustom implements OnInit{
     }
 
     /**
-     * Clear/reset the form
+     * Clear the form
      */
     clear(): void {
         this.questions = [];

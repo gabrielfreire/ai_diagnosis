@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { server } from './../server.connection';
+import { server } from './../../app/server.connection';
 
 const SERVER_URL = server.url;
 

@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import { QuestionMapper } from './../../../../app/mappers/question-mapper.service';
+import { QuestionMapper } from './../../../../mappers/question-mapper.service';
 import { server } from './../../../../app/server.connection';
-import { QuestionBody } from './../../../../app/models/questionbody.model';
+import { QuestionBody } from './../../../../models/questionbody.model';
 
 const SERVER_URL = server.url;
 /**
@@ -21,22 +21,15 @@ export class QuestionService {
             console.log(runner.inputs);
             console.log(runner.outputs);
         });
-        // traditional JavaScript version
-        // WebDNN.load('./../../assets/neural_network/output')
-        // .then(function(runner){
-        //     console.log('loaded');
-        //     console.log(runner.backendName);
-        //     console.log(runner.inputs);
-        //     console.log(runner.outputs);
-        //     // add your code here.
-        // });
-        
-        // WebDNN.Image.getImageArray('./../../assets/imgs/logo.png').then((value) => {
-        //   console.log(value);
-        // }); // Load image RGB data as Float32Array
-        // // runner.inputs[0].set(imageArray); // Write data
     }
 
+    /**
+     * Make a Questionnaire form of a certain type
+     * 
+     * Types -> 'flu', 'hd', 'mh' and 'watson'
+     * @param option The name of the Questionnaire
+     * @return An Observable of a QuestionBody object
+     */
     makeForm(option: string): Observable<QuestionBody> {
         let fn;
         switch(option) {
@@ -61,35 +54,35 @@ export class QuestionService {
     }
 
     /**
-     * Get flu form questions metadata
+     * Get flu questionnaire metadata
      * 
-     * TODO separate question mapping logic from http request
+     * @return An Observable of QuestionBody object
      */
     private getFluQuestions(): Observable<QuestionBody> {
         return this.http.get(SERVER_URL + '/questions/flu').map((res) => this.questionMapper.map(res));
     }
 
     /**
-     * Get Heart Disease form questions metadata
+     * Get Heart Disease questionnaire metadata
      * 
-     * TODO separate question mapping logic from http request
+     * @return An Observable of QuestionBody object
      */
     private getHeartDiseaseQuestions(): Observable<QuestionBody> {
         return this.http.get(SERVER_URL + '/questions/heartdisease').map((res) => this.questionMapper.map(res));
     }
     /**
-     * Get Heart Disease form questions metadata
+     * Get Heart Disease questionnaire metadata
      * 
-     * TODO separate question mapping logic from http request
+     * @return An Observable of QuestionBody object
      */
     private getMentalHealthQuestions(): Observable<QuestionBody> {
         return this.http.get(SERVER_URL + '/questions/mentalhealth').map((res) => this.questionMapper.map(res));
     }
 
     /**
-     * Get Watson form questions metadata
+     * Get Watson questionnaire metadata
      * 
-     * TODO separate question mapping logic from http request
+     * @return An Observable of QuestionBody object
      */
     private getWatsonQuestions(): Observable<QuestionBody> {
         return this.http.get(SERVER_URL + '/questions/askwatson').map((res) => this.questionMapper.map(res));

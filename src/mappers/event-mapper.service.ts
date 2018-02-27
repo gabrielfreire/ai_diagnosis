@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
-
+import { ActionOptions } from './../models/actionoptions.model';
+import { Question } from './../pages/home/formbuilder/questions/question.model';
 // errors
 const ERROR_NO_PARAMETER = "Event parameter or type is missing";
 const ERROR_NO_MATCH_ACTION = "This action does not match any possible action";
@@ -19,15 +20,14 @@ export class QuestionEventMapper {
 
     /**
      * Apply events to questions
-     * @param event event type
-     * @param action action to take
-     * @param question target question where to apply the event
+     * @param options <ActionOptions> Action options with meta information about the event, the action and the target
      */
-    applyAction(event, action, question) {
-        if(!event) throw ERROR_NO_PARAMETER;
+    applyAction(options: ActionOptions): Question {
+        if(!options.event) throw ERROR_NO_PARAMETER;
+        let event = options.event;
+        let question = options.target;
         // Visibility Event
-        if(event == Events.Visibility) {
-
+        if(options.event == Events.Visibility) {
             if(question[event] == Actions.Hidden) {
                 question[event] = Actions.Visible;
             } else if(question[event] == Actions.Visible){
@@ -35,7 +35,6 @@ export class QuestionEventMapper {
             } else {
                 throw ERROR_NO_MATCH_ACTION;
             }
-
         }
 
         //TODO other events

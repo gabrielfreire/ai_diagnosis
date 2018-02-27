@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Question } from './../../pages/home/formbuilder/questions/question.model';
-import { DropdownQuestion } from './../../pages/home/formbuilder/questions/question-dropdown.model';
-import { ToggleQuestion } from './../../pages/home/formbuilder/questions/question-toggle.model';
-import { TextboxQuestion } from './../../pages/home/formbuilder/questions/question-textbox.model';
+import { Question } from './../pages/home/formbuilder/questions/question.model';
+import { DropdownQuestion } from './../pages/home/formbuilder/questions/question-dropdown.model';
+import { ToggleQuestion } from './../pages/home/formbuilder/questions/question-toggle.model';
+import { TextboxQuestion } from './../pages/home/formbuilder/questions/question-textbox.model';
 import { QuestionBody } from './../models/questionbody.model';
 
 @Injectable()
@@ -33,6 +33,14 @@ export class QuestionMapper {
         };
     }
 
+    /**
+     * Create a Question object of some type
+     * 
+     * Types -> 'textbox', 'textarea', 'dropdown' and 'toggle'
+     * @param controlType Type of question
+     * @param question <Question> Object with meta information about the question
+     * @return Question Object of some type
+     */
     mapToQuestion(controlType:string, question: any): Question {
         let cQuestion: Question = null;
         switch(controlType){
