@@ -47,18 +47,15 @@ export class PictureAnalisysPage {
     this.isSpeak = false;
     this.imageDescription = '';
     try {
-      await this.cameraProvider.getPictureFromCamera().then(picture => {
-        if (picture) {
-          this.picture = 'data:image/jpeg;base64,' + picture;
-          this.rawPicture = picture;
-        }
+      let picture = await this.cameraProvider.getPictureFromCamera();
+      if (picture) {
+        this.picture = 'data:image/jpeg;base64,' + picture;
+        this.rawPicture = picture;
+      }
   
-        if (!this.isMute) {
-          // this.nativeActionsProvider.playAudio(this.translateTexts[1].text, this.language);
-        }
-      }, error => {
-        console.error(error);
-      });
+      if (!this.isMute) {
+        // this.nativeActionsProvider.playAudio(this.translateTexts[1].text, this.language);
+      }
 
       await this.cognitiveService.analyzeImage(this.rawPicture).then(description => {
         descriptionAnalyzedImage = description;

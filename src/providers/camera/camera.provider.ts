@@ -7,11 +7,11 @@ export class CameraProvider {
   constructor(private camera: Camera) {
   }
 
-  getPictureFromCamera(): any {
+  getPictureFromCamera(): Promise<any> {
     return this.getImage(this.camera.PictureSourceType.CAMERA);
   }
 
-  private getImage(pictureSourceType, quality = 50, saveToPhotoAlbum = false) {
+  private getImage(pictureSourceType, quality = 50, saveToPhotoAlbum = false): Promise<any> {
     const options: CameraOptions = {
       quality,
       saveToPhotoAlbum,
@@ -19,11 +19,12 @@ export class CameraProvider {
       encodingType: this.camera.EncodingType.JPEG
     };
 
-    return this.camera.getPicture(options).then(imageData => {
-      return imageData;
-    }, error => {
-      console.error(`CAMERA ERROR -> ${JSON.stringify(error)}`);
-    });
+    // return this.camera.getPicture(options).then(imageData => {
+    //   return imageData;
+    // }, error => {
+    //   console.error(`CAMERA ERROR -> ${JSON.stringify(error)}`);
+    // });
+    return this.camera.getPicture(options);
   }
 
 }
