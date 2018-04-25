@@ -44,6 +44,10 @@ export class CognitiveService {
             if(has) {
                 this.speechRecognition.startListening().subscribe((matches) => {
                     console.log(matches);
+                    let res = {};
+                    res['DisplayText'] += matches[0];
+                    res['RecognitionStatus'] = 'Success';
+                    this.emitMessage(res);
                 });
                 this._recognizerStart(SDK, this.recognizer);
             } else {
@@ -52,6 +56,10 @@ export class CognitiveService {
                     this.emitMessage("Permitted!");
                     this.speechRecognition.startListening().subscribe((matches) => {
                         console.log(matches);
+                        let res = {};
+                        res['DisplayText'] += matches[0];
+                        res['RecognitionStatus'] = 'Success';
+                        this.emitMessage(res);
                     });
                     this._recognizerStart(SDK, this.recognizer);
 
@@ -63,7 +71,7 @@ export class CognitiveService {
 
     stopSpeaking() {
         this._RecognizerStop(SDK, this.recognizer);
-        // if(this.speechRecognition.stopListening) this.speechRecognition.stopListening();
+        if(this.speechRecognition.stopListening) this.speechRecognition.stopListening();
     }
 
     analyzeImage(imageFilePath) {
