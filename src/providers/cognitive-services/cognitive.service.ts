@@ -6,7 +6,7 @@ import {server} from '../../app/server.connection';
 import 'rxjs/add/operator/map';
 import { Subject } from 'rxjs/Subject';
 import * as SDK from 'microsoft-speech-browser-sdk';
-import { MediaCapture } from '@ionic-native/media-capture';
+import { SpeechRecognition } from '@ionic-native/speech-recognition';
 @Injectable()
 export class CognitiveService {
     private recognizer;
@@ -15,7 +15,7 @@ export class CognitiveService {
     private emitChangeSource = new Subject<any>();
     // Observable string streams
     listenMessage = this.emitChangeSource.asObservable();
-    constructor(private http: Http, private transfer: FileTransfer, public mediaCapture: MediaCapture) {
+    constructor(private http: Http, private transfer: FileTransfer, public speechRecognition: SpeechRecognition) {
         this.fileTransfer = this.transfer.create();
         this.recognizer = this._RecognizerSetup(SDK, "Dictation", "en-US", "Simple", "17328acb588e413eaf4f56c885b3511f");
         
@@ -24,13 +24,22 @@ export class CognitiveService {
     emitMessage(change: any) {
         this.emitChangeSource.next(change);
     }
-    speak() {
+    async speak() {
         console.log('Loaded SDK');
         console.log(SDK);
-        this.mediaCapture.captureAudio().then((data) => {
-            console.log(data);
-        });
-        this._recognizerStart(SDK, this.recognizer);
+        if(!(await this.speechRecognition.hasPermission())) {
+            this.speechRecognition.requestPermission().then(() => {
+                this.speechRecognition.startListening().subscribe((matches) => {
+                    console.log(matches);
+                    this._recognizerStart(SDK, this.recognizer);
+                });
+            });
+        } else {
+            this.speechRecognition.startListening().subscribe((matches) => {
+                console.log(matches);
+                this._recognizerStart(SDK, this.recognizer);
+            });
+        }
     }
 
     stopSpeaking() {
@@ -149,6 +158,7 @@ export class CognitiveService {
     private _RecognizerStop(SDK, recognizer) {
         // recognizer.AudioSource.Detach(audioNodeId) can be also used here. (audioNodeId is part of ListeningStartedEvent)
         recognizer.AudioSource.TurnOff();
+        if(this.speechRecognition.stopListening) this.speechRecognition.stopListening();
     }
 
     
