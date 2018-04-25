@@ -24,7 +24,7 @@ export class CognitiveService {
     emitMessage(change: any) {
         this.emitChangeSource.next(change);
     }
-    async speak() {
+    speak() {
         console.log('Loaded SDK');
         console.log(SDK);
         // if(!(await this.speechRecognition.hasPermission())) {
@@ -40,11 +40,30 @@ export class CognitiveService {
         //         this._recognizerStart(SDK, this.recognizer);
         //     });
         // }
+        this.speechRecognition.hasPermission().then((has) => {
+            if(has) {
+                this.speechRecognition.startListening().subscribe((matches) => {
+                    console.log(matches);
+                });
+                this._recognizerStart(SDK, this.recognizer);
+            } else {
+                this.emitMessage("No permission!");
+                this.speechRecognition.requestPermission().then(()=>{
+                    this.emitMessage("Permitted!");
+                    this.speechRecognition.startListening().subscribe((matches) => {
+                        console.log(matches);
+                    });
+                    this._recognizerStart(SDK, this.recognizer);
+
+                })
+            }
+        })
         this._recognizerStart(SDK, this.recognizer);
     }
 
     stopSpeaking() {
         this._RecognizerStop(SDK, this.recognizer);
+        // if(this.speechRecognition.stopListening) this.speechRecognition.stopListening();
     }
 
     analyzeImage(imageFilePath) {
@@ -151,7 +170,7 @@ export class CognitiveService {
         },
         (error) => {
             console.log('ERROR');
-            console.info('ERROR');
+            console.info(error);
             console.error(error);
         });
     }
@@ -159,7 +178,6 @@ export class CognitiveService {
     private _RecognizerStop(SDK, recognizer) {
         // recognizer.AudioSource.Detach(audioNodeId) can be also used here. (audioNodeId is part of ListeningStartedEvent)
         recognizer.AudioSource.TurnOff();
-        // if(this.speechRecognition.stopListening) this.speechRecognition.stopListening();
     }
 
     

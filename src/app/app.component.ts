@@ -15,6 +15,7 @@ export class MyApp {
   speaking: boolean;
   spokenMessage: string;
   messageSubscription: Subscription;
+  debug:string;
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, 
     public cognitiveService: CognitiveService,
     public appService: AppService) {
@@ -42,6 +43,9 @@ export class MyApp {
             this.stop(true);
             this.appService.emitMessage('flu');
           }
+        }
+        if(typeof message == 'string'){
+          this.debug += message;
         }
       });
       this.cognitiveService.speak();
