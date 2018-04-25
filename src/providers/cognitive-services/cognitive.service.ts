@@ -28,53 +28,40 @@ export class CognitiveService {
     speak() {
         console.log('Loaded SDK');
         console.log(SDK);
-        // if(!(await this.speechRecognition.hasPermission())) {
-        //     this.speechRecognition.requestPermission().then(() => {
-        //         this.speechRecognition.startListening().subscribe((matches) => {
-        //             console.log(matches);
-        //             this._recognizerStart(SDK, this.recognizer);
-        //         });
-        //     });
-        // } else {
-        //     this.speechRecognition.startListening().subscribe((matches) => {
-        //         console.log(matches);
-        //         this._recognizerStart(SDK, this.recognizer);
-        //     });
-        // }
         const self = this;
-        this.speechRecognition.hasPermission().then((has) => {
-            if(has) {
-                let res = {};
-                self.speechRecognition.startListening().subscribe((matches) => {
-                    console.log(matches);
-                    res['DisplayText'] = matches.join(' ');
-                    res['RecognitionStatus'] = 'Success';
-                    self.emitMessage(res);
-                }, (error) => self.emitMessage(error));
-                // self._recognizerStart(SDK, self.recognizer);
-            } else {
-                self.emitMessage("No permission!");
-                self.speechRecognition.requestPermission().then(()=>{
-                    self.emitMessage("Permitted!");
-                    let res = {};
-                    self.speechRecognition.startListening().subscribe((matches) => {
-                        console.log(matches);
-                        res['DisplayText'] = matches.join(' ');
-                        res['RecognitionStatus'] = 'Success';
-                        self.emitMessage(res);
-                    }, (error) => self.emitMessage(error));
-                    // self._recognizerStart(SDK, self.recognizer);
+        // this.speechRecognition.hasPermission().then((has) => {
+        //     if(has) {
+        //         let res = {};
+        //         self.speechRecognition.startListening().subscribe((matches) => {
+        //             console.log(matches);
+        //             res['DisplayText'] = matches.join(' ');
+        //             res['RecognitionStatus'] = 'Success';
+        //             self.emitMessage(res);
+        //         }, (error) => self.emitMessage(error));
+        //         // self._recognizerStart(SDK, self.recognizer);
+        //     } else {
+        //         self.emitMessage("No permission!");
+        //         self.speechRecognition.requestPermission().then(()=>{
+        //             self.emitMessage("Permitted!");
+        //             let res = {};
+        //             self.speechRecognition.startListening().subscribe((matches) => {
+        //                 console.log(matches);
+        //                 res['DisplayText'] = matches.join(' ');
+        //                 res['RecognitionStatus'] = 'Success';
+        //                 self.emitMessage(res);
+        //             }, (error) => self.emitMessage(error));
+        //             // self._recognizerStart(SDK, self.recognizer);
 
-                }, (error) => self.emitMessage(error));
-            }
-        }, (error) => self.emitMessage(error));
-        // this._recognizerStart(SDK, this.recognizer);
+        //         }, (error) => self.emitMessage(error));
+        //     }
+        // }, (error) => self.emitMessage(error));
+        this._recognizerStart(SDK, this.recognizer);
     }
 
     stopSpeaking() {
         const self = this;
         this._RecognizerStop(SDK, this.recognizer);
-        if(this.speechRecognition.stopListening) this.speechRecognition.stopListening().then(() => console.log('stoped'), (error) => self.emitMessage(error));
+        // if(this.speechRecognition.stopListening) this.speechRecognition.stopListening().then(() => console.log('stoped'), (error) => self.emitMessage(error));
     }
 
     analyzeImage(imageFilePath) {
