@@ -29,8 +29,8 @@ export class CognitiveService {
         console.log(SDK);
         this.mediaCapture.captureAudio().then((data) => {
             console.log(data);
-            this._recognizerStart(SDK, this.recognizer);
         });
+        this._recognizerStart(SDK, this.recognizer);
     }
 
     stopSpeaking() {
