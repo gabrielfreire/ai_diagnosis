@@ -45,7 +45,7 @@ export class CognitiveService {
                 this.speechRecognition.startListening().subscribe((matches) => {
                     console.log(matches);
                     let res = {};
-                    res['DisplayText'] += matches[0];
+                    res['DisplayText'] = matches.join(' ');
                     res['RecognitionStatus'] = 'Success';
                     this.emitMessage(res);
                 });
@@ -57,7 +57,7 @@ export class CognitiveService {
                     this.speechRecognition.startListening().subscribe((matches) => {
                         console.log(matches);
                         let res = {};
-                        res['DisplayText'] += matches[0];
+                        res['DisplayText'] = matches.join(' ');
                         res['RecognitionStatus'] = 'Success';
                         this.emitMessage(res);
                     });
