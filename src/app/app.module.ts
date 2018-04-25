@@ -29,6 +29,7 @@ import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { AppService } from './app.service';
+import { MediaCapture } from '@ionic-native/media-capture';
 // const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 const config: SocketIoConfig = { url: 'https://imsdiag.herokuapp.com', options: {} };
 
@@ -68,6 +69,7 @@ const config: SocketIoConfig = { url: 'https://imsdiag.herokuapp.com', options: 
     StatusBar,
     SplashScreen,
     FileTransfer,
+    MediaCapture,
     FileTransferObject,
     NativeStorage,
     TextToSpeech,

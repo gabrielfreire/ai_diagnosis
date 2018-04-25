@@ -6,7 +6,7 @@ import {server} from '../../app/server.connection';
 import 'rxjs/add/operator/map';
 import { Subject } from 'rxjs/Subject';
 import * as SDK from 'microsoft-speech-browser-sdk';
-
+import { MediaCapture } from '@ionic-native/media-capture';
 @Injectable()
 export class CognitiveService {
     private recognizer;
@@ -15,7 +15,7 @@ export class CognitiveService {
     private emitChangeSource = new Subject<any>();
     // Observable string streams
     listenMessage = this.emitChangeSource.asObservable();
-    constructor(private http: Http, private transfer: FileTransfer) {
+    constructor(private http: Http, private transfer: FileTransfer, public mediaCapture: MediaCapture) {
         this.fileTransfer = this.transfer.create();
         this.recognizer = this._RecognizerSetup(SDK, "Dictation", "en-US", "Simple", "17328acb588e413eaf4f56c885b3511f");
         
@@ -27,7 +27,10 @@ export class CognitiveService {
     speak() {
         console.log('Loaded SDK');
         console.log(SDK);
-        this._recognizerStart(SDK, this.recognizer);
+        this.mediaCapture.captureAudio().then((data) => {
+            console.log(data);
+            this._recognizerStart(SDK, this.recognizer);
+        });
     }
 
     stopSpeaking() {
