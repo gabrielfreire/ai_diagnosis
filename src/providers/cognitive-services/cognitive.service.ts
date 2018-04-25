@@ -27,19 +27,20 @@ export class CognitiveService {
     async speak() {
         console.log('Loaded SDK');
         console.log(SDK);
-        if(!(await this.speechRecognition.hasPermission())) {
-            this.speechRecognition.requestPermission().then(() => {
-                this.speechRecognition.startListening().subscribe((matches) => {
-                    console.log(matches);
-                    this._recognizerStart(SDK, this.recognizer);
-                });
-            });
-        } else {
-            this.speechRecognition.startListening().subscribe((matches) => {
-                console.log(matches);
-                this._recognizerStart(SDK, this.recognizer);
-            });
-        }
+        // if(!(await this.speechRecognition.hasPermission())) {
+        //     this.speechRecognition.requestPermission().then(() => {
+        //         this.speechRecognition.startListening().subscribe((matches) => {
+        //             console.log(matches);
+        //             this._recognizerStart(SDK, this.recognizer);
+        //         });
+        //     });
+        // } else {
+        //     this.speechRecognition.startListening().subscribe((matches) => {
+        //         console.log(matches);
+        //         this._recognizerStart(SDK, this.recognizer);
+        //     });
+        // }
+        this._recognizerStart(SDK, this.recognizer);
     }
 
     stopSpeaking() {
@@ -158,7 +159,7 @@ export class CognitiveService {
     private _RecognizerStop(SDK, recognizer) {
         // recognizer.AudioSource.Detach(audioNodeId) can be also used here. (audioNodeId is part of ListeningStartedEvent)
         recognizer.AudioSource.TurnOff();
-        if(this.speechRecognition.stopListening) this.speechRecognition.stopListening();
+        // if(this.speechRecognition.stopListening) this.speechRecognition.stopListening();
     }
 
     
