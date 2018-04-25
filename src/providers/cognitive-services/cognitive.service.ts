@@ -7,6 +7,7 @@ import 'rxjs/add/operator/map';
 import { Subject } from 'rxjs/Subject';
 import * as SDK from 'microsoft-speech-browser-sdk';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
+import {  NgZone } from '@angular/core';
 @Injectable()
 export class CognitiveService {
     private recognizer;
@@ -15,7 +16,7 @@ export class CognitiveService {
     private emitChangeSource = new Subject<any>();
     // Observable string streams
     listenMessage = this.emitChangeSource.asObservable();
-    constructor(private http: Http, private transfer: FileTransfer, public speechRecognition: SpeechRecognition) {
+    constructor(private http: Http, private transfer: FileTransfer, public speechRecognition: SpeechRecognition, public zone: NgZone) {
         this.fileTransfer = this.transfer.create();
         this.recognizer = this._RecognizerSetup(SDK, "Dictation", "en-US", "Simple", "17328acb588e413eaf4f56c885b3511f");
         
@@ -40,38 +41,40 @@ export class CognitiveService {
         //         this._recognizerStart(SDK, this.recognizer);
         //     });
         // }
+        const self = this;
         this.speechRecognition.hasPermission().then((has) => {
             if(has) {
-                this.speechRecognition.startListening().subscribe((matches) => {
+                let res = {};
+                self.speechRecognition.startListening().subscribe((matches) => {
                     console.log(matches);
-                    let res = {};
                     res['DisplayText'] = matches.join(' ');
                     res['RecognitionStatus'] = 'Success';
-                    this.emitMessage(res);
-                });
-                this._recognizerStart(SDK, this.recognizer);
+                    self.emitMessage(res);
+                }, (error) => self.emitMessage(error));
+                // self._recognizerStart(SDK, self.recognizer);
             } else {
-                this.emitMessage("No permission!");
-                this.speechRecognition.requestPermission().then(()=>{
-                    this.emitMessage("Permitted!");
-                    this.speechRecognition.startListening().subscribe((matches) => {
+                self.emitMessage("No permission!");
+                self.speechRecognition.requestPermission().then(()=>{
+                    self.emitMessage("Permitted!");
+                    let res = {};
+                    self.speechRecognition.startListening().subscribe((matches) => {
                         console.log(matches);
-                        let res = {};
                         res['DisplayText'] = matches.join(' ');
                         res['RecognitionStatus'] = 'Success';
-                        this.emitMessage(res);
-                    });
-                    this._recognizerStart(SDK, this.recognizer);
+                        self.emitMessage(res);
+                    }, (error) => self.emitMessage(error));
+                    // self._recognizerStart(SDK, self.recognizer);
 
-                })
+                }, (error) => self.emitMessage(error));
             }
-        })
-        this._recognizerStart(SDK, this.recognizer);
+        }, (error) => self.emitMessage(error));
+        // this._recognizerStart(SDK, this.recognizer);
     }
 
     stopSpeaking() {
+        const self = this;
         this._RecognizerStop(SDK, this.recognizer);
-        if(this.speechRecognition.stopListening) this.speechRecognition.stopListening();
+        if(this.speechRecognition.stopListening) this.speechRecognition.stopListening().then(() => console.log('stoped'), (error) => self.emitMessage(error));
     }
 
     analyzeImage(imageFilePath) {
