@@ -1,1 +1,21 @@
-page-home {}
+page-home {
+    .floating {
+        position: fixed;
+        top: 83%;
+        left: 1%;
+        width: 10vh;
+        height: 10vh;
+        border-radius: 50%;
+        background: #5ad0c5;
+        color: white;
+        font-size: 30px;
+    }
+    .active {
+        background: rgb(82, 82, 65);
+    }
+    .speakerContainer h4 {
+        position: fixed;
+        top: 83%;
+        left: 4%
+    }
+}

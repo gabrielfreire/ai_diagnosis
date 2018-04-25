@@ -50,34 +50,23 @@ export class PictureAnalisysPage {
       let picture = await this.cameraProvider.getPictureFromCamera();
       if (picture) {
         // this.picture = picture;
-        let request = new XMLHttpRequest();
-        request.open('GET', picture, true);
-        request.responseType = 'blob';
-        request.onload = () => {
-            var reader = new FileReader();
-            reader.readAsDataURL(request.response);
-            reader.onload =  async function(e){
-              this.picture = reader.result;
-            }.bind(this);
-          };
-          request.send();
-        }
+        this.setPicture(picture); // picture is the temporary path
         await this.cognitiveService.analyzeImage(picture).then(description => {
           descriptionAnalyzedImage = description;
           this.imageDescription = descriptionAnalyzedImage;
         }, error => {
-          console.error(`Error: ${error}`);
           this.error = `Error: ${error}`;
+          console.error(this.error);
         });
-  
+      }
       if (!this.isMute) {
         // this.nativeActionsProvider.playAudio(this.translateTexts[1].text, this.language);
       }
       loading.dismiss();
 
     } catch(error) {
-      console.error(`${JSON.stringify(error)}`);
-      this.error = `Error: ${error}`;
+      this.error = `Error: ${JSON.stringify(error)}`;
+      console.error(this.error);
     }
   }
 
@@ -90,7 +79,19 @@ export class PictureAnalisysPage {
     reader.onerror = function (error) {
         console.log('Error: ', error);
     };
-}
+  }
 
-
+  setPicture(picture: string){
+    let request = new XMLHttpRequest();
+    request.open('GET', picture, true);
+    request.responseType = 'blob';
+    request.onload = () => {
+      var reader = new FileReader();
+      reader.readAsDataURL(request.response);
+      reader.onload =  async function(e){
+        this.picture = reader.result;
+      }.bind(this);
+    };
+    request.send();
+  }
 }

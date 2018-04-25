@@ -7,19 +7,17 @@
 <ion-content padding>
     <h1>Select a Diagnosis</h1>
     <button full ion-button color="calm" (click)="goToForm('flu')">Flu Diagnosis</button>
-    <!-- <button full ion-button color="calm" (click)="goToForm(); appForm.getForm('flu');">Flu Diagnosis</button> -->
     <button full ion-button color="calm" (click)="goToForm('hd')">Heart Disease Diagnosis</button>
-    <!-- <button full ion-button color="calm" (click)="select(); appForm.getForm('hd');">Heart Disease Diagnosis</button> -->
     <button full ion-button color="calm" (click)="goToForm('mh')">Patient Health Questionnaire (PHQ-9)</button>
-    <!-- <button full ion-button color="calm" (click)="select(); appForm.getForm('mh');">Patient Health Questionnaire (PHQ-9)</button> -->
     <h1>Watson Services</h1>
     <button full ion-button color="calm" (click)="goToForm('watson')">Ask Watson Discovery</button>
-    <!-- <button full ion-button color="calm" (click)="select(); appForm.getForm('watson');">Ask Watson Discovery</button> -->
     <button full ion-button color="calm" (click)="goToChat()">Ask Watson in a Conversation</button>
-    <!--<button full ion-button light (click)="appForm.getForm('2')">Example Form</button>-->
-    <!-- <app-form #appForm></app-form> -->
     <h1>MS Azure Services</h1>
     <button full ion-button color="calm" (click)="goToPictureAnalisys()">Analyze a picture</button>
-    <!-- <button full ion-button color="red" (click)="takePicture()">Take Picture</button>
-    <img *ngIf="base64Image" [src]="base64Image" /> -->
+    <!-- <div class="speakerContainer">
+        <h4 *ngIf="spokenMessage && spokenMessage !== undefined">{{spokenMessage}}</h4>
+        <button (click)="speakStop()" [ngClass]="{'active': speaking}" class="floating" color="calm">
+            <ion-icon name="mic"></ion-icon>
+        </button>
+    </div> -->
 </ion-content>
