@@ -67,6 +67,7 @@ export class CognitiveService {
     analyzeImage(imageFilePath) {
         const uriBase = server.vision_url;
         const headers = new Headers();
+        const self = this;
         headers.append('Content-Type', 'application/octet-stream');
         headers.append('Ocp-Apim-Subscription-Key', keys.VISION_API_KEY);
     
@@ -79,10 +80,12 @@ export class CognitiveService {
         return this.fileTransfer.upload(imageFilePath, uriBase, options)
             .then(data => data.response)
             .then(res => {
-            const resParse = JSON.parse(res);    
+            const resParse = JSON.parse(res);
             return resParse.description.captions[0].text;
         }, error => {
             console.error(`ANALIZE IMAGE ERROR -> ${JSON.stringify(error)}`);
+            self.emitMessage(error)
+            return error;
         });
         
     }

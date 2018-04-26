@@ -4,8 +4,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 @Injectable()
 export class CameraProvider {
 
-  constructor(private camera: Camera) {
-  }
+  constructor(private camera: Camera) {}
 
   getPictureFromCamera(): Promise<any> {
     return this.getImage(this.camera.PictureSourceType.CAMERA);
