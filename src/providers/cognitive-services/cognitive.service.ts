@@ -69,7 +69,7 @@ export class CognitiveService {
         const headers = new Headers();
         const self = this;
         headers.append('Content-Type', 'application/octet-stream');
-        headers.append('Ocp-Apim-Subscription-Key', keys.VISION_API_KEY);
+        headers.append('Ocp-Apim-Subscription-Key', "6c2ca639591f4c00bea957ad371c36ac");
     
         const options: FileUploadOptions = {
             fileKey: 'file',
@@ -90,7 +90,7 @@ export class CognitiveService {
     }
 
     analyseSound(soundFilePath) {
-        
+
     }
 
     private _RecognizerSetup(SDK: any, recognitionMode: string, language: string, format: string, subscriptionKey: string) {
