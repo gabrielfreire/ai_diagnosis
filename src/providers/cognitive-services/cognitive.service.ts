@@ -64,7 +64,7 @@ export class CognitiveService {
         // if(this.speechRecognition.stopListening) this.speechRecognition.stopListening().then(() => console.log('stoped'), (error) => self.emitMessage(error));
     }
 
-    analyzeImage(imageFilePath) {
+    async analyzeImage(imageFilePath) {
         const uriBase = server.vision_url;
         const headers = new Headers();
         const self = this;
@@ -77,14 +77,13 @@ export class CognitiveService {
             mimeType: 'image/jpeg',
             headers
         };
-        return this.fileTransfer.upload(imageFilePath, uriBase, options).then((data: FileUploadResult) =>{
+        try {
+            let data: FileUploadResult = await this.fileTransfer.upload(imageFilePath, uriBase, options);
             const resParse = JSON.parse(data.response);
             return resParse.description.captions[0].text;
-        }, error => {
-            console.error(`ANALIZE IMAGE ERROR -> ${JSON.stringify(error)}`);
-            self.emitMessage(error)
-            return error;
-        });   
+        } catch(e) {
+            return e;
+        }
     }
 
     analyseSound(soundFilePath) {

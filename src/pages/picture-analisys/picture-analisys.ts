@@ -29,7 +29,7 @@ export class PictureAnalisysPage {
   }
 
   ionViewCanEnter() {
-    this.nativeStorage.getItem('isMute').then(data => this.isMute = data);
+    // this.nativeStorage.getItem('isMute').then(data => this.isMute = data);
   }
 
   ionViewDidLoad() {
@@ -51,20 +51,14 @@ export class PictureAnalisysPage {
       if (picture) {
         // this.picture = picture;
         this.setPicture(picture); // picture is the temporary path
-        await this.cognitiveService.analyzeImage(picture).then(description => {
-          descriptionAnalyzedImage = description;
-          this.imageDescription = descriptionAnalyzedImage;
-        }, error => {
-          loading.dismiss();
-          this.error = `Error: ${error}`;
-          console.error(this.error);
-        });
+        let description = await this.cognitiveService.analyzeImage(picture);
+        descriptionAnalyzedImage = description;
+        this.imageDescription = descriptionAnalyzedImage;
       }
-      if (!this.isMute) {
+      // if (!this.isMute) {
         // this.nativeActionsProvider.playAudio(this.translateTexts[1].text, this.language);
-      }
+      // }
       loading.dismiss();
-
     } catch(error) {
       loading.dismiss();
       this.error = `Error: ${JSON.stringify(error)}`;
@@ -91,9 +85,11 @@ export class PictureAnalisysPage {
     request.open('GET', picture, true);
     request.responseType = 'blob';
     request.onload = () => {
-      self.getBase64(request.response, (result) => {
-        self.picture = result;
-      });
+      const reader = new FileReader();
+      reader.readAsDataURL(request.response);
+      reader.onload = function () {
+          self.picture = reader.result;
+      };
     };
     request.onerror = (err) => {
       self.error = `${JSON.stringify(err)}`;
