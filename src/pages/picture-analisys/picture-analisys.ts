@@ -51,7 +51,7 @@ export class PictureAnalisysPage {
       if (picture) {
         // this.picture = picture;
         this.setPicture(picture); // picture is the temporary path
-        await this.cognitiveService.analyzeImage(picture).then(description => {
+        this.cognitiveService.analyzeImage(picture).then(description => {
           descriptionAnalyzedImage = description;
           this.imageDescription = descriptionAnalyzedImage;
         }, error => {
@@ -73,6 +73,7 @@ export class PictureAnalisysPage {
   }
 
   getBase64(file: any, cb: any): void {
+    const self = this;
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = function () {
@@ -80,20 +81,23 @@ export class PictureAnalisysPage {
     };
     reader.onerror = function (error) {
         console.log('Error: ', error);
+        self.error = `${JSON.stringify(error)}`;
     };
   }
 
   setPicture(picture: string){
+    const self = this;
     let request = new XMLHttpRequest();
     request.open('GET', picture, true);
     request.responseType = 'blob';
     request.onload = () => {
-      var reader = new FileReader();
-      reader.readAsDataURL(request.response);
-      reader.onload =  async function(e){
-        this.picture = reader.result;
-      }.bind(this);
+      self.getBase64(request.response, (result) => {
+        self.picture = result;
+      });
     };
+    request.onerror = (err) => {
+      self.error = `${JSON.stringify(err)}`;
+    }
     request.send();
   }
 }
