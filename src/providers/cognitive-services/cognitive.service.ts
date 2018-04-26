@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { FileTransfer, FileUploadOptions, FileTransferObject, FileUploadResult } from '@ionic-native/file-transfer';
 import keys from '../../utils/keys';
 import {server} from '../../app/server.connection';
 import 'rxjs/add/operator/map';
@@ -77,10 +77,8 @@ export class CognitiveService {
             mimeType: 'image/jpeg',
             headers
         };
-        return this.fileTransfer.upload(imageFilePath, uriBase, options)
-            .then(data => data.response)
-            .then(res => {
-            const resParse = JSON.parse(res);
+        return this.fileTransfer.upload(imageFilePath, uriBase, options).then((data: FileUploadResult) =>{
+            const resParse = JSON.parse(data.response);
             return resParse.description.captions[0].text;
         }, error => {
             console.error(`ANALIZE IMAGE ERROR -> ${JSON.stringify(error)}`);
