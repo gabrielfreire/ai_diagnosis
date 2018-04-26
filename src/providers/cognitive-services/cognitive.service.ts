@@ -86,7 +86,10 @@ export class CognitiveService {
             console.error(`ANALIZE IMAGE ERROR -> ${JSON.stringify(error)}`);
             self.emitMessage(error)
             return error;
-        });
+        });   
+    }
+
+    analyseSound(soundFilePath) {
         
     }
 

@@ -64,9 +64,9 @@ export class WavRecorder extends WebAudioRecorder {
         console.log('saveWavFileChunk(arr.size=' + arr.length + ', nSamples: ' + this.nRecordedSamples + ')');
         let src: Observable<void> = Observable.create((observer) => {
             if (this.nChunksSaved === 0) {
-                WavFile.createWavFile(this.filePath, arr).subscribe(() => {
+                WavFile.createWavFile(this.filePath, arr).subscribe((dataURL) => {
                     this.nChunksSaved = 1;
-                    observer.next();
+                    observer.next(dataURL);
                     observer.complete();
                 },(err1: any) => {
                     observer.error(err1);
@@ -106,11 +106,12 @@ export class WavRecorder extends WebAudioRecorder {
         console.log('WavRecorder:stop() @ ' + this.setter.bufferIndex + ', len: ' + this.setter.activeBuffer.subarray(0, this.setter.bufferIndex).length);
         this.reset();
         let src: Observable<void> = Observable.create((observer) => {
-            this.saveWavFileChunk(this.setter.activeBuffer.subarray(0, this.setter.bufferIndex)).subscribe(() => {
+            this.saveWavFileChunk(this.setter.activeBuffer.subarray(0, this.setter.bufferIndex)).subscribe((dataURL) => {
                 console.log("WavFile:saveWavFileChunk() @ Saved");
+                console.log(dataURL);
                 this.nChunksSaved = 0;
                 this.setter.reset();
-                observer.next();
+                observer.next(dataURL);
                 observer.complete();
             },(err: any) => {
                 observer.error(err);

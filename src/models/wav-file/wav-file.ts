@@ -280,15 +280,16 @@ export class WavFile {
     ): Observable<void> {
         console.log('createWavFile(' + filePath + ') - nSamples=' + wavData.length);
         const src: Observable<void> = Observable.create((observer) => {
-            Filesystem.getFileSystem(true).subscribe((fileSystem: FileSystem) => {
-                console.log('GOT IT');
-                const nSamples: number = wavData.length;
-                const headerView: DataView = makeWavBlobHeaderView(nSamples, SAMPLE_RATE);
-                const blob: Blob = new Blob([ headerView, wavData ], { type: WAV_MIME_TYPE });
-                console.log(blob);
-                downloadBlob(blob, "somewav.wav");
-                observer.next();
-                observer.complete();
+            // Filesystem.getFileSystem(true).subscribe((fileSystem: FileSystem) => {
+            console.log('GOT IT');
+            const nSamples: number = wavData.length;
+            const headerView: DataView = makeWavBlobHeaderView(nSamples, SAMPLE_RATE);
+            const blob: Blob = new Blob([ headerView, wavData ], { type: WAV_MIME_TYPE });
+            // console.log(blob);
+            const dataURL = URL.createObjectURL(blob);
+            // downloadBlob(blob, "somewav.wav");
+            observer.next(dataURL);
+            observer.complete();
                 // Filesystem.writeToFile(fileSystem, filePath, blob, 0, true).subscribe(() => {
                 //     console.log('appended cata len: ' + wavData.length);
                 //     observer.next();
@@ -296,9 +297,9 @@ export class WavFile {
                 // },(err1: any) => {
                 //     observer.error(err1);
                 // });
-            }, (err3: any) => {
-                observer.error('* err3 * ' + err3);
-            });
+            // }, (err3: any) => {
+            //     observer.error('* err3 * ' + err3);
+            // });
         });
         return src;
     } // public static readWavFileInfo(

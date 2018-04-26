@@ -64,7 +64,9 @@ export class MyApp {
   stop(erase: boolean) {
     this.spokenMessage = erase ? '' : this.spokenMessage;
     this.speaking = false;
-    this.recorder.stop().subscribe(null, (err: any) => {
+    this.recorder.stop().subscribe((dataURL) => {
+      this.debug += dataURL;
+    }, (err: any) => {
       console.log("ERROR ->", err)
     });
     // this.cognitiveService.stopSpeaking();
