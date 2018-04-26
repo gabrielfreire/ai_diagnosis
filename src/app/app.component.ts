@@ -64,6 +64,7 @@ export class MyApp {
   stop(erase: boolean) {
     this.spokenMessage = erase ? '' : this.spokenMessage;
     this.speaking = false;
+    this.debug = '';
     this.recorder.stop().subscribe((dataURL) => {
       this.debug += dataURL;
     }, (err: any) => {
