@@ -51,7 +51,7 @@ export class PictureAnalisysPage {
       if (picture) {
         // this.picture = picture;
         this.setPicture(picture); // picture is the temporary path
-        this.cognitiveService.analyzeImage(picture).then(description => {
+        await this.cognitiveService.analyzeImage(picture).then(description => {
           descriptionAnalyzedImage = description;
           this.imageDescription = descriptionAnalyzedImage;
         }, error => {
