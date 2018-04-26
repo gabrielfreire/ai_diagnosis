@@ -151,7 +151,8 @@ export abstract class WebAudioRecorder {
                     this.status = RecordStatus.NO_MICROPHONE_ERROR;
                     const msg: string = 'initAudio(new): err: ' +
                           err + ', code: ' + err.code;
-                    alert(msg);
+                    // alert(msg);
+                    console.log(msg);
                 });
         }
         else {
@@ -170,20 +171,22 @@ export abstract class WebAudioRecorder {
                         this.status = RecordStatus.NO_MICROPHONE_ERROR;
                         const msg: string = 'initAudio(old1): err: ' +
                                 err + ', code: ' + err.code;
-                        alert(msg);
+                        // alert(msg);
+                        console.log(msg);
                     });
                 }
                 catch (err) {
                     this.status = RecordStatus.GETUSERMEDIA_ERROR;
                     const msg: string = 'initAudio(old2): err: ' +
                           err + ', code: ' + err.code;
-                    alert(msg);
+                    // alert(msg);
+                    console.log(msg);
                 }
             }
             else {
                 // neither old nor new getUserMedia are available
                 console.warn('initAudio() Error: no getUserMedia');
-                alert('initAudio() Error: no getUserMedia');
+                // alert('initAudio() Error: no getUserMedia');
                 this.status = RecordStatus.NO_GETUSERMEDIA_ERROR;
             }
         }

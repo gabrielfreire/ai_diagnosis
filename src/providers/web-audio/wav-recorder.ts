@@ -29,7 +29,8 @@ export class WavRecorder extends WebAudioRecorder {
         this.filePath = null;
         this.setter = new DoubleBufferSetter(WAV_CHUNK1, WAV_CHUNK2, () => {
             this.saveWavFileChunk(this.setter.activeBuffer).subscribe(null, (err: any) => {
-                alert('Error in RecordWav.setter(): ' + err);
+                // alert('Error in RecordWav.setter(): ' + err);
+                console.log('Error in RecordWav.setter(): ' + err);
             });
         });
         this.nChunksSaved = 0;
