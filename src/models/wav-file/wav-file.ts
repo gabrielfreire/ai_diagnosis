@@ -285,10 +285,10 @@ export class WavFile {
             const nSamples: number = wavData.length;
             const headerView: DataView = makeWavBlobHeaderView(nSamples, SAMPLE_RATE);
             const blob: Blob = new Blob([ headerView, wavData ], { type: WAV_MIME_TYPE });
-            // console.log(blob);
-            const dataURL = URL.createObjectURL(blob);
+            const dataFile = new FormData();
+            dataFile.append("file", blob, "wavfile")
             // downloadBlob(blob, "somewav.wav");
-            observer.next(dataURL);
+            observer.next(dataFile);
             observer.complete();
                 // Filesystem.writeToFile(fileSystem, filePath, blob, 0, true).subscribe(() => {
                 //     console.log('appended cata len: ' + wavData.length);

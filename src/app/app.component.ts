@@ -65,8 +65,9 @@ export class MyApp {
     this.spokenMessage = erase ? '' : this.spokenMessage;
     this.speaking = false;
     this.debug = '';
-    this.recorder.stop().subscribe((dataURL) => {
-      this.debug += dataURL;
+    this.recorder.stop().subscribe((formDataFile) => {
+      this.debug += 'Stoped! File created';
+      // TODO send to Azure Bing Speech API by POST
     }, (err: any) => {
       console.log("ERROR ->", err)
     });
