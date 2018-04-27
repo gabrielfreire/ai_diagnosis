@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import keys from '../../utils/keys';
-import {server} from '../../app/server.connection';
+import { server } from '../../app/server.connection';
 import 'rxjs/add/operator/map';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
@@ -78,58 +78,43 @@ export class CognitiveService {
         return src;
     }
 
-    makeBlobFromUrl(url): Observable<Blob> {
-        const src: Observable<Blob>= Observable.create((observer) => {
-            this.http.get(url).subscribe((res) => {
-                const myBlob = res;
-                observer.next(myBlob);
-                observer.complete();
-            }, (error) => {
-                observer.error(error);
-            });
-            // const xhr = new XMLHttpRequest();
-            // xhr.open('GET', url);
-            // xhr.responseType = 'blob';
-            // xhr.onload = function(e) {
-            //   if (this.status == 200) {
-            //     const myBlob = this.response;
-            //     observer.next(myBlob);
-            //     observer.complete();
-            //     // myBlob is now the blob that the object URL pointed to.
-            //   }
-            //   observer.error(this.status + ' error');
-            // };
-            // xhr.onerror = function(e) {
-            //     observer.error(e);
-            // }
-            // xhr.send();
-        });
-        return src;
-    }
-
-    dataURItoBlob(dataURI) {
+    dataURItoBlob(dataURI: string): Blob {
         // convert base64 to raw binary data held in a string
         // var byteString = atob(dataURI.split(',')[1]);
-        var byteString = atob(dataURI);
+        const byteString = atob(dataURI);
     
         // separate out the mime component
-        var mimeString = 'image/jpeg';
+        const mimeString = 'image/jpeg';
         // var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
     
         // write the bytes of the string to an ArrayBuffer
-        var arrayBuffer = new ArrayBuffer(byteString.length);
-        var _ia = new Uint8Array(arrayBuffer);
+        const arrayBuffer = new ArrayBuffer(byteString.length);
+        let _ia = new Uint8Array(arrayBuffer);
         for (var i = 0; i < byteString.length; i++) {
             _ia[i] = byteString.charCodeAt(i);
         }
     
-        var dataView = new DataView(arrayBuffer);
-        var blob = new Blob([dataView], { type: mimeString });
+        const dataView = new DataView(arrayBuffer);
+        const blob = new Blob([dataView], { type: mimeString });
         return blob;
     }
 
-    analyseSound(soundFilePath) {
-
+    analyseSound(soundFile: File | Blob): Observable<any> {
+        const headers = new Headers();
+        headers.append('Ocp-Apim-Subscription-Key','17328acb588e413eaf4f56c885b3511f');
+        headers.append('Content-Type','audio/wav; codec="audio/pcm"; samplerate=16000');
+        const src: Observable<any> = Observable.create((observer) => {
+            let speechURL ="https://speech.platform.bing.com/speech/recognition/dictation/cognitiveservices/v1?language=en-US&format=simple";
+            this.http.post(speechURL, soundFile, {headers: headers}).subscribe((data) => {
+                data = data.json();
+                console.log(data);
+                observer.next(data);
+                observer.complete();
+            }, (error) => {
+                observer.error(error);
+            });
+        });
+        return src;
     }
 
     private _RecognizerSetup(SDK: any, recognitionMode: string, language: string, format: string, subscriptionKey: string) {
