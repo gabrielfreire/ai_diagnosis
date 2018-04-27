@@ -3,6 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
+    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' blob:">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' blob:">
+    <meta http-equiv="Content-Security-Policy" content="media-src 'self' blob:">
+    <meta http-equiv="Content-Security-Policy" content="img-src 'self' blob:">
+    <meta http-equiv="Content-Security-Policy" content="object-src 'self' blob:"> -->
+    <meta http-equiv="Content-Security-Policy" content="connect-src 'self' file: data: blob: filesystem:; default-src *; style-src 'self' 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'; img-src 'self' http://localhost:8000 unsafe: blob: data:">
     <title>Ionic App</title>
     <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
@@ -15,7 +21,6 @@
     <!-- add to homescreen for ios -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
     <!-- cordova.js required for cordova apps -->
     <script src="cordova.js"></script>
 

@@ -49,17 +49,16 @@ export class PictureAnalisysPage {
     try {
       let picture = await this.cameraProvider.getPictureFromCamera();
       if (picture) {
-        // this.picture = picture;
         this.setPicture(picture); // picture is the temporary path
         this.cognitiveService.analyzeImage(picture).subscribe((data) => {
           loading.dismiss();
           descriptionAnalyzedImage = data.description.captions[0].text;
           this.imageDescription = descriptionAnalyzedImage;
+        }, (error) => {
+          loading.dismiss();
+          this.error = `Error: ${JSON.stringify(error)}`;
         });
       }
-      // if (!this.isMute) {
-        // this.nativeActionsProvider.playAudio(this.translateTexts[1].text, this.language);
-      // }
     } catch(error) {
       loading.dismiss();
       this.error = `Error: ${JSON.stringify(error)}`;
@@ -81,10 +80,6 @@ export class PictureAnalisysPage {
   }
 
   setPicture(picture: string){
-    this.cognitiveService.makeBlobFromUrl(picture).subscribe((blob) => {
-      let url = URL.createObjectURL(blob);
-      this.picture = url;
-      URL.revokeObjectURL(url);
-    });
+    this.picture = "data:image/jpeg;base64," + picture;
   }
 }
