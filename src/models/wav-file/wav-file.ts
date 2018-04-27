@@ -284,8 +284,8 @@ export class WavFile {
                 const nSamples: number = wavData.length;
                 const headerView: DataView = makeWavBlobHeaderView(nSamples, SAMPLE_RATE);
                 const blob: Blob = new Blob([ headerView, wavData ], { type: WAV_MIME_TYPE });
-                const dataFile = new FormData();
-                dataFile.append("file", blob, "wavfile")
+                // const dataFile = new FormData();
+                // dataFile.append("file", blob, "wavfile")
                 console.log('The blob created -->', blob);
                 // downloadBlob(blob, "somewav.wav");
                 // observer.next(dataFile);

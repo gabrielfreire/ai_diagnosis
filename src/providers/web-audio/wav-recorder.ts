@@ -116,7 +116,7 @@ export class WavRecorder extends WebAudioRecorder {
                 observer.next(formDataFile);
                 observer.complete();
                 Filesystem.getFileSystem(true).subscribe((fileSystem: FileSystem) => {
-                    Filesystem.eraseEverything(fileSystem).subscribe();
+                    Filesystem.deleteEntries(fileSystem, [this.filePath]).subscribe();
                 });
             },(err: any) => {
                 observer.error(err);

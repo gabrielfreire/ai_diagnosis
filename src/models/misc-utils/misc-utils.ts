@@ -235,9 +235,7 @@ export function formatDate(date: Date): string {
         '-',
         (date.getMonth() + 1).toString(),
         '-',
-        date.getDate().toString(),
-        '--',
-        date.toLocaleTimeString()
+        date.getDate().toString()
     ].join('').toLowerCase().replace(' ', '');
 }
 

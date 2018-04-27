@@ -76,7 +76,8 @@
       "cordova-plugin-speechrecognition": {},
       "cordova-plugin-camera": {},
       "cordova-plugin-nativestorage": {},
-      "cordova-plugin-media-capture": {}
+      "cordova-plugin-media-capture": {},
+      "cordova-plugin-file": {}
     },
     "platforms": [
       "browser",
