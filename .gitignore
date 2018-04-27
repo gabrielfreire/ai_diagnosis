@@ -15,6 +15,7 @@ npm-debug.log*
 demo_video
 demo_video/
 
+package-lock.json
 .idea/
 .sourcemaps/
 .sass-cache/
