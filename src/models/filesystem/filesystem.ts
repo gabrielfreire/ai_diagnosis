@@ -254,15 +254,11 @@ export class Filesystem {
      * @param  {number=DEFAULT_REQUEST_SIZE} requestSize
      * @returns Observable<FileSystem>
      */
-    public static getFileSystem(
-        bPersistent: boolean = true,
-        requestSize: number = DEFAULT_REQUEST_SIZE
-    ): Observable<FileSystem> {
+    public static getFileSystem(bPersistent: boolean = true, requestSize: number = DEFAULT_REQUEST_SIZE): Observable<FileSystem> {
         console.log('getFileSystem(bPersistent=' + bPersistent + ', requestSize=' + requestSize + ')');
         const fsType: number = bPersistent ? window.PERSISTENT :  window.TEMPORARY;
         const src: Observable<FileSystem> = Observable.create((observer) => {
-            Filesystem.requestQuota(bPersistent).subscribe(
-                (grantedBytes: number) => {
+            Filesystem.requestQuota(bPersistent).subscribe((grantedBytes: number) => {
                     ( window.requestFileSystem ||
                       window['webkitRequestFileSystem']
                     )(fsType, grantedBytes, (fs: FileSystem) => {
@@ -327,10 +323,7 @@ export class Filesystem {
                     // Create a FileWriter object for our FileEntry (log.txt).
                     fileEntry.createWriter((fileWriter: FileWriter) => {
                         fileWriter.onwriteend = (event: any) => {
-                            console.log('appendToFile() - ' +
-                                        'Wrote ' + blob.size + ' bytes. ' +
-                                        'Accum = ' + fileWriter.length +
-                                        ' bytes');
+                            console.log('appendToFile() - ' + 'Wrote ' + blob.size + ' bytes. ' + 'Accum = ' + fileWriter.length + ' bytes');
                             observer.next(fileEntry);
                             observer.complete();
                         };
@@ -517,7 +510,9 @@ export class Filesystem {
                 const paths: string[] = entries.map((entry: Entry): string => {
                     return entry.fullPath + (entry.isFile ? '' : '/');
                 });
+                console.log('CURRENT PATHS ', paths);
                 Filesystem.deleteEntries(fileSystem, paths).subscribe(() => {
+                    console.log('ALL ERASED');
                     observer.next();
                     observer.complete();
                 }, (err1: any) => {

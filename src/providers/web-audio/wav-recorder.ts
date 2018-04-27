@@ -2,7 +2,7 @@
 
 import { Observable } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
-import { formatUnixTimestamp, DoubleBufferSetter, WavFile } from '../../models';
+import { formatUnixTimestamp, DoubleBufferSetter, WavFile, downloadBlob, Filesystem } from '../../models';
 import { WebAudioRecorder } from './recorder';
 
 // make this a multiple of PROCESSING_BUFFER_LENGTH (from record.ts)
@@ -61,22 +61,22 @@ export class WavRecorder extends WebAudioRecorder {
      * Save the next wav file chunk
      * @return {Observable<void>}
      */
-    private saveWavFileChunk(arr: Int16Array): Observable<void> {
+    private saveWavFileChunk(arr: Int16Array): Observable<File | Blob> {
         console.log('saveWavFileChunk(arr.size=' + arr.length + ', nSamples: ' + this.nRecordedSamples + ')');
-        let src: Observable<void> = Observable.create((observer) => {
+        let src: Observable<File | Blob> = Observable.create((observer) => {
             if (this.nChunksSaved === 0) {
-                WavFile.createWavFile(this.filePath, arr).subscribe((formDataFile) => {
+                WavFile.createWavFile(this.filePath, arr).subscribe((blob: Blob) => {
                     this.nChunksSaved = 1;
-                    observer.next(formDataFile);
+                    observer.next(blob);
                     observer.complete();
                 },(err1: any) => {
                     observer.error(err1);
                 });
             }
             else {
-                WavFile.appendToWavFile(this.filePath, arr, this.nRecordedSamples - arr.length).subscribe(() => {
+                WavFile.appendToWavFile(this.filePath, arr, this.nRecordedSamples - arr.length).subscribe((file: File) => {
                     this.nChunksSaved++;
-                    observer.next();
+                    observer.next(file);
                     observer.complete();
                 }, (err1: any) => {
                     observer.error(err1);
@@ -93,7 +93,7 @@ export class WavRecorder extends WebAudioRecorder {
         super.start();
         const dateCreated: number = Date.now();
         const displayDateCreated: string = formatUnixTimestamp(dateCreated);
-        const filePath: string = '/Unfiled/' + displayDateCreated;
+        const filePath: string = '/' + displayDateCreated;
         console.log('start() - ' + filePath);
         this.filePath = filePath;
     }
@@ -103,17 +103,21 @@ export class WavRecorder extends WebAudioRecorder {
      * Precondition: called start() already
      * @return {Observable<void>}
      */
-    public stop(): Observable<void> {
+    public stop(): Observable<File | Blob> {
         console.log('WavRecorder:stop() @ ' + this.setter.bufferIndex + ', len: ' + this.setter.activeBuffer.subarray(0, this.setter.bufferIndex).length);
         this.reset();
-        let src: Observable<void> = Observable.create((observer) => {
-            this.saveWavFileChunk(this.setter.activeBuffer.subarray(0, this.setter.bufferIndex)).subscribe((formDataFile) => {
+        let src: Observable<File | Blob> = Observable.create((observer) => {
+            this.saveWavFileChunk(this.setter.activeBuffer.subarray(0, this.setter.bufferIndex)).subscribe((formDataFile: File | Blob) => {
                 console.log("WavFile:saveWavFileChunk() @ Saved");
-                console.log(formDataFile);
+                console.log('form data', formDataFile);
                 this.nChunksSaved = 0;
                 this.setter.reset();
+                // downloadBlob(formDataFile, "somewav.wav");
                 observer.next(formDataFile);
                 observer.complete();
+                Filesystem.getFileSystem(true).subscribe((fileSystem: FileSystem) => {
+                    Filesystem.eraseEverything(fileSystem).subscribe();
+                });
             },(err: any) => {
                 observer.error(err);
             });

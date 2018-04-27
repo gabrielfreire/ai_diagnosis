@@ -96,6 +96,6 @@ export class PictureAnalisysPage {
     //   self.error = `${JSON.stringify(err)}`;
     // }
     // request.send();
-    this.picture = picture;
+    this.picture = "data:image/jpeg;base64, " + picture;
   }
 }

@@ -276,30 +276,30 @@ export class WavFile {
     /**
      *
      */
-    public static createWavFile(filePath: string, wavData: Int16Array
-    ): Observable<void> {
+    public static createWavFile(filePath: string, wavData: Int16Array): Observable<Blob> {
         console.log('createWavFile(' + filePath + ') - nSamples=' + wavData.length);
-        const src: Observable<void> = Observable.create((observer) => {
-            // Filesystem.getFileSystem(true).subscribe((fileSystem: FileSystem) => {
-            console.log('GOT IT');
-            const nSamples: number = wavData.length;
-            const headerView: DataView = makeWavBlobHeaderView(nSamples, SAMPLE_RATE);
-            const blob: Blob = new Blob([ headerView, wavData ], { type: WAV_MIME_TYPE });
-            const dataFile = new FormData();
-            dataFile.append("file", blob, "wavfile")
-            // downloadBlob(blob, "somewav.wav");
-            observer.next(dataFile);
-            observer.complete();
-                // Filesystem.writeToFile(fileSystem, filePath, blob, 0, true).subscribe(() => {
-                //     console.log('appended cata len: ' + wavData.length);
-                //     observer.next();
-                //     observer.complete();
-                // },(err1: any) => {
-                //     observer.error(err1);
-                // });
-            // }, (err3: any) => {
-            //     observer.error('* err3 * ' + err3);
-            // });
+        const src: Observable<Blob> = Observable.create((observer) => {
+            Filesystem.getFileSystem(true).subscribe((fileSystem: FileSystem) => {
+                console.log('GOT IT');
+                const nSamples: number = wavData.length;
+                const headerView: DataView = makeWavBlobHeaderView(nSamples, SAMPLE_RATE);
+                const blob: Blob = new Blob([ headerView, wavData ], { type: WAV_MIME_TYPE });
+                const dataFile = new FormData();
+                dataFile.append("file", blob, "wavfile")
+                console.log('The blob created -->', blob);
+                // downloadBlob(blob, "somewav.wav");
+                // observer.next(dataFile);
+                // observer.complete();
+                Filesystem.writeToFile(fileSystem, filePath, blob, 0, true).subscribe(() => {
+                    console.log('appended cata len: ' + wavData.length);
+                    observer.next(blob);
+                    observer.complete();
+                },(err1: any) => {
+                    observer.error(err1);
+                });
+            }, (err3: any) => {
+                observer.error('* err3 * ' + err3);
+            });
         });
         return src;
     } // public static readWavFileInfo(
@@ -307,76 +307,45 @@ export class WavFile {
     /**
      *
      */
-    public static appendToWavFile(
-        filePath: string,
-        wavData: Int16Array,
-        nPreAppendSamples: number
-    ): Observable<void> {
-        console.log('appendToWavFile(' + filePath + '), nPre: '
-                    + nPreAppendSamples);
-        const src: Observable<void> = Observable.create((observer) => {
-            Filesystem.getFileSystem(true).subscribe(
-                (fileSystem: FileSystem) => {
-                    // see http://soundfile.sapp.org/doc/WaveFormat/
-                    // for definitions of subchunk2size and chunkSize
-                    const nSamples: number = nPreAppendSamples + wavData.length,
-                          subchunk2size: number = 2 * nSamples,
-                          chunkSize: number = 36 + subchunk2size;
-                    console.log('nSamples: ' + nSamples);
-                    let view: DataView = new DataView(new ArrayBuffer(4));
-                    view.setUint32(0, chunkSize, true);
-                    Filesystem.writeToFile(
-                        fileSystem,
-                        filePath,
-                        new Blob([ view ], { type: NUMBER_MIME_TYPE }),
-                        CHUNKSIZE_START_BYTE,
-                        false
-                    ).subscribe(
-                        () => {
-                            view.setUint32(0, subchunk2size, true);
-                            Filesystem.writeToFile(
-                                fileSystem,
-                                filePath,
-                                new Blob([ view ], { type: NUMBER_MIME_TYPE }),
-                                SUBCHUNK2SIZE_START_BYTE,
-                                false
-                            ).subscribe(
-                                () => {
-                                    Filesystem.appendToFile(
-                                        fileSystem,
-                                        filePath,
-                                        new Blob(
-                                            [ wavData ],
-                                            { type: WAV_MIME_TYPE }
-                                        )
-                                    ).subscribe(
-                                        () => {
-                                            console.log('appended data len: ' +
-                                                        wavData.length);
-                                            observer.next();
-                                            observer.complete();
-                                        },
-                                        (err1: any) => {
-                                            observer.error('* err1 * ' +
-                                                           wavData.length +
-                                                           ' - ' + err1);
-                                        }
-                                    );
-                                },
-                                (err2: any) => {
-                                    observer.error('err2 ' + err2);
-                                }
-                            ); // .writeToFile(fs, path, blob, 40, false) ..
-                        },
-                        (err3: any) => {
-                            observer.error('err3 ' + err3);
-                        }
-                    ); // .writeToFile(fs, path, blob, 4, false).subscribe(
-                },
-                (err4: any) => {
-                    observer.error(err4);
-                }
-            );
+    public static appendToWavFile(filePath: string, wavData: Int16Array, nPreAppendSamples: number): Observable<File> {
+        console.log('appendToWavFile(' + filePath + '), nPre: ' + nPreAppendSamples);
+        const src: Observable<File> = Observable.create((observer) => {
+            Filesystem.getFileSystem(true).subscribe((fileSystem: FileSystem) => {
+                // see http://soundfile.sapp.org/doc/WaveFormat/
+                // for definitions of subchunk2size and chunkSize
+                const nSamples: number = nPreAppendSamples + wavData.length;
+                const subchunk2size: number = 2 * nSamples;
+                const chunkSize: number = 36 + subchunk2size;
+                console.log('nSamples: ' + nSamples);
+                let view: DataView = new DataView(new ArrayBuffer(4));
+                view.setUint32(0, chunkSize, true);
+                console.log('1st chunk view written');
+                Filesystem.writeToFile(fileSystem, filePath, new Blob([ view ], { type: NUMBER_MIME_TYPE }), CHUNKSIZE_START_BYTE, false).subscribe(() => {
+                    console.log('1st chunk saved');
+                    view.setUint32(0, subchunk2size, true);
+                    console.log('2nd subchunk2 view written');
+                    Filesystem.writeToFile(fileSystem, filePath, new Blob([ view ], { type: NUMBER_MIME_TYPE }), SUBCHUNK2SIZE_START_BYTE,false).subscribe(() => {
+                        console.log('2nd subchunk2 saved');
+                        Filesystem.appendToFile(fileSystem, filePath, new Blob([ wavData ],{ type: WAV_MIME_TYPE })).subscribe((fileEntry: FileEntry) => {
+                            console.log('appended data len: ' + wavData.length);
+                            fileEntry.file((file) => {
+                                observer.next(file);
+                                observer.complete();
+                            }, (error) => {
+                                observer.error("Failed to get File from FileEntry");
+                            });
+                        },(err1: any) => {
+                            observer.error('* err1 * ' + wavData.length + ' - ' + err1);
+                        });
+                    },(err2: any) => {
+                        observer.error('err2 ' + err2);
+                    }); // .writeToFile(fs, path, blob, 40, false) ..
+                },(err3: any) => {
+                    observer.error('err3 ' + err3);
+                }); // .writeToFile(fs, path, blob, 4, false).subscribe(
+            },(err4: any) => {
+                observer.error(err4);
+            });
         });
         return src;
     } // public static appendToWavFile(
