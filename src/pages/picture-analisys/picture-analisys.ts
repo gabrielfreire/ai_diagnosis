@@ -81,21 +81,10 @@ export class PictureAnalisysPage {
   }
 
   setPicture(picture: string){
-    // const self = this;
-    // let request = new XMLHttpRequest();
-    // request.open('GET', picture, true);
-    // request.responseType = 'blob';
-    // request.onload = () => {
-    //   const reader = new FileReader();
-    //   reader.readAsDataURL(request.response);
-    //   reader.onload = function () {
-    //       self.picture = reader.result;
-    //   };
-    // };
-    // request.onerror = (err) => {
-    //   self.error = `${JSON.stringify(err)}`;
-    // }
-    // request.send();
-    this.picture = "data:image/jpeg;base64, " + picture;
+    this.cognitiveService.makeBlobFromUrl(picture).subscribe((blob) => {
+      let url = URL.createObjectURL(blob);
+      this.picture = url;
+      URL.revokeObjectURL(url);
+    });
   }
 }

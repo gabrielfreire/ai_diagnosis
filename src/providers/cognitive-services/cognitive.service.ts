@@ -62,14 +62,41 @@ export class CognitiveService {
         if(this.speechRecognition.stopListening) this.speechRecognition.stopListening().then(() => console.log('stoped'), (error) => self.emitMessage(error));
     }
 
-    analyzeImage(imageFileURL): Observable<any> {
+    analyzeImage(imageFileURL: string): Observable<any> {
         const uriBase = server.vision_url;
         const headers = new Headers();
         const self = this;
         headers.append('Content-Type', 'application/octet-stream');
         headers.append('Ocp-Apim-Subscription-Key', "6c2ca639591f4c00bea957ad371c36ac");
-        let imageBlob = this.dataURItoBlob(imageFileURL);
-        return this.http.post(uriBase, imageBlob, {headers: headers}).map((res) => res.json());
+        var src: Observable<any> = Observable.create((observer) => {
+            this.makeBlobFromUrl(imageFileURL).subscribe((blob: Blob) => {
+                let imageBlob = blob;
+                observer.next(this.http.post(uriBase, imageBlob, {headers: headers}).map((res) => res.json()));
+                observer.complete();
+            }, (error) => {
+                observer.error("An error ocurred on CognitiveServices.analyzeImage() @ makeBlobFromUrl");
+            });
+        });
+        return src;
+        // let imageBlob = this.dataURItoBlob(imageFileURL);
+    }
+
+    makeBlobFromUrl(url): Observable<Blob> {
+        var src: Observable<Blob>= Observable.create((observer) => {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.responseType = 'blob';
+            xhr.onload = function(e) {
+              if (this.status == 200) {
+                var myBlob = this.response;
+                observer.next(myBlob);
+                observer.complete();
+                // myBlob is now the blob that the object URL pointed to.
+              }
+            };
+            xhr.send();
+        });
+        return src;
     }
 
     dataURItoBlob(dataURI) {

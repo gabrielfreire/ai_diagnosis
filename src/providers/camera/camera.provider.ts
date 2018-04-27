@@ -15,7 +15,7 @@ export class CameraProvider {
       quality,
       saveToPhotoAlbum,
       sourceType: pictureSourceType,
-      destinationType: this.camera.DestinationType.DATA_URL,
+      destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG
     };
     return this.camera.getPicture(options);
