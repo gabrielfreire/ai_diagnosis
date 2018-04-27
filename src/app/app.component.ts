@@ -32,6 +32,7 @@ export class MyApp {
     });
   }
   speakStop() {
+    this.debug = '';
     if(!this.speaking) {
       this.speaking = true;
       this.spokenMessage = '';

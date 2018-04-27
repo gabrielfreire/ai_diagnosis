@@ -90,11 +90,14 @@ export class FormBuilderCustom implements OnInit{
         loading.present();
         this.questionService.makeForm(option).subscribe((questionnaire: QuestionBody) => {
             this.title = questionnaire.additional_information.title ? questionnaire.additional_information.title : UNTITLED_QUESTIONNAIRE;
-            this.hasSubmit = true;
-            this.payLoad = '';
             this.form = this.questionControlService.toFormGroup(questionnaire.questions);
             this.questions = questionnaire.questions;
+            this.hasSubmit = true;
+            this.payLoad = '';
             loading.dismiss();
+        }, (error) => {
+            loading.dismiss();
+            console.log(error);
         });
     }
 
@@ -109,7 +112,7 @@ export class FormBuilderCustom implements OnInit{
     * @param key question key
     * @return A Question
     */
-    getQuestion(key: string|Number): Question {
+    getQuestion(key: string|number): Question {
         for(var i = 0; i < this.questions.length; i++) {
             if(this.questions[i].key === key){
                 return this.questions[i];
@@ -122,7 +125,7 @@ export class FormBuilderCustom implements OnInit{
      * Update a specific question
     * @param key question key
     */
-    updateQuestion(key: string|Number, newQuestion: Question): void {
+    updateQuestion(key: string|number, newQuestion: Question): void {
         for(var i = 0; i < this.questions.length; i++) {
             if(this.questions[i].key === key){
                 this.questions[i] = newQuestion;

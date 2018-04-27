@@ -51,14 +51,15 @@ export class PictureAnalisysPage {
       if (picture) {
         // this.picture = picture;
         this.setPicture(picture); // picture is the temporary path
-        let description = await this.cognitiveService.analyzeImage(picture);
-        descriptionAnalyzedImage = description;
-        this.imageDescription = descriptionAnalyzedImage;
+        this.cognitiveService.analyzeImage(picture).subscribe((data) => {
+          loading.dismiss();
+          descriptionAnalyzedImage = data.description.captions[0].text;
+          this.imageDescription = descriptionAnalyzedImage;
+        });
       }
       // if (!this.isMute) {
         // this.nativeActionsProvider.playAudio(this.translateTexts[1].text, this.language);
       // }
-      loading.dismiss();
     } catch(error) {
       loading.dismiss();
       this.error = `Error: ${JSON.stringify(error)}`;
@@ -80,20 +81,21 @@ export class PictureAnalisysPage {
   }
 
   setPicture(picture: string){
-    const self = this;
-    let request = new XMLHttpRequest();
-    request.open('GET', picture, true);
-    request.responseType = 'blob';
-    request.onload = () => {
-      const reader = new FileReader();
-      reader.readAsDataURL(request.response);
-      reader.onload = function () {
-          self.picture = reader.result;
-      };
-    };
-    request.onerror = (err) => {
-      self.error = `${JSON.stringify(err)}`;
-    }
-    request.send();
+    // const self = this;
+    // let request = new XMLHttpRequest();
+    // request.open('GET', picture, true);
+    // request.responseType = 'blob';
+    // request.onload = () => {
+    //   const reader = new FileReader();
+    //   reader.readAsDataURL(request.response);
+    //   reader.onload = function () {
+    //       self.picture = reader.result;
+    //   };
+    // };
+    // request.onerror = (err) => {
+    //   self.error = `${JSON.stringify(err)}`;
+    // }
+    // request.send();
+    this.picture = picture;
   }
 }

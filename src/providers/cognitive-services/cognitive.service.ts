@@ -1,23 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import { FileTransfer, FileUploadOptions, FileTransferObject, FileUploadResult } from '@ionic-native/file-transfer';
 import keys from '../../utils/keys';
 import {server} from '../../app/server.connection';
 import 'rxjs/add/operator/map';
 import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 import * as SDK from 'microsoft-speech-browser-sdk';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
 import {  NgZone } from '@angular/core';
 @Injectable()
 export class CognitiveService {
     private recognizer;
-    private fileTransfer: FileTransferObject;
     // Observable string sources
     private emitChangeSource = new Subject<any>();
     // Observable string streams
     listenMessage = this.emitChangeSource.asObservable();
-    constructor(private http: Http, private transfer: FileTransfer, public speechRecognition: SpeechRecognition, public zone: NgZone) {
-        this.fileTransfer = this.transfer.create();
+    constructor(private http: Http, public speechRecognition: SpeechRecognition, public zone: NgZone) {
         this.recognizer = this._RecognizerSetup(SDK, "Dictation", "en-US", "Simple", "17328acb588e413eaf4f56c885b3511f");
         
     }
@@ -64,26 +62,35 @@ export class CognitiveService {
         // if(this.speechRecognition.stopListening) this.speechRecognition.stopListening().then(() => console.log('stoped'), (error) => self.emitMessage(error));
     }
 
-    async analyzeImage(imageFilePath) {
+    analyzeImage(imageFileURL): Observable<any> {
         const uriBase = server.vision_url;
         const headers = new Headers();
         const self = this;
         headers.append('Content-Type', 'application/octet-stream');
         headers.append('Ocp-Apim-Subscription-Key', "6c2ca639591f4c00bea957ad371c36ac");
+        let imageBlob = this.dataURItoBlob(imageFileURL);
+        return this.http.post(uriBase, imageBlob, {headers: headers}).map((res) => res.json());
+    }
+
+    dataURItoBlob(dataURI) {
+        // convert base64 to raw binary data held in a string
+        // var byteString = atob(dataURI.split(',')[1]);
+        var byteString = atob(dataURI);
     
-        const options: FileUploadOptions = {
-            fileKey: 'file',
-            httpMethod: 'POST',
-            mimeType: 'image/jpeg',
-            headers
-        };
-        try {
-            let data: FileUploadResult = await this.fileTransfer.upload(imageFilePath, uriBase, options);
-            const resParse = JSON.parse(data.response);
-            return resParse.description.captions[0].text;
-        } catch(e) {
-            return e;
+        // separate out the mime component
+        var mimeString = 'image/jpeg';
+        // var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    
+        // write the bytes of the string to an ArrayBuffer
+        var arrayBuffer = new ArrayBuffer(byteString.length);
+        var _ia = new Uint8Array(arrayBuffer);
+        for (var i = 0; i < byteString.length; i++) {
+            _ia[i] = byteString.charCodeAt(i);
         }
+    
+        var dataView = new DataView(arrayBuffer);
+        var blob = new Blob([dataView], { type: mimeString });
+        return blob;
     }
 
     analyseSound(soundFilePath) {
