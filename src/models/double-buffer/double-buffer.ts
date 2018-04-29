@@ -31,7 +31,7 @@ export abstract class DoubleBuffer {
 
     protected swap(): void {
         if (this.preSwapCB) {
-            this.preSwapCB();
+            this.preSwapCB(); // preSwapCB is calling saveWavFileChunk everytime
         }
         if (this.activeBuffer === this.buffer1) {
             this.activeBuffer = this.buffer2;

@@ -28,6 +28,8 @@ export class WavRecorder extends WebAudioRecorder {
         console.log('constructor()');
         this.filePath = null;
         this.setter = new DoubleBufferSetter(WAV_CHUNK1, WAV_CHUNK2, () => {
+            // THIS CALLBACK IS CALLED MULTIPLE TIMES WHILE THE AUDIO IS BEING RECORDED
+            // TODO remove saveWavFileChunk from this callback and maybe replace for a debugging log to see activeBuffer change
             this.saveWavFileChunk(this.setter.activeBuffer).subscribe(null, (err: any) => {
                 // alert('Error in RecordWav.setter(): ' + err);
                 console.log('Error in RecordWav.setter(): ' + err);
@@ -38,6 +40,8 @@ export class WavRecorder extends WebAudioRecorder {
 
     /**
      * Precondition: Pcm is clipped (?)
+     * valueCB receives the inputBuffer value clipped (-1, 1) from onAudioProcess
+     * and setter.setNext calls saveWavFileChunk through swap() method
      */
     protected valueCB(pcm: number): void {
         this.setter.setNext(pcm < 0 ? pcm * 0x8000 : pcm * 0x7fff);
@@ -59,6 +63,7 @@ export class WavRecorder extends WebAudioRecorder {
 
     /**
      * Save the next wav file chunk
+     * TODO change this method in a way i don't save chunks, but the whole file in the end of recording from buffer data
      * @return {Observable<void>}
      */
     private saveWavFileChunk(arr: Int16Array): Observable<File | Blob> {
@@ -101,6 +106,8 @@ export class WavRecorder extends WebAudioRecorder {
     /**
      * Stop recording and save the last chunk.
      * Precondition: called start() already
+     * // TODO save file from activeBuffer data, no need to keep saving file chunks with cordova file plugin and appending
+     * 
      * @return {Observable<void>}
      */
     public stop(): Observable<File | Blob> {
