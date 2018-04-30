@@ -2,7 +2,7 @@
 
 import { Observable } from 'rxjs/Rx';
 import { Filesystem, downloadBlob } from '../';
-import { AUDIO_CONTEXT, SAMPLE_RATE } from '../../providers';
+import { AudioContextGenerator } from '../../providers';
 
 /**
  *
@@ -43,18 +43,13 @@ function sampleToByte(iSample: number): number {
 /**
  *
  */
-function makeWavBlobHeaderView(
-    nSamples: number,
-    sampleRate: number
-): DataView {
+function makeWavBlobHeaderView(nSamples: number, sampleRate: number): DataView {
     'use strict';
     // see: http://soundfile.sapp.org/doc/WaveFormat/
     const arrayByteLength: number = 2 * nSamples,
           arrayBuffer: ArrayBuffer = new ArrayBuffer(N_HEADER_BYTES),
           headerView: DataView = new DataView(arrayBuffer),
-          writeAscii:
-          (dataView: DataView, offset: number, text: string) => void =
-          (dataView: DataView, offset: number, text: string) => {
+          writeAscii: (dataView: DataView, offset: number, text: string) => void = (dataView: DataView, offset: number, text: string) => {
               const len: number = text.length;
               for (let i: number = 0; i < len; i++) {
                   dataView.setUint8(offset + i, text.charCodeAt(i));
@@ -95,211 +90,52 @@ function makeWavBlobHeaderView(
     return headerView;
 } // public static makeWavBlobHeaderView(
 
+let AUDIO_CONTEXT: AudioContext;
+let SAMPLE_RATE: number = 0;
 /**
  *
  */
 export class WavFile {
-
+    constructor(){
+    }
     /**
      *
      */
-    public static readWavFileInfo(
-        filePath: string,
-        bIncludeMetadata: boolean = false
-    ): Observable<WavInfo> {
-        console.log('readWavFileInfo(' + filePath + ')');
-        const src: Observable<WavInfo> = Observable.create((observer) => {
-            Filesystem.getFileSystem(true).subscribe(
-                (fileSystem: FileSystem) => {
-                    Filesystem.readFromFile(fileSystem, filePath, SAMPLE_RATE_START_BYTE, SAMPLE_RATE_END_BYTE).subscribe((data1: any) => {
-                            const view1: DataView = new DataView(data1),
-                                  sampleRate: number = view1.getUint32(0, true);
-                            Filesystem.readFromFile(
-                                fileSystem,
-                                filePath,
-                                SUBCHUNK2SIZE_START_BYTE,
-                                SUBCHUNK2SIZE_END_BYTE
-                            ).subscribe(
-                                (data2: any) => {
-                                    const view2: DataView = new DataView(data2),
-                                          subchunk2Size: number =
-                                          view2.getUint32(0, true),
-                                          nSamples: number = subchunk2Size / 2;
-                                    if (bIncludeMetadata) {
-                                        // yes metadata
-                                        Filesystem.getMetadata(
-                                            fileSystem,
-                                            filePath
-                                        ).subscribe(
-                                            (metadata: Metadata) => {
-                                                observer.next({
-                                                    nSamples: nSamples,
-                                                    sampleRate: sampleRate,
-                                                    metadata: metadata
-                                                });
-                                                observer.complete();
-                                            },
-                                            (err0: any) => {
-                                                observer.error(err0);
-                                            }
-                                        );
-                                    }
-                                    else {
-                                        // no metadata
-                                        observer.next({
-                                            nSamples: nSamples,
-                                            sampleRate: sampleRate,
-                                            metadata: null
-                                        });
-                                        observer.complete();
-                                    }
-                                },
-                                (err1: any) => {
-                                    observer.error(err1);
-                                }
-                            );
-                        },
-                        (err2: any) => {
-                            observer.error(err2);
-                        }
-                    );
-                },
-                (err3: any) => {
-                    observer.error(err3);
-                });
-        });
-        return src;
-    } // public static readWavFileInfo(
-
-    /**
-     *
-     */
-    public static readWavFileAudio(
-        filePath: string,
-        startSample: number = undefined,
-        endSample: number = undefined
-    ): Observable<AudioBuffer> {
-        console.log('readWavFileAudio(' + filePath + ', startSample: ' +
-                    startSample + ', endSample: ' + endSample + ')');
-        const startByte: number = sampleToByte(startSample),
-              endByte: number = sampleToByte(endSample);
-        const src: Observable<AudioBuffer> = Observable.create((obs) => {
-            Filesystem.getFileSystem(true).subscribe(
-                (fileSystem: FileSystem) => {
-                    Filesystem.readFromFile( fileSystem, filePath, startByte, endByte ).subscribe(
-                        (arrayBuffer: ArrayBuffer) => {
-                            if (!arrayBuffer.byteLength) {
-                                // could not read anything - this is where we
-                                // are failing currently.
-                                obs.error('!arrayBuffer.byteLength');
-                            }
-                            // console.log('array buffer: ' + arrayBuffer);
-                            // console.log(arrayBuffer.byteLength);
-                            // console.dir(arrayBuffer);
-                            if (startByte) {
-                                // this is a chunk that does not
-                                // contain a header we have to create
-                                // a blob with a wav header, read the
-                                // blob with filereader, then decode
-                                // the result console.log('array
-                                // buffer: ' + arrayBuffer + ', byte
-                                // length: ' + arrayBuffer.byteLength
-                                // + ', startByte: ' + startByte + ',
-                                // endByte: ' + endByte);
-                                // console.log(arrayBuffer.byteLength);
-                                // console.dir(arrayBuffer);
-
-                                const fileReader: FileReader = new FileReader();
-
-                                fileReader.onerror = (err1: any) => {
-                                    obs.error(err1);
-                                };
-
-                                fileReader.onload = () => {
-                                    console.log('onload: ' +
-                                                fileReader.result.byteLength);
-
-                                    // For decodeAudioData errs on
-                                    // arrayBuffer, see
-                                    // https://stackoverflow.com/questions..
-                                    // ../10365335..
-                                    // ../decodeaudiodata-returning-a-null-error
-                                    AUDIO_CONTEXT.decodeAudioData(
-                                        fileReader.result
-                                    ).then(
-                                        (audioBuffer: AudioBuffer) => {
-                                            console.log('AUDIO DATA DECODED!');
-                                            obs.next(audioBuffer);
-                                            obs.complete(audioBuffer);
-                                        }).catch((err2: any) => {
-                                            obs.error(err2);
-                                        });
-                                };
-
-                                fileReader.readAsArrayBuffer(
-                                    new Blob(
-                                        [
-                                            makeWavBlobHeaderView(
-                                                arrayBuffer.byteLength / 2,
-                                                SAMPLE_RATE
-                                            ),
-                                            arrayBuffer
-                                        ],
-                                        { type: WAV_MIME_TYPE }
-                                    )
-                                ); // fileReader.readAsArrayBuffer(
-                            }
-                            else {
-                                // this is the entire file, so it has a header,
-                                // just decode it
-                                AUDIO_CONTEXT.decodeAudioData(arrayBuffer).then(
-                                    (audioBuffer: AudioBuffer) => {
-                                        obs.next(audioBuffer);
-                                        obs.complete(audioBuffer);
-                                    }).catch((err1: any) => {
-                                        obs.error(err1);
-                                    });
-                            }
-                        },
-                        (err2: any) => {
-                            obs.error(err2);
-                        }
-                    );
-                },
-                (err3: any) => {
-                    obs.error(err3);
-                });
-        });
-        return src;
-    } // public static readWavFileInfo(
-
-    /**
-     *
-     */
-    public static createWavFile(filePath: string, wavData: Int16Array): Observable<Blob> {
+    public static createWavFile(filePath: string, wavData: Int16Array, audioContext: AudioContext): Observable<Blob> {
         console.log('createWavFile(' + filePath + ') - nSamples=' + wavData.length);
+        if(!AUDIO_CONTEXT) {
+            AUDIO_CONTEXT = audioContext;
+            SAMPLE_RATE = AUDIO_CONTEXT.sampleRate;
+        }
         const src: Observable<Blob> = Observable.create((observer) => {
-            Filesystem.getFileSystem(true).subscribe((fileSystem: FileSystem) => {
-                console.log('GOT IT');
-                const nSamples: number = wavData.length;
-                const headerView: DataView = makeWavBlobHeaderView(nSamples, SAMPLE_RATE);
-                const blob: Blob = new Blob([ headerView, wavData ], { type: WAV_MIME_TYPE });
-                // const dataFile = new FormData();
-                // dataFile.append("file", blob, "wavfile")
-                console.log('The blob created -->', blob);
-                // downloadBlob(blob, "somewav.wav");
-                // observer.next(dataFile);
-                // observer.complete();
-                Filesystem.writeToFile(fileSystem, filePath, blob, 0, true).subscribe(() => {
-                    console.log('appended cata len: ' + wavData.length);
-                    observer.next(blob);
-                    observer.complete();
-                },(err1: any) => {
-                    observer.error(err1);
-                });
-            }, (err3: any) => {
-                observer.error('* err3 * ' + err3);
-            });
+            const nSamples: number = wavData.length;
+            const headerView: DataView = makeWavBlobHeaderView(nSamples, SAMPLE_RATE);
+            const blob: Blob = new Blob([ headerView, wavData ], { type: WAV_MIME_TYPE });
+            console.log('The blob created -->', blob);
+            downloadBlob(blob, "somewav.wav");
+            observer.next(blob);
+            observer.complete();
+            // Filesystem.getFileSystem(true).subscribe((fileSystem: FileSystem) => {
+            //     console.log('GOT IT');
+            //     const nSamples: number = wavData.length;
+            //     const headerView: DataView = makeWavBlobHeaderView(nSamples, SAMPLE_RATE);
+            //     const blob: Blob = new Blob([ headerView, wavData ], { type: WAV_MIME_TYPE });
+            //     // const dataFile = new FormData();
+            //     // dataFile.append("file", blob, "wavfile")
+            //     console.log('The blob created -->', blob);
+            //     // downloadBlob(blob, "somewav.wav");
+            //     // observer.next(dataFile);
+            //     // observer.complete();
+            //     Filesystem.writeToFile(fileSystem, filePath, blob, 0, true).subscribe(() => {
+            //         console.log('appended cata len: ' + wavData.length);
+            //         observer.next(blob);
+            //         observer.complete();
+            //     },(err1: any) => {
+            //         observer.error(err1);
+            //     });
+            // }, (err3: any) => {
+            //     observer.error('* err3 * ' + err3);
+            // });
         });
         return src;
     } // public static readWavFileInfo(
@@ -307,8 +143,12 @@ export class WavFile {
     /**
      *
      */
-    public static appendToWavFile(filePath: string, wavData: Int16Array, nPreAppendSamples: number): Observable<File> {
+    public static appendToWavFile(filePath: string, wavData: Int16Array, nPreAppendSamples: number, audioContext: AudioContext): Observable<File> {
         console.log('appendToWavFile(' + filePath + '), nPre: ' + nPreAppendSamples);
+        if(!AUDIO_CONTEXT) {
+            AUDIO_CONTEXT = audioContext;
+            SAMPLE_RATE = AUDIO_CONTEXT.sampleRate;
+        }
         const src: Observable<File> = Observable.create((observer) => {
             Filesystem.getFileSystem(true).subscribe((fileSystem: FileSystem) => {
                 // see http://soundfile.sapp.org/doc/WaveFormat/

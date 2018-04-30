@@ -27,9 +27,9 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
     });
-    recorder.waitForWAA().subscribe(()=>{
-      recorder.resetPeaks();
-    });
+    // recorder.waitForWAA().subscribe(()=>{
+    //   recorder.resetPeaks();
+    // });
   }
   speakStop() {
     this.debug = '';
@@ -52,8 +52,10 @@ export class MyApp {
           this.debug += message;
         }
       });
-      this.recorder.start();
-      // this.cognitiveService.speak();
+      // this.recorder.start().then(() => {
+        // READY
+      // });
+      this.cognitiveService.speak();
     } else {
       this.stop(true);
     }
@@ -65,26 +67,27 @@ export class MyApp {
     this.spokenMessage = erase ? '' : this.spokenMessage;
     this.speaking = false;
     this.debug = '';
-    this.recorder.stop().subscribe((file: File | Blob) => {
-      self.debug += 'Stoped! File created';
-      // TODO send to Azure Bing Speech API by POST
-      self.cognitiveService.analyseSound(file).subscribe((data) => {
-        self.debug = '';
-        self.debug += 'Success!!';
-        self.cognitiveService.emitMessage(data);
-        if(self.messageSubscription) {
-          setTimeout(() => {
-            self.messageSubscription.unsubscribe();
-          },2000);
-        }
-      }, (error) => {
-        self.debug = '';
-        self.debug += `An Error ocurred: ${JSON.stringify(error)}`;
-        console.log(error);
-      })
-    }, (err: any) => {
-      console.log("ERROR ->", err)
-    });
-    // this.cognitiveService.stopSpeaking();
+    // this.recorder.stop().subscribe((file: File | Blob) => {
+    //   console.log(file);
+    //   self.debug += 'Stoped! File created';
+    //   // TODO send to Azure Bing Speech API by POST
+    //   self.cognitiveService.analyseSound(file).subscribe((data) => {
+    //     self.debug = '';
+    //     self.debug += 'Success!!';
+    //     self.cognitiveService.emitMessage(data);
+    //     if(self.messageSubscription) {
+    //       setTimeout(() => {
+    //         self.messageSubscription.unsubscribe();
+    //       },2000);
+    //     }
+    //   }, (error) => {
+    //     self.debug = '';
+    //     self.debug += `An Error ocurred: ${JSON.stringify(error)}`;
+    //     console.log(error);
+    //   });
+    // }, (err: any) => {
+    //   console.log("ERROR ->", err)
+    // });
+    this.cognitiveService.stopSpeaking();
   }
 }

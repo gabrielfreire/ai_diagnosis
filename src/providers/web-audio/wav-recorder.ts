@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
 import { formatUnixTimestamp, DoubleBufferSetter, WavFile, downloadBlob, Filesystem } from '../../models';
 import { WebAudioRecorder } from './recorder';
+import { AudioContextGenerator } from '../';
 
 // make this a multiple of PROCESSING_BUFFER_LENGTH (from record.ts)
 export const WAV_CHUNK_LENGTH: number = 131072;
@@ -24,16 +25,17 @@ export class WavRecorder extends WebAudioRecorder {
 
     // this is how we signal
     constructor() {
-        super();
+        super(new AudioContextGenerator());
         console.log('constructor()');
         this.filePath = null;
         this.setter = new DoubleBufferSetter(WAV_CHUNK1, WAV_CHUNK2, () => {
             // THIS CALLBACK IS CALLED MULTIPLE TIMES WHILE THE AUDIO IS BEING RECORDED
             // TODO remove saveWavFileChunk from this callback and maybe replace for a debugging log to see activeBuffer change
-            this.saveWavFileChunk(this.setter.activeBuffer).subscribe(null, (err: any) => {
-                // alert('Error in RecordWav.setter(): ' + err);
-                console.log('Error in RecordWav.setter(): ' + err);
-            });
+            // this.saveWavFileChunk(this.setter.activeBuffer).subscribe(null, (err: any) => {
+            //     // alert('Error in RecordWav.setter(): ' + err);
+            //     console.log('Error in RecordWav.setter(): ' + err);
+            // });
+            console.log('Recording:', this.setter.bufferIndex);
         });
         this.nChunksSaved = 0;
     }
@@ -66,27 +68,16 @@ export class WavRecorder extends WebAudioRecorder {
      * TODO change this method in a way i don't save chunks, but the whole file in the end of recording from buffer data
      * @return {Observable<void>}
      */
-    private saveWavFileChunk(arr: Int16Array): Observable<File | Blob> {
-        console.log('saveWavFileChunk(arr.size=' + arr.length + ', nSamples: ' + this.nRecordedSamples + ')');
+    private saveWav(arr: Int16Array): Observable<File | Blob> {
+        console.log('saveWav(arr.size=' + arr.length + ', nSamples: ' + this.nRecordedSamples + ')');
         let src: Observable<File | Blob> = Observable.create((observer) => {
-            if (this.nChunksSaved === 0) {
-                WavFile.createWavFile(this.filePath, arr).subscribe((blob: Blob) => {
-                    this.nChunksSaved = 1;
-                    observer.next(blob);
-                    observer.complete();
-                },(err1: any) => {
-                    observer.error(err1);
-                });
-            }
-            else {
-                WavFile.appendToWavFile(this.filePath, arr, this.nRecordedSamples - arr.length).subscribe((file: File) => {
-                    this.nChunksSaved++;
-                    observer.next(file);
-                    observer.complete();
-                }, (err1: any) => {
-                    observer.error(err1);
-                });
-            }
+            WavFile.createWavFile(this.filePath, arr, this.audioContext).subscribe((blob: Blob) => {
+                this.nChunksSaved = 1;
+                observer.next(blob);
+                observer.complete();
+            },(err1: any) => {
+                observer.error(err1);
+            });
         });
         return src;
     }
@@ -94,7 +85,7 @@ export class WavRecorder extends WebAudioRecorder {
     /**
      * Start recording
      */
-    public start(): void {
+    public async start(): Promise<void> {
         super.start();
         const dateCreated: number = Date.now();
         const displayDateCreated: string = formatUnixTimestamp(dateCreated);
@@ -114,17 +105,21 @@ export class WavRecorder extends WebAudioRecorder {
         console.log('WavRecorder:stop() @ ' + this.setter.bufferIndex + ', len: ' + this.setter.activeBuffer.subarray(0, this.setter.bufferIndex).length);
         this.reset();
         let src: Observable<File | Blob> = Observable.create((observer) => {
-            this.saveWavFileChunk(this.setter.activeBuffer.subarray(0, this.setter.bufferIndex)).subscribe((formDataFile: File | Blob) => {
-                console.log("WavFile:saveWavFileChunk() @ Saved");
+            this.saveWav(this.setter.activeBuffer.subarray(0, this.setter.bufferIndex)).subscribe((formDataFile: File | Blob) => {
+                console.log("WavFile:saveWav() @ Saved");
                 console.log('form data', formDataFile);
                 this.nChunksSaved = 0;
                 this.setter.reset();
+                if(this.audioContext.close) {
+                    this.audioContext.close();
+                    this.audioContext = null;
+                } else if (this.audioContext.state === "running") {
+                    this.audioContext.suspend();
+                }
+                
                 // downloadBlob(formDataFile, "somewav.wav");
                 observer.next(formDataFile);
                 observer.complete();
-                Filesystem.getFileSystem(true).subscribe((fileSystem: FileSystem) => {
-                    Filesystem.deleteEntries(fileSystem, [this.filePath]).subscribe();
-                });
             },(err: any) => {
                 observer.error(err);
             });

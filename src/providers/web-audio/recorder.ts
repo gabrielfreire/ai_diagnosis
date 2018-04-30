@@ -3,7 +3,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { formatTime } from '../../models';
-import { AUDIO_CONTEXT, SAMPLE_RATE } from '../';
+import { AudioContextGenerator } from '../';
 
 /** @const {string} Heartbeat clock's ID of function to run periodically */
 const RECORDER_CLOCK_FUNCTION_NAME: string = 'recorder';
@@ -16,7 +16,6 @@ const PROCESSING_BUFFER_LENGTH: number = 4096;
 
 /** @const {number}  Waiting time between checks that WAA is initialized */
 const WAIT_MSEC: number = 50;
-
 // statuses
 export enum RecordStatus {
     // uninitialized means we have not been initialized yet
@@ -76,32 +75,25 @@ export abstract class WebAudioRecorder {
     public displayTime: string;
     public maxVolumeSinceReset: number;
     public percentPeaksAtMax: string;
+    public audioContext: AudioContext;
 
     public nClipped: number;
 
     protected abstract valueCB(pcm: number): void;
 
     // this is how we signal
-    constructor() {
+    constructor(public audioContextGenerator: AudioContextGenerator) {
         console.log('constructor()');
 
         this.nClipped = 0;
 
-        if (!AUDIO_CONTEXT) {
-            this.status = RecordStatus.NO_CONTEXT_ERROR;
-            return;
-        }
+        // WONT CREATE AUDIO CONTEXT HERE BECAUSE IOS DOENS'T ALLOW IT TO BE CREATED THIS WAY
+        // if (!AUDIO_CONTEXT) {
+        //     this.status = RecordStatus.NO_CONTEXT_ERROR;
+        //     return;
+        // }
 
         this.status = RecordStatus.UNINITIALIZED_STATE;
-
-        // create nodes that do not require a stream in their constructor
-        this.createNodes();
-
-        // this call to resetPeaks() also initializes private variables
-        this.resetPeaks();
-
-        // grab microphone, init nodes that rely on stream, connect nodes
-        this.initAudio();
     }
 
     /**
@@ -131,7 +123,7 @@ export abstract class WebAudioRecorder {
      * @returns void
      */
     private initAudio(): void {
-        console.log('initAudio(): SAMPLE RATE: ' + SAMPLE_RATE);
+        console.log('initAudio(): SAMPLE RATE: ' + this.sampleRate);
 
         const getUserMediaOptions: Object = {
             video: false,
@@ -199,7 +191,9 @@ export abstract class WebAudioRecorder {
     private onAudioProcess(processingEvent: AudioProcessingEvent): void {
         // console.log('onAudioProcess() ' + this.isRecording);
         let inputBuffer: AudioBuffer = processingEvent.inputBuffer;
+        let outputBuffer: AudioBuffer = processingEvent.outputBuffer;
         let inputData: Float32Array = inputBuffer.getChannelData(0);
+        let outputData: Float32Array = outputBuffer.getChannelData(0);
         let i: number;
         let value: number;
         let absValue: number;
@@ -232,6 +226,7 @@ export abstract class WebAudioRecorder {
             // save every time a fill-up occurs)
             // if (this.valueCB && this.isRecording) {
             if (this.isRecording) {
+                outputData[i] = clippedValue;
                 this.valueCB(clippedValue);
                 this.nRecordedSamples++;
             }
@@ -244,10 +239,13 @@ export abstract class WebAudioRecorder {
      */
     private createNodes(): void {
         console.log('createNodes()');
+        this.audioContext = this.audioContextGenerator.createAudioContext();
+        this.audioContextGenerator.setAudioContext(this.audioContext);
+        this.sampleRate = this.audioContext.sampleRate;
         // create the gainNode
-        this.audioGainNode = AUDIO_CONTEXT.createGain();
+        this.audioGainNode = this.audioContext.createGain();
         // create and configure the scriptProcessorNode
-        this.scriptProcessorNode = AUDIO_CONTEXT.createScriptProcessor(PROCESSING_BUFFER_LENGTH, 1, 1);
+        this.scriptProcessorNode = this.audioContext.createScriptProcessor(PROCESSING_BUFFER_LENGTH, 1, 1);
         this.scriptProcessorNode.onaudioprocess = (processingEvent: AudioProcessingEvent): any => {
             this.onAudioProcess(processingEvent);
         };
@@ -269,12 +267,12 @@ export abstract class WebAudioRecorder {
         // create a source node out of the audio media stream
         // (the other nodes, which do not require a stream for their
         // initialization, are created in this.createNodes())
-        this.sourceNode = AUDIO_CONTEXT.createMediaStreamSource(stream);
+        this.sourceNode = this.audioContext.createMediaStreamSource(stream);
 
         // create a destination node (need something to connect the
         // scriptProcessorNode with or else it won't process audio)
         // let dest: MediaStreamAudioDestinationNode =
-        //     AUDIO_CONTEXT.createMediaStreamDestination();
+        //     this.audioContext.createMediaStreamDestination();
 
         // sourceNode (microphone) -> gainNode
         this.sourceNode.connect(this.audioGainNode);
@@ -284,7 +282,7 @@ export abstract class WebAudioRecorder {
 
         // scriptProcessorNode -> destination
         // this.scriptProcessorNode.connect(dest);
-        this.scriptProcessorNode.connect(AUDIO_CONTEXT.destination);
+        this.scriptProcessorNode.connect(this.audioContext.destination);
 
         // call the reset() function to normalize state
         this.reset();
@@ -371,9 +369,19 @@ export abstract class WebAudioRecorder {
      * @returns void
      */
     public start(): void {
-        this.nRecordedSamples = 0;
-        this.isRecording = true;
-        this.isInactive = false;
+        // create nodes that do not require a stream in their constructor
+        this.createNodes();
+        // this call to resetPeaks() also initializes private variables
+        this.resetPeaks();
+        // grab microphone, init nodes that rely on stream, connect nodes
+        this.initAudio();
+        this.waitForWAA().subscribe(() => {
+            // reset peaks again when WAA is ready
+            this.resetPeaks();
+            this.nRecordedSamples = 0;
+            this.isRecording = true;
+            this.isInactive = false;
+        });
     }
 
     /**
@@ -399,6 +407,7 @@ export abstract class WebAudioRecorder {
     protected reset(): void {
         this.isRecording = false;
         this.isInactive = true;
+        this.status = RecordStatus.UNINITIALIZED_STATE;
     }
 
     /**
@@ -406,7 +415,7 @@ export abstract class WebAudioRecorder {
      * @returns number
      */
     private getTime(): number {
-        return this.isInactive ? 0 : this.nRecordedSamples / SAMPLE_RATE;
+        return this.isInactive ? 0 : this.nRecordedSamples / this.sampleRate;
     }
 
 }

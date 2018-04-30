@@ -1,5 +1,4 @@
 // Copyright (c) 2017 Tracktunes Inc
-import { SAMPLE_RATE } from '../../providers';
 export abstract class DoubleBuffer {
     private buffer1: any;
     private buffer2: any;

@@ -27,33 +27,33 @@ export class CognitiveService {
         console.log('Loaded SDK');
         console.log(SDK);
         const self = this;
-        this.speechRecognition.hasPermission().then((has) => {
-            if(has) {
-                let res = {};
-                self.speechRecognition.startListening({language: 'en-US', matches:5, showPartial: true}).subscribe((matches) => {
-                    res['DisplayText'] = matches;
-                    res['RecognitionStatus'] = 'Success';
-                    console.log(res);
-                    self.emitMessage(res);
-                }, (error) => self.emitMessage(error));
-                // self._recognizerStart(SDK, self.recognizer);
-            } else {
-                self.emitMessage("No permission!");
-                self.speechRecognition.requestPermission().then(()=>{
-                    self.emitMessage("Permitted!");
-                    let res = {};
-                    self.speechRecognition.startListening({language: 'en-US', matches:5, showPartial: true}).subscribe((matches) => {
-                        res['DisplayText'] = matches;
-                        res['RecognitionStatus'] = 'Success';
-                        console.log(res);
-                        self.emitMessage(res);
-                    }, (error) => self.emitMessage(error));
-                    // self._recognizerStart(SDK, self.recognizer);
+        // this.speechRecognition.hasPermission().then((has) => {
+        //     if(has) {
+        //         let res = {};
+        //         self.speechRecognition.startListening({language: 'en-US', matches:5, showPartial: true}).subscribe((matches) => {
+        //             res['DisplayText'] = matches;
+        //             res['RecognitionStatus'] = 'Success';
+        //             console.log(res);
+        //             self.emitMessage(res);
+        //         }, (error) => self.emitMessage(error));
+        //         // self._recognizerStart(SDK, self.recognizer);
+        //     } else {
+        //         self.emitMessage("No permission!");
+        //         self.speechRecognition.requestPermission().then(()=>{
+        //             self.emitMessage("Permitted!");
+        //             let res = {};
+        //             self.speechRecognition.startListening({language: 'en-US', matches:5, showPartial: true}).subscribe((matches) => {
+        //                 res['DisplayText'] = matches;
+        //                 res['RecognitionStatus'] = 'Success';
+        //                 console.log(res);
+        //                 self.emitMessage(res);
+        //             }, (error) => self.emitMessage(error));
+        //             // self._recognizerStart(SDK, self.recognizer);
 
-                }, (error) => self.emitMessage(error));
-            }
-        }, (error) => self.emitMessage(error));
-        // this._recognizerStart(SDK, this.recognizer);
+        //         }, (error) => self.emitMessage(error));
+        //     }
+        // }, (error) => self.emitMessage(error));
+        this._recognizerStart(SDK, this.recognizer);
     }
 
     stopSpeaking() {

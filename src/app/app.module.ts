@@ -27,7 +27,7 @@ import { TextToSpeech } from '@ionic-native/text-to-speech';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { AppService } from './app.service';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
-import { WavRecorder, DiagnosticsService, CameraProvider, CognitiveService } from '../providers';
+import { WavRecorder, DiagnosticsService, CameraProvider, CognitiveService, AudioContextGenerator } from '../providers';
 // const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 const config: SocketIoConfig = { url: 'https://imsdiag.herokuapp.com', options: {} };
 
@@ -44,7 +44,7 @@ const config: SocketIoConfig = { url: 'https://imsdiag.herokuapp.com', options: 
     DynamicFormQuestionComponent
   ],
   imports: [
-  BrowserModule,
+    BrowserModule,
     ReactiveFormsModule,
     HttpModule,
     BrowserAnimationsModule,
@@ -81,6 +81,7 @@ const config: SocketIoConfig = { url: 'https://imsdiag.herokuapp.com', options: 
     CameraProvider,
     AppService,
     WavRecorder,
+    AudioContextGenerator,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
