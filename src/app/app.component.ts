@@ -75,9 +75,11 @@ export class MyApp implements OnInit{
       console.log(file);
       self.debug += 'Stoped! File created';
       // TODO send to Azure Bing Speech API by POST
+      self.debug = '';
       self.cognitiveService.analyseSound(file).subscribe((data) => {
         console.log('analyseSound() @ success');
         self.debug = '';
+        self.debug += file.size + ' -> ';
         self.debug += 'Success!!';
         self.cognitiveService.emitMessage(data);
       }, (error) => {
