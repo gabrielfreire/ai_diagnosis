@@ -116,7 +116,6 @@ export class WavRecorder extends WebAudioRecorder {
                 } else if (this.audioContext.state === "running") {
                     this.audioContext.suspend();
                 }
-                
                 // downloadBlob(formDataFile, "somewav.wav");
                 observer.next(formDataFile);
                 observer.complete();

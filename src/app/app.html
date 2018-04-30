@@ -1,7 +1,7 @@
 <ion-nav [root]="rootPage">
 </ion-nav>
 <div class="speakerContainer">
-    <!-- <h4 id="debug">DEBUG: {{debug}}</h4> -->
+    <h4 id="debug">DEBUG: {{debug}}</h4>
     <h4>{{spokenMessage}}</h4>
     <button (click)="speakStop()" [ngClass]="{'active': speaking}" class="floating" color="calm">
         <ion-icon name="mic"></ion-icon>
