@@ -114,4 +114,5 @@
         <variable name="XWALK_MODE" value="embedded" />
         <variable name="XWALK_MULTIPLEAPK" value="true" />
     </plugin>
+    <plugin name="cordova-plugin-iosrtc" spec="^4.0.2" />
 </widget>
