@@ -58,8 +58,8 @@ export class CognitiveService {
 
     stopSpeaking() {
         const self = this;
-        // this._RecognizerStop(SDK, this.recognizer);
-        if(this.speechRecognition.stopListening) this.speechRecognition.stopListening().then(() => console.log('stoped'), (error) => self.emitMessage(error));
+        this._RecognizerStop(SDK, this.recognizer);
+        // if(this.speechRecognition.stopListening) this.speechRecognition.stopListening().then(() => console.log('stoped'), (error) => self.emitMessage(error));
     }
 
     analyzeImage(imageDataURL: string): Observable<any> {
