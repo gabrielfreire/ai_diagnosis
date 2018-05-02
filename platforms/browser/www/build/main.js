@@ -69,60 +69,58 @@ let CognitiveService = class CognitiveService {
         console.log('Loaded SDK');
         console.log(__WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__);
         const self = this;
-        this.speechRecognition.isRecognitionAvailable().then((available) => {
-            console.log('available ?', available);
-            this.speechRecognition.hasPermission().then((has) => {
-                console.log('Permission', has);
-                if (has) {
-                    let res = {};
-                    self.speechRecognition.startListening({ language: 'en-US', matches: 5, showPartial: true }).subscribe((matches) => {
-                        console.log('Listening');
-                        res['DisplayText'] = matches[0];
-                        res['RecognitionStatus'] = 'Success';
-                        console.log(res);
-                        self.emitMessage(res);
-                    }, (error) => {
-                        console.log('error->', error);
-                        self.emitMessage(error);
-                    });
-                    // self._recognizerStart(SDK, self.recognizer);
-                }
-                else {
-                    self.emitMessage("No permission!");
-                    console.log('Permission', has);
-                    self.speechRecognition.requestPermission().then(() => {
-                        console.log('Permitted');
-                        self.emitMessage("Permitted!");
-                        let res = {};
-                        self.speechRecognition.startListening({ language: 'en-US', matches: 5, showPartial: true }).subscribe((matches) => {
-                            console.log('Listening');
-                            res['DisplayText'] = matches[0];
-                            res['RecognitionStatus'] = 'Success';
-                            console.log(res);
-                            self.emitMessage(res);
-                        }, (error) => {
-                            console.log('error->', error);
-                            self.emitMessage(error);
-                        });
-                        // self._recognizerStart(SDK, self.recognizer);
-                    }, (error) => {
-                        console.log('error->', error);
-                        self.emitMessage(error);
-                    });
-                }
-            }, (error) => self.emitMessage(error));
-        }, (error) => {
-            console.log('Error ocurred ->', error);
-            self.emitMessage('Error ' + JSON.stringify(error));
-        });
-        // this._recognizerStart(SDK, this.recognizer);
+        // this.speechRecognition.isRecognitionAvailable().then((available: boolean) => {
+        //     console.log('available ?', available);
+        //     this.speechRecognition.hasPermission().then((has) => {
+        //         console.log('Permission', has);
+        //         if(has) {
+        //             let res = {};
+        //             self.speechRecognition.startListening({language: 'en-US', matches:5, showPartial: true}).subscribe((matches) => {
+        //                 console.log('Listening');
+        //                 res['DisplayText'] = matches[0];
+        //                 res['RecognitionStatus'] = 'Success';
+        //                 console.log(res);
+        //                 self.emitMessage(res);
+        //             }, (error) => {
+        //                 console.log('error->', error);
+        //                 self.emitMessage(error)
+        //             });
+        //             // self._recognizerStart(SDK, self.recognizer);
+        //         } else {
+        //             self.emitMessage("No permission!");
+        //             console.log('Permission', has);
+        //             self.speechRecognition.requestPermission().then(()=>{
+        //                 console.log('Permitted');
+        //                 self.emitMessage("Permitted!");
+        //                 let res = {};
+        //                 self.speechRecognition.startListening({language: 'en-US', matches:5, showPartial: true}).subscribe((matches) => {
+        //                     console.log('Listening');
+        //                     res['DisplayText'] = matches[0];
+        //                     res['RecognitionStatus'] = 'Success';
+        //                     console.log(res);
+        //                     self.emitMessage(res);
+        //                 }, (error) => {
+        //                     console.log('error->', error);
+        //                     self.emitMessage(error)
+        //                 });
+        //                 // self._recognizerStart(SDK, self.recognizer);
+        //             }, (error) => {
+        //                 console.log('error->', error);
+        //                 self.emitMessage(error)
+        //             });
+        //         }
+        //     }, (error) => self.emitMessage(error));
+        // }, (error) => {
+        //     console.log('Error ocurred ->', error);
+        //     self.emitMessage('Error ' + JSON.stringify(error));
+        // });
+        this._recognizerStart(__WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__, this.recognizer);
     }
     stopSpeaking() {
         const self = this;
-        // this._RecognizerStop(SDK, this.recognizer);
+        this._RecognizerStop(__WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__, this.recognizer);
         console.log('Stopped');
-        if (this.speechRecognition.stopListening)
-            this.speechRecognition.stopListening().then(() => console.log('stoped'), (error) => self.emitMessage(error));
+        // if(this.speechRecognition.stopListening) this.speechRecognition.stopListening().then(() => console.log('stoped'), (error) => self.emitMessage(error));
     }
     analyzeImage(imageDataURL) {
         const uriBase = __WEBPACK_IMPORTED_MODULE_2__app_server_connection__["a" /* server */].vision_url;
@@ -2500,7 +2498,7 @@ let MyApp = class MyApp {
     }
 };
 MyApp = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\app\app.html"*/'<ion-nav [root]="rootPage">\n\n</ion-nav>\n\n<div class="speakerContainer">\n\n    <h4 id="debug">DEBUG: {{debug}}</h4>\n\n    <h4>{{spokenMessage}}</h4>\n\n    <button (click)="speakStop()" [ngClass]="{\'active\': speaking}" class="floating" color="calm">\n\n        <ion-icon name="mic"></ion-icon>\n\n    </button>\n\n</div>\n\n'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\app\app.html"*/
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\app\app.html"*/'<ion-nav [root]="rootPage">\n\n</ion-nav>\n\n<div class="speakerContainer">\n\n    <h4 id="debug">DEBUG LOG: {{debug}}</h4>\n\n    <h4 id="answer">Output: {{spokenMessage}}</h4>\n\n    <button (click)="speakStop()" [ngClass]="{\'active\': speaking}" class="floating" color="calm">\n\n        <ion-icon name="mic"></ion-icon>\n\n    </button>\n\n</div>\n\n'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\app\app.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
         __WEBPACK_IMPORTED_MODULE_5__providers_cognitive_services_cognitive_service__["a" /* CognitiveService */],
