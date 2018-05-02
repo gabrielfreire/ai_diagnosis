@@ -30562,8 +30562,8 @@ ion-label {
   position: fixed;
   top: 70%;
   left: 1%;
-  width: 90px;
-  height: 90px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   background: #5ad0c5;
   color: white;
@@ -30574,6 +30574,8 @@ ion-label {
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-shadow: 3px 3px 9px rgba(0, 0, 0, 0.2);
+  box-shadow: 3px 3px 9px rgba(0, 0, 0, 0.2);
 }
 
 .floating:hover {
@@ -30585,18 +30587,28 @@ ion-label {
 }
 
 .active {
-  background: #525241;
+  background: #02f312;
+  color: #057e43;
+  -webkit-box-shadow: 0px 0px 15px #00fc2a;
+  box-shadow: 0px 0px 15px #00fc2a;
 }
 
-#debug {
-  color: red;
-}
-
-.speakerContainer h4 {
+.speakerContainer #answer {
   position: fixed;
-  top: 80%;
+  top: 65%;
   left: 20%;
-  font-size: 14px;
+  color: black;
+  font-weight: bold;
+  white-space: pre-line;
+  font-size: 18px;
+}
+
+.speakerContainer #debug {
+  position: fixed;
+  color: red;
+  top: 75%;
+  left: 20%;
+  font-size: 12px;
 }
 
 app-chat .chat-baloon {

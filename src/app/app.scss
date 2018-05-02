@@ -43,8 +43,8 @@ ion-label {
     position: fixed;
     top: 70%;
     left: 1%;
-    width: 90px;
-    height: 90px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     background: #5ad0c5;
     color: white;
@@ -52,6 +52,8 @@ ion-label {
     z-index: 999;
     opacity: 0.5;
     justify-content: center;
+    
+    box-shadow: 3px 3px 9px rgba(0, 0, 0, 0.2);
     &:hover {
         opacity: 1;
     }
@@ -60,14 +62,25 @@ ion-label {
     }
 }
 .active {
-    background: rgb(82, 82, 65);
+    background: rgb(2, 243, 18);
+    color: rgb(5, 126, 67);
+    box-shadow: 0px 0px 15px #00fc2a;
 }
-#debug {
-    color: red;
-}
-.speakerContainer h4 {
-    position: fixed;
-    top: 80%;
-    left: 20%;
-    font-size: 14px;
+.speakerContainer {
+    #answer {
+        position: fixed;
+        top: 65%;
+        left: 20%;
+        color: black;
+        font-weight: bold;
+        white-space: pre-line;
+        font-size: 18px;
+    }
+    #debug {
+        position: fixed;
+        color: red;
+        top: 75%;
+        left: 20%;
+        font-size: 12px;
+    }
 }
