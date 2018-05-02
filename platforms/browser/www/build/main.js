@@ -69,32 +69,15 @@ let CognitiveService = class CognitiveService {
         console.log('Loaded SDK');
         console.log(__WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__);
         const self = this;
-        this.speechRecognition.hasPermission().then((has) => {
-            console.log('Permission', has);
-            if (has) {
-                let res = {};
-                self.speechRecognition.startListening({ language: 'en-US', matches: 5, showPartial: true }).subscribe((matches) => {
-                    console.log('Listening');
-                    res['DisplayText'] = matches;
-                    res['RecognitionStatus'] = 'Success';
-                    console.log(res);
-                    self.emitMessage(res);
-                }, (error) => {
-                    console.log('error->', error);
-                    self.emitMessage(error);
-                });
-                // self._recognizerStart(SDK, self.recognizer);
-            }
-            else {
-                self.emitMessage("No permission!");
+        this.speechRecognition.isRecognitionAvailable().then((available) => {
+            console.log('available ?', available);
+            this.speechRecognition.hasPermission().then((has) => {
                 console.log('Permission', has);
-                self.speechRecognition.requestPermission().then(() => {
-                    console.log('Permitted');
-                    self.emitMessage("Permitted!");
+                if (has) {
                     let res = {};
                     self.speechRecognition.startListening({ language: 'en-US', matches: 5, showPartial: true }).subscribe((matches) => {
                         console.log('Listening');
-                        res['DisplayText'] = matches;
+                        res['DisplayText'] = matches[0];
                         res['RecognitionStatus'] = 'Success';
                         console.log(res);
                         self.emitMessage(res);
@@ -103,12 +86,35 @@ let CognitiveService = class CognitiveService {
                         self.emitMessage(error);
                     });
                     // self._recognizerStart(SDK, self.recognizer);
-                }, (error) => {
-                    console.log('error->', error);
-                    self.emitMessage(error);
-                });
-            }
-        }, (error) => self.emitMessage(error));
+                }
+                else {
+                    self.emitMessage("No permission!");
+                    console.log('Permission', has);
+                    self.speechRecognition.requestPermission().then(() => {
+                        console.log('Permitted');
+                        self.emitMessage("Permitted!");
+                        let res = {};
+                        self.speechRecognition.startListening({ language: 'en-US', matches: 5, showPartial: true }).subscribe((matches) => {
+                            console.log('Listening');
+                            res['DisplayText'] = matches[0];
+                            res['RecognitionStatus'] = 'Success';
+                            console.log(res);
+                            self.emitMessage(res);
+                        }, (error) => {
+                            console.log('error->', error);
+                            self.emitMessage(error);
+                        });
+                        // self._recognizerStart(SDK, self.recognizer);
+                    }, (error) => {
+                        console.log('error->', error);
+                        self.emitMessage(error);
+                    });
+                }
+            }, (error) => self.emitMessage(error));
+        }, (error) => {
+            console.log('Error ocurred ->', error);
+            self.emitMessage('Error ' + JSON.stringify(error));
+        });
         // this._recognizerStart(SDK, this.recognizer);
     }
     stopSpeaking() {

@@ -29,14 +29,6 @@ module.exports = [
         "runs": true
     },
     {
-        "file": "plugins/cordova-plugin-speechrecognition/www/speechRecognition.js",
-        "id": "cordova-plugin-speechrecognition.SpeechRecognition",
-        "pluginId": "cordova-plugin-speechrecognition",
-        "merges": [
-            "window.plugins.speechRecognition"
-        ]
-    },
-    {
         "file": "plugins/cordova-plugin-file/www/DirectoryEntry.js",
         "id": "cordova-plugin-file.DirectoryEntry",
         "pluginId": "cordova-plugin-file",
@@ -358,6 +350,14 @@ module.exports = [
         "id": "cordova-plugin-statusbar.StatusBarProxy",
         "pluginId": "cordova-plugin-statusbar",
         "runs": true
+    },
+    {
+        "file": "plugins/cordova-plugin-speechrecognition/www/speechRecognition.js",
+        "id": "cordova-plugin-speechrecognition.SpeechRecognition",
+        "pluginId": "cordova-plugin-speechrecognition",
+        "merges": [
+            "window.plugins.speechRecognition"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -368,7 +368,6 @@ module.exports.metadata =
     "cordova-plugin-ionic-webview": "1.1.16",
     "cordova-plugin-splashscreen": "5.0.2",
     "cordova-plugin-whitelist": "1.3.3",
-    "cordova-plugin-speechrecognition": "1.1.2",
     "cordova-plugin-file": "6.0.1",
     "cordova-plugin-media-capture": "3.0.2",
     "cordova-plugin-nativestorage": "2.3.1",
@@ -377,7 +376,8 @@ module.exports.metadata =
     "cordova-plugin-compat": "1.2.0",
     "cordova-plugin-audioinput": "1.0.1",
     "cordova-plugin-camera": "4.0.3",
-    "cordova-plugin-statusbar": "2.4.2"
+    "cordova-plugin-statusbar": "2.4.2",
+    "cordova-plugin-speechrecognition": "1.1.2"
 }
 // BOTTOM OF METADATA
 });
