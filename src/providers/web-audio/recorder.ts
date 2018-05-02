@@ -96,6 +96,7 @@ export abstract class WebAudioRecorder {
 
         this.status = RecordStatus.UNINITIALIZED_STATE;
         console.log('adapter', adapter.browserShim.shimGetUserMedia);
+        console.log(window);
     }
 
     /**
@@ -126,7 +127,9 @@ export abstract class WebAudioRecorder {
      */
     private initAudio(): void {
         console.log('initAudio(): SAMPLE RATE: ' + this.sampleRate);
-
+        var pc = new RTCPeerConnection({
+            iceServers: []
+        });
         const getUserMediaOptions: Object = {
             video: false,
             audio: true
@@ -139,6 +142,7 @@ export abstract class WebAudioRecorder {
             navigator.mediaDevices.getUserMedia(getUserMediaOptions)
                 .then((stream: MediaStream) => {
                     this.connectNodes(stream);
+                    pc.addStream(stream);
                 })
                 .catch((err: any) => {
                     this.status = RecordStatus.NO_MICROPHONE_ERROR;
@@ -159,6 +163,7 @@ export abstract class WebAudioRecorder {
                 try {
                     navigator.getUserMedia(getUserMediaOptions,(stream: MediaStream) => {
                         this.connectNodes(stream);
+                        pc.addStream(stream);
                     },
                     (err: any) => {
                         this.status = RecordStatus.NO_MICROPHONE_ERROR;
@@ -180,6 +185,7 @@ export abstract class WebAudioRecorder {
                 try {
                     adapter.browserShim.shimGetUserMedia(getUserMediaOptions,(stream: MediaStream) => {
                         this.connectNodes(stream);
+                        pc.addStream(stream);
                     },
                     (err: any) => {
                         this.status = RecordStatus.NO_MICROPHONE_ERROR;
