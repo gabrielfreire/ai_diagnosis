@@ -119,4 +119,5 @@
         <variable name="XWALK_MULTIPLEAPK" value="true" />
     </plugin>
     <plugin name="cordova-plugin-iosrtc" spec="^4.0.2" />
+    <plugin name="cordova-plugin-audioinput" spec="^1.0.1" />
 </widget>

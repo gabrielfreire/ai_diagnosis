@@ -95,8 +95,6 @@ export abstract class WebAudioRecorder {
         // }
 
         this.status = RecordStatus.UNINITIALIZED_STATE;
-        console.log('adapter', adapter.browserShim.shimGetUserMedia);
-        console.log(window);
     }
 
     /**
