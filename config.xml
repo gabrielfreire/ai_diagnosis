@@ -116,4 +116,5 @@
         <variable name="XWALK_MULTIPLEAPK" value="true" />
     </plugin>
     <plugin name="cordova-plugin-speechrecognition" spec="~1.1.2" />
+    <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
 </widget>
