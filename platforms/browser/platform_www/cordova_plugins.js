@@ -29,6 +29,54 @@ module.exports = [
         "runs": true
     },
     {
+        "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
+        "id": "cordova-plugin-camera.Camera",
+        "pluginId": "cordova-plugin-camera",
+        "clobbers": [
+            "Camera"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-camera/www/CameraPopoverOptions.js",
+        "id": "cordova-plugin-camera.CameraPopoverOptions",
+        "pluginId": "cordova-plugin-camera",
+        "clobbers": [
+            "CameraPopoverOptions"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-camera/www/Camera.js",
+        "id": "cordova-plugin-camera.camera",
+        "pluginId": "cordova-plugin-camera",
+        "clobbers": [
+            "navigator.camera"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-camera/src/browser/CameraProxy.js",
+        "id": "cordova-plugin-camera.CameraProxy",
+        "pluginId": "cordova-plugin-camera",
+        "runs": true
+    },
+    {
+        "file": "plugins/cordova-plugin-nativestorage/www/mainHandle.js",
+        "id": "cordova-plugin-nativestorage.mainHandle",
+        "pluginId": "cordova-plugin-nativestorage",
+        "clobbers": [
+            "NativeStorage"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-nativestorage/www/LocalStorageHandle.js",
+        "id": "cordova-plugin-nativestorage.LocalStorageHandle",
+        "pluginId": "cordova-plugin-nativestorage"
+    },
+    {
+        "file": "plugins/cordova-plugin-nativestorage/www/NativeStorageError.js",
+        "id": "cordova-plugin-nativestorage.NativeStorageError",
+        "pluginId": "cordova-plugin-nativestorage"
+    },
+    {
         "file": "plugins/cordova-plugin-file/www/DirectoryEntry.js",
         "id": "cordova-plugin-file.DirectoryEntry",
         "pluginId": "cordova-plugin-file",
@@ -276,68 +324,6 @@ module.exports = [
         "runs": true
     },
     {
-        "file": "plugins/cordova-plugin-nativestorage/www/mainHandle.js",
-        "id": "cordova-plugin-nativestorage.mainHandle",
-        "pluginId": "cordova-plugin-nativestorage",
-        "clobbers": [
-            "NativeStorage"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-nativestorage/www/LocalStorageHandle.js",
-        "id": "cordova-plugin-nativestorage.LocalStorageHandle",
-        "pluginId": "cordova-plugin-nativestorage"
-    },
-    {
-        "file": "plugins/cordova-plugin-nativestorage/www/NativeStorageError.js",
-        "id": "cordova-plugin-nativestorage.NativeStorageError",
-        "pluginId": "cordova-plugin-nativestorage"
-    },
-    {
-        "file": "plugins/cordova-plugin-audioinput/www/audioInputCapture.js",
-        "id": "cordova-plugin-audioinput.AudioInput",
-        "pluginId": "cordova-plugin-audioinput",
-        "clobbers": [
-            "audioinput"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-audioinput/src/browser/AudioInputCaptureProxy.js",
-        "id": "cordova-plugin-audioinput.AudioInputCaptureProxy",
-        "pluginId": "cordova-plugin-audioinput",
-        "runs": true
-    },
-    {
-        "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
-        "id": "cordova-plugin-camera.Camera",
-        "pluginId": "cordova-plugin-camera",
-        "clobbers": [
-            "Camera"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-camera/www/CameraPopoverOptions.js",
-        "id": "cordova-plugin-camera.CameraPopoverOptions",
-        "pluginId": "cordova-plugin-camera",
-        "clobbers": [
-            "CameraPopoverOptions"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-camera/www/Camera.js",
-        "id": "cordova-plugin-camera.camera",
-        "pluginId": "cordova-plugin-camera",
-        "clobbers": [
-            "navigator.camera"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-camera/src/browser/CameraProxy.js",
-        "id": "cordova-plugin-camera.CameraProxy",
-        "pluginId": "cordova-plugin-camera",
-        "runs": true
-    },
-    {
         "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
         "id": "cordova-plugin-statusbar.statusbar",
         "pluginId": "cordova-plugin-statusbar",
@@ -363,19 +349,16 @@ module.exports = [
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "cordova-plugin-device": "2.0.1",
-    "cordova-plugin-ionic-keyboard": "2.0.5",
-    "cordova-plugin-ionic-webview": "1.1.16",
-    "cordova-plugin-splashscreen": "5.0.2",
     "cordova-plugin-whitelist": "1.3.3",
+    "cordova-plugin-device": "2.0.2",
+    "cordova-plugin-splashscreen": "5.0.2",
+    "cordova-plugin-ionic-webview": "1.2.1",
+    "cordova-plugin-ionic-keyboard": "2.0.5",
+    "cordova-plugin-camera": "4.0.3",
+    "cordova-plugin-nativestorage": "2.3.1",
     "cordova-plugin-file": "6.0.1",
     "cordova-plugin-media-capture": "3.0.2",
-    "cordova-plugin-nativestorage": "2.3.1",
-    "cordova-plugin-iosrtc": "4.0.2",
     "cordova-plugin-crosswalk-webview": "2.4.0",
-    "cordova-plugin-compat": "1.2.0",
-    "cordova-plugin-audioinput": "1.0.1",
-    "cordova-plugin-camera": "4.0.3",
     "cordova-plugin-statusbar": "2.4.2",
     "cordova-plugin-speechrecognition": "1.1.2"
 }

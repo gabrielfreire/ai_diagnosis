@@ -16,7 +16,7 @@ export class CognitiveService {
     // Observable string streams
     listenMessage = this.emitChangeSource.asObservable();
     constructor(private http: Http, public speechRecognition: SpeechRecognition, public zone: NgZone) {
-        this.recognizer = this._RecognizerSetup(SDK, "Dictation", "en-US", "Simple", "17328acb588e413eaf4f56c885b3511f");
+        // this.recognizer = this._RecognizerSetup(SDK, "Dictation", "en-US", "Simple", "17328acb588e413eaf4f56c885b3511f");
         
     }
     // Service message commands
@@ -24,6 +24,7 @@ export class CognitiveService {
         this.emitChangeSource.next(change);
     }
     speak() {
+        this.recognizer = this._RecognizerSetup(SDK, "Dictation", "en-US", "Simple", "17328acb588e413eaf4f56c885b3511f");
         console.log('Loaded SDK');
         console.log(SDK);
         const self = this;
