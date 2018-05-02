@@ -93,6 +93,7 @@ let CognitiveService = class CognitiveService {
                     self.emitMessage("Permitted!");
                     let res = {};
                     self.speechRecognition.startListening({ language: 'en-US', matches: 5, showPartial: true }).subscribe((matches) => {
+                        console.log('Listening');
                         res['DisplayText'] = matches;
                         res['RecognitionStatus'] = 'Success';
                         console.log(res);
@@ -2444,6 +2445,7 @@ let MyApp = class MyApp {
                 }
             }
             if (typeof message == 'string') {
+                this.debug = '';
                 this.debug += message;
             }
         });

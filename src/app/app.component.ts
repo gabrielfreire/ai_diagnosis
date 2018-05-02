@@ -48,6 +48,7 @@ export class MyApp implements OnInit{
         }
       }
       if(typeof message == 'string'){
+        this.debug = '';
         this.debug += message;
       }
     });
