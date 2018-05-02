@@ -1,1 +1,1 @@
-web: npm run buildbrowser && npm start
+web: npm run build && npm start
