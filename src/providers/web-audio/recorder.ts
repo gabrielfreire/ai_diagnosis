@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { formatTime } from '../../models';
 import { AudioContextGenerator } from '../';
+import * as adapter from 'webrtc-adapter';
 
 /** @const {string} Heartbeat clock's ID of function to run periodically */
 const RECORDER_CLOCK_FUNCTION_NAME: string = 'recorder';
@@ -94,6 +95,7 @@ export abstract class WebAudioRecorder {
         // }
 
         this.status = RecordStatus.UNINITIALIZED_STATE;
+        console.log('adapter', adapter.browserShim.shimGetUserMedia);
     }
 
     /**
@@ -129,7 +131,6 @@ export abstract class WebAudioRecorder {
             video: false,
             audio: true
         };
-
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             // We're in mozilla but not yet in chrome
             // new getUserMedia is available, use it to get microphone stream
@@ -175,11 +176,32 @@ export abstract class WebAudioRecorder {
                     console.log(msg);
                 }
             }
-            else {
+            else if(adapter.browserShim.shimGetUserMedia){
+                try {
+                    adapter.browserShim.shimGetUserMedia(getUserMediaOptions,(stream: MediaStream) => {
+                        this.connectNodes(stream);
+                    },
+                    (err: any) => {
+                        this.status = RecordStatus.NO_MICROPHONE_ERROR;
+                        const msg: string = 'initAudio(old1): err: ' +
+                                err + ', code: ' + err.code;
+                        // alert(msg);
+                        console.log(msg);
+                    });
+                }
+                catch (err) {
+                    this.status = RecordStatus.GETUSERMEDIA_ERROR;
+                    const msg: string = 'initAudio(old2): err: ' +
+                          err + ', code: ' + err.code;
+                    // alert(msg);
+                    console.log(msg);
+                }
+            } else {
                 // neither old nor new getUserMedia are available
                 console.warn('initAudio() Error: no getUserMedia');
                 // alert('initAudio() Error: no getUserMedia');
                 this.status = RecordStatus.NO_GETUSERMEDIA_ERROR;
+
             }
         }
     }
