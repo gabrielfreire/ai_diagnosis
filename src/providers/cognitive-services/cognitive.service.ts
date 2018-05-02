@@ -135,7 +135,7 @@ export class CognitiveService {
         var recognizerConfig = new SDK.RecognizerConfig(
             new SDK.SpeechConfig(
                 new SDK.Context(
-                    null,
+                    new SDK.OS(navigator.userAgent, "Browser", null),
                     new SDK.Device("SpeechSample", "SpeechSample", "1.0.00000"))),
             recognitionMode,
             language, // Supported languages are specific to each recognition mode. Refer to docs.
