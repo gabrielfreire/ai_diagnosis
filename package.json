@@ -7,6 +7,7 @@
   "scripts": {
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
+    "buildbrowser": "ionic cordova build browser",
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve"
@@ -89,7 +90,6 @@
       "cordova-plugin-camera": {},
       "cordova-plugin-nativestorage": {},
       "cordova-plugin-media-capture": {},
-      "cordova-plugin-file": {},
       "cordova-plugin-crosswalk-webview": {
         "XWALK_VERSION": "23+",
         "XWALK_LITEVERSION": "xwalk_core_library_canary:17+",
@@ -98,6 +98,7 @@
         "XWALK_MULTIPLEAPK": "true"
       },
       "cordova-plugin-iosrtc": {},
+      "cordova-plugin-file": {},
       "cordova-plugin-audioinput": {}
     },
     "platforms": [
