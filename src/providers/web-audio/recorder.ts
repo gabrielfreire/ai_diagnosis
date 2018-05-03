@@ -1,13 +1,14 @@
 // Copyright (c) 2017 Tracktunes Inc
+declare let audioinput: any;
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { formatTime } from '../../models';
 import { AudioContextGenerator } from '../';
-import * as adapter from 'webrtc-adapter';
 
 /** @const {string} Heartbeat clock's ID of function to run periodically */
 const RECORDER_CLOCK_FUNCTION_NAME: string = 'recorder';
+
 
 /**
  * @const {string} Length of script processing buffer - (a) this must be a
@@ -79,6 +80,7 @@ export abstract class WebAudioRecorder {
     public audioContext: AudioContext;
 
     public nClipped: number;
+    public isMobileAudioInput: boolean;
 
     protected abstract valueCB(pcm: number): void;
 
@@ -95,6 +97,8 @@ export abstract class WebAudioRecorder {
         // }
 
         this.status = RecordStatus.UNINITIALIZED_STATE;
+        this.isMobileAudioInput = false;
+        console.log(audioinput);
     }
 
     /**
@@ -125,13 +129,68 @@ export abstract class WebAudioRecorder {
      */
     private initAudio(): void {
         console.log('initAudio(): SAMPLE RATE: ' + this.sampleRate);
-        var pc = new RTCPeerConnection({
-            iceServers: []
-        });
+        var self = this;
         const getUserMediaOptions: Object = {
             video: false,
             audio: true
         };
+        /**
+         * 
+         *  *******************
+         *  EXPERIMENT START 
+         *  *******************
+         * 
+         */
+        if(audioinput){
+            console.log('Using audioinput');
+            this.isMobileAudioInput = true;
+            try {
+                let captureCfg = {
+                    sampleRate: 16000,
+                    bufferSize: PROCESSING_BUFFER_LENGTH,
+                    channels: 1,
+                    format: audioinput.FORMAT.PCM_16BIT,
+                    audioSourceType: audioinput.AUDIOSOURCE_TYPE.DEFAULT,
+                    audioContext: this.audioContext,
+                    fileUrl: null
+                };
+                audioinput.initialize(captureCfg, () => {
+                    audioinput.checkMicrophonePermission((hasPermission) => {
+                        if(hasPermission){
+                            console.log('Already have permission to record');
+                            // startRecording
+                            this.connectNodes();
+                        } else {
+                            console.log('No permission to record yet');
+                            console.log('Asking...');
+                            audioinput.getMicrophonePermission((hasPermission, message) => {
+                                if(hasPermission) {
+                                    console.log('User granted permission to record');
+                                    this.connectNodes();
+                                } else {
+                                    console.warn('User denied permission to record');
+                                    this.status = RecordStatus.GETUSERMEDIA_ERROR;
+                                }
+                            });
+                        }
+                        return;
+                    });
+                });
+            } catch (err) {
+                this.status = RecordStatus.GETUSERMEDIA_ERROR;
+                const msg: string = 'initAudio(old2): err: ' +
+                      err + ', code: ' + err.code;
+                // alert(msg);
+                console.log(msg);
+            }
+            
+            return;
+        }
+        
+        
+        // EXPERIMENT END
+
+
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             // We're in mozilla but not yet in chrome
             // new getUserMedia is available, use it to get microphone stream
@@ -140,7 +199,6 @@ export abstract class WebAudioRecorder {
             navigator.mediaDevices.getUserMedia(getUserMediaOptions)
                 .then((stream: MediaStream) => {
                     this.connectNodes(stream);
-                    pc.addStream(stream);
                 })
                 .catch((err: any) => {
                     this.status = RecordStatus.NO_MICROPHONE_ERROR;
@@ -161,7 +219,6 @@ export abstract class WebAudioRecorder {
                 try {
                     navigator.getUserMedia(getUserMediaOptions,(stream: MediaStream) => {
                         this.connectNodes(stream);
-                        pc.addStream(stream);
                     },
                     (err: any) => {
                         this.status = RecordStatus.NO_MICROPHONE_ERROR;
@@ -179,21 +236,34 @@ export abstract class WebAudioRecorder {
                     console.log(msg);
                 }
             }
-            else if(adapter.browserShim.shimGetUserMedia){
+            else if(audioinput){
+                this.isMobileAudioInput = true;
                 try {
-                    adapter.browserShim.shimGetUserMedia(getUserMediaOptions,(stream: MediaStream) => {
-                        this.connectNodes(stream);
-                        pc.addStream(stream);
-                    },
-                    (err: any) => {
-                        this.status = RecordStatus.NO_MICROPHONE_ERROR;
-                        const msg: string = 'initAudio(old1): err: ' +
-                                err + ', code: ' + err.code;
-                        // alert(msg);
-                        console.log(msg);
-                    });
-                }
-                catch (err) {
+                    let captureCfg = {
+                        sampleRate: 16000,
+                        bufferSize: PROCESSING_BUFFER_LENGTH,
+                        channels: 1,
+                        format: audioinput.FORMAT.PCM_16BIT,
+                        audioSourceType: audioinput.AUDIOSOURCE_TYPE.DEFAULT,
+                        fileUrl: null
+                    };
+                    audioinput.initialize(captureCfg, () => {
+                        audioinput.checkMicrophonePermission((hasPermission) => {
+                            if(hasPermission){
+                                console.log('Already have permission to record');
+                            } else {
+                                audioinput.getMicrophonePermission((hasPermission, message) => {
+                                    if(hasPermission) {
+                                        console.log('User granted permission to record');
+                                    } else {
+                                        console.warn('User denied permission to record');
+                                        this.status = RecordStatus.GETUSERMEDIA_ERROR;
+                                    }
+                                });
+                            }
+                        });
+                    })
+                } catch (err) {
                     this.status = RecordStatus.GETUSERMEDIA_ERROR;
                     const msg: string = 'initAudio(old2): err: ' +
                           err + ', code: ' + err.code;
@@ -214,10 +284,40 @@ export abstract class WebAudioRecorder {
      * @param {AudioProcessingEvent}
      * @returns void
      */
-    private onAudioProcess(processingEvent: AudioProcessingEvent): void {
+    private onAudioProcess(processingEvent: AudioProcessingEvent | Event): void {
         // console.log('onAudioProcess() ' + this.isRecording);
-        let inputBuffer: AudioBuffer = processingEvent.inputBuffer;
-        let outputBuffer: AudioBuffer = processingEvent.outputBuffer;
+        if(this.isMobileAudioInput) {
+            // DO MOBILE STUFF
+            console.log('mobile onAudioProcess() ->', processingEvent);
+            if((<any>processingEvent) && (<any>processingEvent).data) {
+                let inputData: any[] = (<any>processingEvent).data;
+                let i: number;
+                let value: number;
+                let absValue: number;
+                for(i = 0; i < PROCESSING_BUFFER_LENGTH; i++) {
+                    value = inputData[i];
+                    console.log(value);
+                    const clippedValue: number = Math.max(-1.0, Math.min(1.0, value));
+                    if (value !== clippedValue) {
+                        this.nClipped++;
+                    }
+                    absValue = Math.abs(clippedValue);
+                    // keep track of volume using abs value
+                    if (absValue > this.currentVolume) {
+                        this.currentVolume = absValue;
+                    }
+                    if (this.isRecording) {
+                        // outputData[i] = clippedValue;
+                        this.valueCB(clippedValue);
+                        this.nRecordedSamples++;
+                    }
+                }
+            }
+            return;
+        }
+        console.log('browser onAudioProcess() ->', processingEvent);
+        let inputBuffer: AudioBuffer = (<AudioProcessingEvent>processingEvent).inputBuffer;
+        let outputBuffer: AudioBuffer = (<AudioProcessingEvent>processingEvent).outputBuffer;
         let inputData: Float32Array = inputBuffer.getChannelData(0);
         let outputData: Float32Array = outputBuffer.getChannelData(0);
         let i: number;
@@ -234,20 +334,12 @@ export abstract class WebAudioRecorder {
             if (value !== clippedValue) {
                 this.nClipped++;
             }
-
             // absValue is what we use to monitor volume = abs(value)
             absValue = Math.abs(clippedValue);
-
-            // clip monitored volume at [0, 1]
-            // if (absValue > 1) {
-            //     absValue = 1;
-            // }
-
             // keep track of volume using abs value
             if (absValue > this.currentVolume) {
                 this.currentVolume = absValue;
             }
-
             // fill up double-buffer active buffer if recording (and
             // save every time a fill-up occurs)
             // if (this.valueCB && this.isRecording) {
@@ -266,15 +358,18 @@ export abstract class WebAudioRecorder {
     private createNodes(): void {
         console.log('createNodes()');
         this.audioContext = this.audioContextGenerator.createAudioContext();
-        this.audioContextGenerator.setAudioContext(this.audioContext);
-        this.sampleRate = this.audioContext.sampleRate;
-        // create the gainNode
-        this.audioGainNode = this.audioContext.createGain();
-        // create and configure the scriptProcessorNode
-        this.scriptProcessorNode = this.audioContext.createScriptProcessor(PROCESSING_BUFFER_LENGTH, 1, 1);
-        this.scriptProcessorNode.onaudioprocess = (processingEvent: AudioProcessingEvent): any => {
-            this.onAudioProcess(processingEvent);
-        };
+        if(this.audioContext) {
+            this.audioContextGenerator.setAudioContext(this.audioContext);
+            this.sampleRate = this.audioContext.sampleRate;
+            // create the gainNode
+            this.audioGainNode = this.audioContext.createGain();
+            // create and configure the scriptProcessorNode
+            this.scriptProcessorNode = this.audioContext.createScriptProcessor(PROCESSING_BUFFER_LENGTH, 1, 1);
+            this.scriptProcessorNode.onaudioprocess = (processingEvent: AudioProcessingEvent): any => {
+                this.onAudioProcess(processingEvent);
+            };
+        }
+            
     }
 
     /**
@@ -286,8 +381,18 @@ export abstract class WebAudioRecorder {
      * @param {MediaStream} stream the stream obtained by getUserMedia
      * @returns void
      */
-    private connectNodes(stream: MediaStream): void {
+    private connectNodes(stream?: MediaStream): void {
         console.log('connectNodes()');
+        if(this.isMobileAudioInput) {
+            // DO MOBILE STUFF WITH AUDIOINPUT
+            audioinput.connect(this.audioContext.destination);
+            window.addEventListener('audioinput', (event) => {
+                this.onAudioProcess(event);
+            }, false);
+            audioinput.start();
+            this.status = RecordStatus.READY_STATE;
+            return;
+        }
         // TODO: a check here that this.mediaStream is valid
 
         // create a source node out of the audio media stream
@@ -434,6 +539,7 @@ export abstract class WebAudioRecorder {
         this.isRecording = false;
         this.isInactive = true;
         this.status = RecordStatus.UNINITIALIZED_STATE;
+        if(audioinput) audioinput.stop((url) => { console.log('FINAL URL -> ', url) });
     }
 
     /**

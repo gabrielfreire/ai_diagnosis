@@ -58,12 +58,12 @@ export class MyApp implements OnInit{
     if(!this.speaking) {
       this.speaking = true;
       this.spokenMessage = '';
-      // this.recorder.start().then(() => {
-      //   // READY
-      //   this.debug += 'READY TO SPEAK';
-      //   console.log('READY TO SPEAK');
-      // });
-      this.cognitiveService.speak();
+      this.recorder.start().then(() => {
+        // READY
+        this.debug += 'READY TO SPEAK';
+        console.log('READY TO SPEAK');
+      });
+      // this.cognitiveService.speak();
     } else {
       this.stop(true);
     }
@@ -75,25 +75,25 @@ export class MyApp implements OnInit{
     this.spokenMessage = erase ? '' : this.spokenMessage;
     this.speaking = false;
     this.debug = '';
-    // this.recorder.stop().subscribe((file: File | Blob) => {
-    //   console.log(file);
-    //   self.debug += 'Stoped! File created';
-    //   // TODO send to Azure Bing Speech API by POST
-    //   self.debug = '';
-    //   self.cognitiveService.analyseSound(file).subscribe((data) => {
-    //     console.log('analyseSound() @ success');
-    //     self.debug = '';
-    //     self.debug += file.size + ' -> ';
-    //     self.debug += 'Success!!';
-    //     self.cognitiveService.emitMessage(data);
-    //   }, (error) => {
-    //     self.debug = '';
-    //     self.debug += `An Error ocurred: ${JSON.stringify(error)}`;
-    //     console.log(error);
-    //   });
-    // }, (err: any) => {
-    //   console.log("ERROR ->", err)
-    // });
-    this.cognitiveService.stopSpeaking();
+    this.recorder.stop().subscribe((file: File | Blob) => {
+      console.log(file);
+      self.debug += 'Stoped! File created';
+      // TODO send to Azure Bing Speech API by POST
+      self.debug = '';
+      self.cognitiveService.analyseSound(file).subscribe((data) => {
+        console.log('analyseSound() @ success');
+        self.debug = '';
+        self.debug += file.size + ' -> ';
+        self.debug += 'Success!!';
+        self.cognitiveService.emitMessage(data);
+      }, (error) => {
+        self.debug = '';
+        self.debug += `An Error ocurred: ${JSON.stringify(error)}`;
+        console.log(error);
+      });
+    }, (err: any) => {
+      console.log("ERROR ->", err)
+    });
+    // this.cognitiveService.stopSpeaking();
   }
 }

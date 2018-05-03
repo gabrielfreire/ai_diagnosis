@@ -75,7 +75,8 @@
   "devDependencies": {
     "@types/node": "^9.4.6",
     "@types/pako": "^1.0.0",
-    "ts-node": "^6.0.1"
+    "ts-node": "^6.0.1",
+    "cordova": "^8.0.0"
   },
   "description": "An Ionic project",
   "cordova": {
@@ -96,7 +97,8 @@
         "XWALK_MULTIPLEAPK": "true"
       },
       "cordova-plugin-statusbar": {},
-      "cordova-plugin-speechrecognition": {}
+      "cordova-plugin-speechrecognition": {},
+      "cordova-plugin-audioinput": {}
     },
     "platforms": [
       "browser",

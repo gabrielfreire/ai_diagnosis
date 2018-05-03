@@ -118,4 +118,5 @@
     </plugin>
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
     <plugin name="cordova-plugin-speechrecognition" spec="^1.2.0" />
+    <plugin name="cordova-plugin-audioinput" spec="^1.0.1" />
 </widget>
