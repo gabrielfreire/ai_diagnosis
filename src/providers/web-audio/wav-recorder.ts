@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { formatUnixTimestamp, DoubleBufferSetter, WavFile, downloadBlob, Filesystem } from '../../models';
 import { WebAudioRecorder } from './recorder';
 import { AudioContextGenerator } from '../';
+import { Platform } from 'ionic-angular';
 
 // make this a multiple of PROCESSING_BUFFER_LENGTH (from record.ts)
 export const WAV_CHUNK_LENGTH: number = 131072;
@@ -24,8 +25,8 @@ export class WavRecorder extends WebAudioRecorder {
     private filePath: string;
 
     // this is how we signal
-    constructor() {
-        super(new AudioContextGenerator());
+    constructor(public audioContextGenerator: AudioContextGenerator,public platform: Platform) {
+        super(audioContextGenerator, platform);
         console.log('constructor()');
         this.filePath = null;
         this.setter = new DoubleBufferSetter(WAV_CHUNK1, WAV_CHUNK2, () => {
@@ -98,27 +99,31 @@ export class WavRecorder extends WebAudioRecorder {
      * Stop recording and save the last chunk.
      * Precondition: called start() already
      * // TODO save file from activeBuffer data, no need to keep saving file chunks with cordova file plugin and appending
-     * 
+     *
      * @return {Observable<void>}
      */
     public stop(): Observable<File | Blob> {
         console.log('WavRecorder:stop() @ ' + this.setter.bufferIndex + ', len: ' + this.setter.activeBuffer.subarray(0, this.setter.bufferIndex).length);
         this.reset();
         let src: Observable<File | Blob> = Observable.create((observer) => {
-            this.saveWav(this.setter.activeBuffer.subarray(0, this.setter.bufferIndex)).subscribe((formDataFile: File | Blob) => {
+          this.saveWav(this.setter.activeBuffer.subarray(0, this.setter.bufferIndex)).subscribe((formDataFile: File | Blob) => {
                 console.log("WavFile:saveWav() @ Saved");
                 console.log('form data', formDataFile);
                 this.nChunksSaved = 0;
                 this.setter.reset();
+                //downloadBlob(formDataFile, "somewav.wav");
                 if(this.audioContext.close) {
-                    this.audioContext.close();
-                    this.audioContext = null;
-                } else if (this.audioContext.state === "running") {
-                    this.audioContext.suspend();
+                  this.audioContext.close().then(() => {
+                    console.log('CLOSED');
+                  });
+                } else if(this.audioContext.state == "running") {
+                  this.audioContext.suspend().then(() => {
+                    console.log('SUSPENDED');
+                  });
                 }
-                // downloadBlob(formDataFile, "somewav.wav");
                 observer.next(formDataFile);
                 observer.complete();
+
             },(err: any) => {
                 observer.error(err);
             });

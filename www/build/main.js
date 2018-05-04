@@ -1,6 +1,6 @@
 webpackJsonp([0],{
 
-/***/ 162:
+/***/ 161:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15,23 +15,23 @@ const server = {
 
 /***/ }),
 
-/***/ 164:
+/***/ 163:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CognitiveService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_server_connection__ = __webpack_require__(162);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_server_connection__ = __webpack_require__(161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(160);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_Subject__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_Subject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_Subject__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_Observable__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_Observable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__ = __webpack_require__(532);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__ = __webpack_require__(530);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_speech_recognition__ = __webpack_require__(337);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_speech_recognition__ = __webpack_require__(336);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -52,6 +52,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 let CognitiveService = class CognitiveService {
     constructor(http, speechRecognition, zone) {
+        // this.recognizer = this._RecognizerSetup(SDK, "Dictation", "en-US", "Simple", "17328acb588e413eaf4f56c885b3511f");
         this.http = http;
         this.speechRecognition = speechRecognition;
         this.zone = zone;
@@ -59,68 +60,70 @@ let CognitiveService = class CognitiveService {
         this.emitChangeSource = new __WEBPACK_IMPORTED_MODULE_4_rxjs_Subject__["Subject"]();
         // Observable string streams
         this.listenMessage = this.emitChangeSource.asObservable();
-        this.recognizer = this._RecognizerSetup(__WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__, "Dictation", "en-US", "Simple", "17328acb588e413eaf4f56c885b3511f");
     }
     // Service message commands
     emitMessage(change) {
         this.emitChangeSource.next(change);
     }
     speak() {
+        this.recognizer = this._RecognizerSetup(__WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__, "Dictation", "en-US", "Simple", "17328acb588e413eaf4f56c885b3511f");
         console.log('Loaded SDK');
         console.log(__WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__);
         const self = this;
-        // this.speechRecognition.isRecognitionAvailable().then((available: boolean) => {
-        //     console.log('available ?', available);
-        //     this.speechRecognition.hasPermission().then((has) => {
-        //         console.log('Permission', has);
-        //         if(has) {
-        //             let res = {};
-        //             self.speechRecognition.startListening({language: 'en-US', matches:5, showPartial: true}).subscribe((matches) => {
-        //                 console.log('Listening');
-        //                 res['DisplayText'] = matches[0];
-        //                 res['RecognitionStatus'] = 'Success';
-        //                 console.log(res);
-        //                 self.emitMessage(res);
-        //             }, (error) => {
-        //                 console.log('error->', error);
-        //                 self.emitMessage(error)
-        //             });
-        //             // self._recognizerStart(SDK, self.recognizer);
-        //         } else {
-        //             self.emitMessage("No permission!");
-        //             console.log('Permission', has);
-        //             self.speechRecognition.requestPermission().then(()=>{
-        //                 console.log('Permitted');
-        //                 self.emitMessage("Permitted!");
-        //                 let res = {};
-        //                 self.speechRecognition.startListening({language: 'en-US', matches:5, showPartial: true}).subscribe((matches) => {
-        //                     console.log('Listening');
-        //                     res['DisplayText'] = matches[0];
-        //                     res['RecognitionStatus'] = 'Success';
-        //                     console.log(res);
-        //                     self.emitMessage(res);
-        //                 }, (error) => {
-        //                     console.log('error->', error);
-        //                     self.emitMessage(error)
-        //                 });
-        //                 // self._recognizerStart(SDK, self.recognizer);
-        //             }, (error) => {
-        //                 console.log('error->', error);
-        //                 self.emitMessage(error)
-        //             });
-        //         }
-        //     }, (error) => self.emitMessage(error));
-        // }, (error) => {
-        //     console.log('Error ocurred ->', error);
-        //     self.emitMessage('Error ' + JSON.stringify(error));
-        // });
-        this._recognizerStart(__WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__, this.recognizer);
+        this.speechRecognition.isRecognitionAvailable().then((available) => {
+            console.log('available ?', available);
+            this.speechRecognition.hasPermission().then((has) => {
+                console.log('Permission', has);
+                if (has) {
+                    let res = {};
+                    self.speechRecognition.startListening({ language: 'en-US', matches: 5, showPartial: true }).subscribe((matches) => {
+                        console.log('Listening');
+                        res['DisplayText'] = matches[0];
+                        res['RecognitionStatus'] = 'Success';
+                        console.log(res);
+                        self.emitMessage(res);
+                    }, (error) => {
+                        console.log('error->', error);
+                        self.emitMessage(error);
+                    });
+                    // self._recognizerStart(SDK, self.recognizer);
+                }
+                else {
+                    self.emitMessage("No permission!");
+                    console.log('Permission', has);
+                    self.speechRecognition.requestPermission().then(() => {
+                        console.log('Permitted');
+                        self.emitMessage("Permitted!");
+                        let res = {};
+                        self.speechRecognition.startListening({ language: 'en-US', matches: 5, showPartial: true }).subscribe((matches) => {
+                            console.log('Listening');
+                            res['DisplayText'] = matches[0];
+                            res['RecognitionStatus'] = 'Success';
+                            console.log(res);
+                            self.emitMessage(res);
+                        }, (error) => {
+                            console.log('error->', error);
+                            self.emitMessage(error);
+                        });
+                        // self._recognizerStart(SDK, self.recognizer);
+                    }, (error) => {
+                        console.log('error->', error);
+                        self.emitMessage(error);
+                    });
+                }
+            }, (error) => self.emitMessage(error));
+        }, (error) => {
+            console.log('Error ocurred ->', error);
+            self.emitMessage('Error ' + JSON.stringify(error));
+        });
+        // this._recognizerStart(SDK, this.recognizer);
     }
     stopSpeaking() {
         const self = this;
-        this._RecognizerStop(__WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__, this.recognizer);
+        // this._RecognizerStop(SDK, this.recognizer);
         console.log('Stopped');
-        // if(this.speechRecognition.stopListening) this.speechRecognition.stopListening().then(() => console.log('stoped'), (error) => self.emitMessage(error));
+        if (this.speechRecognition.stopListening)
+            this.speechRecognition.stopListening().then(() => console.log('stoped'), (error) => self.emitMessage(error));
     }
     analyzeImage(imageDataURL) {
         const uriBase = __WEBPACK_IMPORTED_MODULE_2__app_server_connection__["a" /* server */].vision_url;
@@ -260,7 +263,7 @@ CognitiveService = __decorate([
 
 /***/ }),
 
-/***/ 169:
+/***/ 168:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -300,21 +303,21 @@ AppService = __decorate([
 
 /***/ }),
 
-/***/ 184:
+/***/ 183:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__web_audio_audioContextGenerator_service__ = __webpack_require__(840);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__web_audio_audioContextGenerator_service__ = __webpack_require__(838);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__web_audio_audioContextGenerator_service__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__web_audio_recorder__ = __webpack_require__(431);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__web_audio_recorder__ = __webpack_require__(430);
 /* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__web_audio_wav_recorder__ = __webpack_require__(338);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__web_audio_wav_recorder__ = __webpack_require__(337);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_2__web_audio_wav_recorder__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__diagnostics_diagnostic_service__ = __webpack_require__(323);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__diagnostics_diagnostic_service__ = __webpack_require__(322);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_3__diagnostics_diagnostic_service__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__cognitive_services_cognitive_service__ = __webpack_require__(164);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__cognitive_services_cognitive_service__ = __webpack_require__(163);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_4__cognitive_services_cognitive_service__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__camera_camera_provider__ = __webpack_require__(326);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__camera_camera_provider__ = __webpack_require__(325);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_5__camera_camera_provider__["a"]; });
 
 
@@ -326,7 +329,7 @@ AppService = __decorate([
 
 /***/ }),
 
-/***/ 197:
+/***/ 196:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -339,11 +342,11 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 197;
+webpackEmptyAsyncContext.id = 196;
 
 /***/ }),
 
-/***/ 254:
+/***/ 253:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -356,19 +359,19 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 254;
+webpackEmptyAsyncContext.id = 253;
 
 /***/ }),
 
-/***/ 298:
+/***/ 297:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TabsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__about_about__ = __webpack_require__(299);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__contact_contact__ = __webpack_require__(300);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(301);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__about_about__ = __webpack_require__(298);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__contact_contact__ = __webpack_require__(299);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(300);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -399,13 +402,13 @@ TabsPage = __decorate([
 
 /***/ }),
 
-/***/ 299:
+/***/ 298:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AboutPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -768,13 +771,13 @@ AboutPage = __decorate([
 
 /***/ }),
 
-/***/ 300:
+/***/ 299:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ContactPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -802,18 +805,18 @@ ContactPage = __decorate([
 
 /***/ }),
 
-/***/ 301:
+/***/ 300:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__chat_watson_chat__ = __webpack_require__(302);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__formbuilder_form_template_formBuilder__ = __webpack_require__(319);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_camera__ = __webpack_require__(163);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__picture_analisys_picture_analisys__ = __webpack_require__(325);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_service__ = __webpack_require__(169);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__chat_watson_chat__ = __webpack_require__(301);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__formbuilder_form_template_formBuilder__ = __webpack_require__(318);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_camera__ = __webpack_require__(162);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__picture_analisys_picture_analisys__ = __webpack_require__(324);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_service__ = __webpack_require__(168);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -870,13 +873,13 @@ HomePage = __decorate([
 
 /***/ }),
 
-/***/ 302:
+/***/ 301:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng_socket_io__ = __webpack_require__(303);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng_socket_io__ = __webpack_require__(302);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_ng_socket_io__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -947,18 +950,18 @@ ChatPage = __decorate([
 
 /***/ }),
 
-/***/ 319:
+/***/ 318:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FormBuilderCustom; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__questions_question_service__ = __webpack_require__(320);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__questions_question_control_service__ = __webpack_require__(322);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_diagnostics_diagnostic_service__ = __webpack_require__(323);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__loaders_loaders__ = __webpack_require__(531);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__mappers_event_mapper_service__ = __webpack_require__(324);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__questions_question_service__ = __webpack_require__(319);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__questions_question_control_service__ = __webpack_require__(321);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_diagnostics_diagnostic_service__ = __webpack_require__(322);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__loaders_loaders__ = __webpack_require__(529);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__mappers_event_mapper_service__ = __webpack_require__(323);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1114,19 +1117,19 @@ FormBuilderCustom = __decorate([
 
 /***/ }),
 
-/***/ 320:
+/***/ 319:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return QuestionService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_webdnn__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_webdnn__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_webdnn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_webdnn__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(160);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mappers_question_mapper_service__ = __webpack_require__(321);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_server_connection__ = __webpack_require__(162);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mappers_question_mapper_service__ = __webpack_require__(320);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_server_connection__ = __webpack_require__(161);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1227,16 +1230,16 @@ QuestionService = __decorate([
 
 /***/ }),
 
-/***/ 321:
+/***/ 320:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return QuestionMapper; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_home_formbuilder_questions_question_model__ = __webpack_require__(64);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_home_formbuilder_questions_question_dropdown_model__ = __webpack_require__(528);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_home_formbuilder_questions_question_toggle_model__ = __webpack_require__(529);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_formbuilder_questions_question_textbox_model__ = __webpack_require__(530);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_home_formbuilder_questions_question_model__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_home_formbuilder_questions_question_dropdown_model__ = __webpack_require__(526);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_home_formbuilder_questions_question_toggle_model__ = __webpack_require__(527);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_formbuilder_questions_question_textbox_model__ = __webpack_require__(528);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1319,7 +1322,7 @@ QuestionMapper = __decorate([
 
 /***/ }),
 
-/***/ 322:
+/***/ 321:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1372,14 +1375,14 @@ QuestionControlService = __decorate([
 
 /***/ }),
 
-/***/ 323:
+/***/ 322:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DiagnosticsService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_server_connection__ = __webpack_require__(162);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_server_connection__ = __webpack_require__(161);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1423,7 +1426,7 @@ DiagnosticsService = __decorate([
 
 /***/ }),
 
-/***/ 324:
+/***/ 323:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1487,16 +1490,16 @@ QuestionEventMapper = __decorate([
 
 /***/ }),
 
-/***/ 325:
+/***/ 324:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PictureAnalisysPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_camera_camera_provider__ = __webpack_require__(326);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_native_storage__ = __webpack_require__(327);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_cognitive_services_cognitive_service__ = __webpack_require__(164);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_camera_camera_provider__ = __webpack_require__(325);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_native_storage__ = __webpack_require__(326);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_cognitive_services_cognitive_service__ = __webpack_require__(163);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1609,13 +1612,13 @@ PictureAnalisysPage = __decorate([
 
 /***/ }),
 
-/***/ 326:
+/***/ 325:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CameraProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_native_camera__ = __webpack_require__(163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_native_camera__ = __webpack_require__(162);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1654,17 +1657,18 @@ CameraProvider = __decorate([
 
 /***/ }),
 
-/***/ 338:
+/***/ 337:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WavRecorder; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__ = __webpack_require__(95);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models__ = __webpack_require__(430);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__recorder__ = __webpack_require__(431);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4____ = __webpack_require__(184);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models__ = __webpack_require__(429);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__recorder__ = __webpack_require__(430);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4____ = __webpack_require__(183);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(33);
 // Copyright (c) 2017 Tracktunes Inc
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1688,6 +1692,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 
 
 
+
 // make this a multiple of PROCESSING_BUFFER_LENGTH (from record.ts)
 const WAV_CHUNK_LENGTH = 131072;
 /* unused harmony export WAV_CHUNK_LENGTH */
@@ -1701,8 +1706,10 @@ const WAV_CHUNK2 = new Int16Array(WAV_CHUNK_LENGTH);
  */
 let WavRecorder = class WavRecorder extends __WEBPACK_IMPORTED_MODULE_3__recorder__["a" /* WebAudioRecorder */] {
     // this is how we signal
-    constructor() {
-        super(new __WEBPACK_IMPORTED_MODULE_4____["a" /* AudioContextGenerator */]());
+    constructor(audioContextGenerator, platform) {
+        super(audioContextGenerator, platform);
+        this.audioContextGenerator = audioContextGenerator;
+        this.platform = platform;
         console.log('constructor()');
         this.filePath = null;
         this.setter = new __WEBPACK_IMPORTED_MODULE_2__models__["a" /* DoubleBufferSetter */](WAV_CHUNK1, WAV_CHUNK2, () => {
@@ -1784,14 +1791,17 @@ let WavRecorder = class WavRecorder extends __WEBPACK_IMPORTED_MODULE_3__recorde
                 console.log('form data', formDataFile);
                 this.nChunksSaved = 0;
                 this.setter.reset();
+                //downloadBlob(formDataFile, "somewav.wav");
                 if (this.audioContext.close) {
-                    this.audioContext.close();
-                    this.audioContext = null;
+                    this.audioContext.close().then(() => {
+                        console.log('CLOSED');
+                    });
                 }
-                else if (this.audioContext.state === "running") {
-                    this.audioContext.suspend();
+                else if (this.audioContext.state == "running") {
+                    this.audioContext.suspend().then(() => {
+                        console.log('SUSPENDED');
+                    });
                 }
-                // downloadBlob(formDataFile, "somewav.wav");
                 observer.next(formDataFile);
                 observer.complete();
             }, (err) => {
@@ -1803,24 +1813,24 @@ let WavRecorder = class WavRecorder extends __WEBPACK_IMPORTED_MODULE_3__recorde
 };
 WavRecorder = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4____["a" /* AudioContextGenerator */], __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["g" /* Platform */]])
 ], WavRecorder);
 
 //# sourceMappingURL=wav-recorder.js.map
 
 /***/ }),
 
-/***/ 430:
+/***/ 429:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__wav_file_wav_file__ = __webpack_require__(836);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__wav_file_wav_file__ = __webpack_require__(834);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__wav_file_wav_file__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__double_buffer_double_buffer__ = __webpack_require__(837);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__double_buffer_double_buffer__ = __webpack_require__(835);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_1__double_buffer_double_buffer__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__filesystem_filesystem__ = __webpack_require__(838);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__filesystem_filesystem__ = __webpack_require__(836);
 /* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__misc_utils_misc_utils__ = __webpack_require__(839);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__misc_utils_misc_utils__ = __webpack_require__(837);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_3__misc_utils_misc_utils__["a"]; });
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_3__misc_utils_misc_utils__["b"]; });
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_3__misc_utils_misc_utils__["c"]; });
@@ -1833,19 +1843,17 @@ WavRecorder = __decorate([
 
 /***/ }),
 
-/***/ 431:
+/***/ 430:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* unused harmony export RecordStatus */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WebAudioRecorder; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__(95);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2____ = __webpack_require__(184);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_webrtc_adapter__ = __webpack_require__(841);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_webrtc_adapter___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_webrtc_adapter__);
-// Copyright (c) 2017 Tracktunes Inc
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2____ = __webpack_require__(183);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(33);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1886,14 +1894,25 @@ var RecordStatus;
     // normal operation
     RecordStatus[RecordStatus["READY_STATE"] = 6] = "READY_STATE";
 })(RecordStatus || (RecordStatus = {}));
+function _normalizeAudio(pcmData) {
+    for (var i = 0; i < pcmData.length; i++) {
+        pcmData[i] = parseFloat(pcmData[i]) / 32767.0;
+    }
+    // If last value is NaN, remove it.
+    if (isNaN(pcmData[pcmData.length - 1])) {
+        pcmData.pop();
+    }
+    return pcmData;
+}
 /**
  * Audio recording functions using Web Audio API
  * @class WebAudioRecorder
  */
 let WebAudioRecorder = class WebAudioRecorder {
     // this is how we signal
-    constructor(audioContextGenerator) {
+    constructor(audioContextGenerator, platform) {
         this.audioContextGenerator = audioContextGenerator;
+        this.platform = platform;
         console.log('constructor()');
         this.nClipped = 0;
         // WONT CREATE AUDIO CONTEXT HERE BECAUSE IOS DOENS'T ALLOW IT TO BE CREATED THIS WAY
@@ -1902,6 +1921,7 @@ let WebAudioRecorder = class WebAudioRecorder {
         //     return;
         // }
         this.status = RecordStatus.UNINITIALIZED_STATE;
+        this.isMobileAudioInput = false;
     }
     /**
      * Wait indefinitely until DB is ready for use, via an observable.
@@ -1930,84 +1950,107 @@ let WebAudioRecorder = class WebAudioRecorder {
      */
     initAudio() {
         console.log('initAudio(): SAMPLE RATE: ' + this.sampleRate);
-        var pc = new RTCPeerConnection({
-            iceServers: []
-        });
+        var self = this;
         const getUserMediaOptions = {
             video: false,
             audio: true
         };
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            // We're in mozilla but not yet in chrome
-            // new getUserMedia is available, use it to get microphone stream
-            // console.log('Using NEW navigator.mediaDevices.getUserMedia');
-            navigator.mediaDevices.getUserMedia(getUserMediaOptions)
-                .then((stream) => {
-                this.connectNodes(stream);
-                pc.addStream(stream);
-            })
-                .catch((err) => {
-                this.status = RecordStatus.NO_MICROPHONE_ERROR;
-                const msg = 'initAudio(new): err: ' +
-                    err + ', code: ' + err.code;
-                // alert(msg);
-                console.log(msg);
-            });
+        if (this.platform.is('ios') || this.platform.is('android') || this.platform.is('cordova')) {
+            if (audioinput) {
+                console.log('Using audioinput');
+                this.isMobileAudioInput = true;
+                try {
+                    let captureCfg = {
+                        sampleRate: 16000,
+                        bufferSize: PROCESSING_BUFFER_LENGTH,
+                        channels: 1,
+                        format: audioinput.FORMAT.PCM_16BIT,
+                        audioSourceType: audioinput.AUDIOSOURCE_TYPE.DEFAULT
+                    };
+                    audioinput.initialize(captureCfg, () => {
+                        audioinput.checkMicrophonePermission((hasPermission) => {
+                            if (hasPermission) {
+                                console.log('Already have permission to record');
+                                // startRecording
+                                this.connectNodes();
+                            }
+                            else {
+                                console.log('No permission to record yet');
+                                console.log('Asking...');
+                                audioinput.getMicrophonePermission((hasPermission, message) => {
+                                    if (hasPermission) {
+                                        console.log('User granted permission to record');
+                                        this.connectNodes();
+                                    }
+                                    else {
+                                        console.warn('User denied permission to record');
+                                        this.status = RecordStatus.GETUSERMEDIA_ERROR;
+                                    }
+                                });
+                            }
+                        });
+                    });
+                }
+                catch (err) {
+                    this.status = RecordStatus.GETUSERMEDIA_ERROR;
+                    const msg = 'initAudio(old2): err: ' +
+                        err + ', code: ' + err.code;
+                    // alert(msg);
+                    console.log(msg);
+                }
+            }
         }
         else {
-            // This is what is called if we're in chrome / chromium
-            // console.log('Using OLD navigator.getUserMedia (new not there)');
-            navigator.getUserMedia = navigator.getUserMedia ||
-                navigator.webkitGetUserMedia ||
-                navigator.mozGetUserMedia;
-            if (navigator.getUserMedia) {
-                // old getUserMedia is available, use it
-                try {
-                    navigator.getUserMedia(getUserMediaOptions, (stream) => {
-                        this.connectNodes(stream);
-                        pc.addStream(stream);
-                    }, (err) => {
-                        this.status = RecordStatus.NO_MICROPHONE_ERROR;
-                        const msg = 'initAudio(old1): err: ' +
-                            err + ', code: ' + err.code;
-                        // alert(msg);
-                        console.log(msg);
-                    });
-                }
-                catch (err) {
-                    this.status = RecordStatus.GETUSERMEDIA_ERROR;
-                    const msg = 'initAudio(old2): err: ' +
+            this.isMobileAudioInput = false;
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                // We're in mozilla but not yet in chrome
+                // new getUserMedia is available, use it to get microphone stream
+                // console.log('Using NEW navigator.mediaDevices.getUserMedia');
+                navigator.mediaDevices.getUserMedia(getUserMediaOptions)
+                    .then((stream) => {
+                    this.connectNodes(stream);
+                })
+                    .catch((err) => {
+                    this.status = RecordStatus.NO_MICROPHONE_ERROR;
+                    const msg = 'initAudio(new): err: ' +
                         err + ', code: ' + err.code;
                     // alert(msg);
                     console.log(msg);
-                }
-            }
-            else if (__WEBPACK_IMPORTED_MODULE_3_webrtc_adapter__["browserShim"].shimGetUserMedia) {
-                try {
-                    __WEBPACK_IMPORTED_MODULE_3_webrtc_adapter__["browserShim"].shimGetUserMedia(getUserMediaOptions, (stream) => {
-                        this.connectNodes(stream);
-                        pc.addStream(stream);
-                    }, (err) => {
-                        this.status = RecordStatus.NO_MICROPHONE_ERROR;
-                        const msg = 'initAudio(old1): err: ' +
-                            err + ', code: ' + err.code;
-                        // alert(msg);
-                        console.log(msg);
-                    });
-                }
-                catch (err) {
-                    this.status = RecordStatus.GETUSERMEDIA_ERROR;
-                    const msg = 'initAudio(old2): err: ' +
-                        err + ', code: ' + err.code;
-                    // alert(msg);
-                    console.log(msg);
-                }
+                });
             }
             else {
-                // neither old nor new getUserMedia are available
-                console.warn('initAudio() Error: no getUserMedia');
-                // alert('initAudio() Error: no getUserMedia');
-                this.status = RecordStatus.NO_GETUSERMEDIA_ERROR;
+                // This is what is called if we're in chrome / chromium
+                // console.log('Using OLD navigator.getUserMedia (new not there)');
+                navigator.getUserMedia = navigator.getUserMedia ||
+                    navigator.webkitGetUserMedia ||
+                    navigator.mozGetUserMedia;
+                if (navigator.getUserMedia) {
+                    // old getUserMedia is available, use it
+                    try {
+                        navigator.getUserMedia(getUserMediaOptions, (stream) => {
+                            this.connectNodes(stream);
+                        }, (err) => {
+                            this.status = RecordStatus.NO_MICROPHONE_ERROR;
+                            const msg = 'initAudio(old1): err: ' +
+                                err + ', code: ' + err.code;
+                            // alert(msg);
+                            console.log(msg);
+                        });
+                    }
+                    catch (err) {
+                        this.status = RecordStatus.GETUSERMEDIA_ERROR;
+                        const msg = 'initAudio(old2): err: ' +
+                            err + ', code: ' + err.code;
+                        // alert(msg);
+                        console.log(msg);
+                    }
+                }
+                else {
+                    // neither old nor new getUserMedia are available
+                    console.warn('initAudio() Error: no getUserMedia');
+                    // alert('initAudio() Error: no getUserMedia');
+                    this.status = RecordStatus.NO_GETUSERMEDIA_ERROR;
+                }
             }
         }
     }
@@ -2017,6 +2060,45 @@ let WebAudioRecorder = class WebAudioRecorder {
      */
     onAudioProcess(processingEvent) {
         // console.log('onAudioProcess() ' + this.isRecording);
+        if (this.isMobileAudioInput) {
+            // DO MOBILE STUFF
+            console.log('mobile onAudioProcess() ->', processingEvent.data.length);
+            if (processingEvent && processingEvent.data) {
+                let inputData = processingEvent.data;
+                let i;
+                let value;
+                let absValue;
+                this.currentVolume = 0;
+                let audioBuffer = this.audioContext.createBuffer(1, (inputData.length / 1), this.audioContext.sampleRate);
+                //let buffer = _normalizeAudio(inputData);
+                let buffer = [];
+                for (i = 0; i < inputData.length; i++) {
+                    value = inputData[i];
+                    const clippedValue = Math.max(-1.0, Math.min(1.0, value));
+                    if (value !== clippedValue) {
+                        this.nClipped++;
+                    }
+                    absValue = Math.abs(clippedValue);
+                    // keep track of volume using abs value
+                    if (absValue > this.currentVolume) {
+                        this.currentVolume = absValue;
+                    }
+                    if (this.isRecording) {
+                        // outputData[i] = clippedValue;
+                        buffer.push(clippedValue);
+                        this.valueCB(clippedValue);
+                        this.nRecordedSamples++;
+                    }
+                }
+                audioBuffer.getChannelData(0).set(buffer);
+                let source = this.audioContext.createBufferSource();
+                source.buffer = audioBuffer;
+                source.connect(this.audioGainNode);
+                source.start(0);
+            }
+            return;
+        }
+        // console.log('browser onAudioProcess() ->', processingEvent);
         let inputBuffer = processingEvent.inputBuffer;
         let outputBuffer = processingEvent.outputBuffer;
         let inputData = inputBuffer.getChannelData(0);
@@ -2037,10 +2119,6 @@ let WebAudioRecorder = class WebAudioRecorder {
             }
             // absValue is what we use to monitor volume = abs(value)
             absValue = Math.abs(clippedValue);
-            // clip monitored volume at [0, 1]
-            // if (absValue > 1) {
-            //     absValue = 1;
-            // }
             // keep track of volume using abs value
             if (absValue > this.currentVolume) {
                 this.currentVolume = absValue;
@@ -2053,7 +2131,7 @@ let WebAudioRecorder = class WebAudioRecorder {
                 this.valueCB(clippedValue);
                 this.nRecordedSamples++;
             }
-        } // for (i ...
+        }
     }
     /**
      * Create audioGainNode & scriptProcessorNode
@@ -2062,15 +2140,17 @@ let WebAudioRecorder = class WebAudioRecorder {
     createNodes() {
         console.log('createNodes()');
         this.audioContext = this.audioContextGenerator.createAudioContext();
-        this.audioContextGenerator.setAudioContext(this.audioContext);
-        this.sampleRate = this.audioContext.sampleRate;
-        // create the gainNode
-        this.audioGainNode = this.audioContext.createGain();
-        // create and configure the scriptProcessorNode
-        this.scriptProcessorNode = this.audioContext.createScriptProcessor(PROCESSING_BUFFER_LENGTH, 1, 1);
-        this.scriptProcessorNode.onaudioprocess = (processingEvent) => {
-            this.onAudioProcess(processingEvent);
-        };
+        if (this.audioContext) {
+            this.audioContextGenerator.setAudioContext(this.audioContext);
+            this.sampleRate = this.audioContext.sampleRate;
+            // create the gainNode
+            this.audioGainNode = this.audioContext.createGain();
+            // create and configure the scriptProcessorNode
+            this.scriptProcessorNode = this.audioContext.createScriptProcessor(PROCESSING_BUFFER_LENGTH, 1, 1);
+            this.scriptProcessorNode.onaudioprocess = (processingEvent) => {
+                this.onAudioProcess(processingEvent);
+            };
+        }
     }
     /**
      * Create the following nodes:
@@ -2083,6 +2163,20 @@ let WebAudioRecorder = class WebAudioRecorder {
      */
     connectNodes(stream) {
         console.log('connectNodes()');
+        const self = this;
+        if (this.isMobileAudioInput) {
+            // DO MOBILE STUFF WITH AUDIOINPUT
+            audioinput.start({ bufferSize: PROCESSING_BUFFER_LENGTH, streamToWebAudio: false });
+            window.addEventListener('audioinput', (event) => {
+                self.onAudioProcess(event);
+                // console.log('DATA FROM AUDIOINPUT', event);
+            }, false);
+            audioinput.connect(this.audioGainNode);
+            this.audioGainNode.connect(this.audioContext.destination);
+            // audioinput.connect(this.audioContext.destination);
+            this.status = RecordStatus.READY_STATE;
+            return;
+        }
         // TODO: a check here that this.mediaStream is valid
         // create a source node out of the audio media stream
         // (the other nodes, which do not require a stream for their
@@ -2211,7 +2305,11 @@ let WebAudioRecorder = class WebAudioRecorder {
     reset() {
         this.isRecording = false;
         this.isInactive = true;
-        this.status = RecordStatus.UNINITIALIZED_STATE;
+        //if(this.isMobileAudioInput) this.status = RecordStatus.UNINITIALIZED_STATE;
+        if (audioinput && this.isMobileAudioInput) {
+            audioinput.stop((url) => { console.log('FINAL URL -> ', url); });
+            audioinput.disconnect();
+        }
     }
     /**
      * Returns recording time, in seconds.
@@ -2223,22 +2321,22 @@ let WebAudioRecorder = class WebAudioRecorder {
 };
 WebAudioRecorder = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2____["a" /* AudioContextGenerator */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2____["a" /* AudioContextGenerator */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["g" /* Platform */]])
 ], WebAudioRecorder);
 
 //# sourceMappingURL=recorder.js.map
 
 /***/ }),
 
-/***/ 434:
+/***/ 432:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(435);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_web_animations_js_web_animations_min__ = __webpack_require__(439);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(433);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_web_animations_js_web_animations_min__ = __webpack_require__(437);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_web_animations_js_web_animations_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_web_animations_js_web_animations_min__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_module__ = __webpack_require__(440);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_module__ = __webpack_require__(438);
 
 
 
@@ -2247,43 +2345,43 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 440:
+/***/ 438:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_webdnn__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_webdnn__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_webdnn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_webdnn__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_platform_browser__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_platform_browser__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__(500);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_about_about__ = __webpack_require__(299);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_contact_contact__ = __webpack_require__(300);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_home_home__ = __webpack_require__(301);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_chat_watson_chat__ = __webpack_require__(302);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_picture_analisys_picture_analisys__ = __webpack_require__(325);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_home_formbuilder_form_template_formBuilder__ = __webpack_require__(319);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_home_formbuilder_questions_template_dynamic_form_question_component__ = __webpack_require__(852);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_home_formbuilder_questions_question_control_service__ = __webpack_require__(322);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_home_formbuilder_questions_question_service__ = __webpack_require__(320);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__mappers_question_mapper_service__ = __webpack_require__(321);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__mappers_event_mapper_service__ = __webpack_require__(324);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__angular_platform_browser_animations__ = __webpack_require__(853);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_tabs_tabs__ = __webpack_require__(298);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ionic_native_status_bar__ = __webpack_require__(293);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ionic_native_splash_screen__ = __webpack_require__(297);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22_ng_socket_io__ = __webpack_require__(303);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__(498);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_about_about__ = __webpack_require__(298);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_contact_contact__ = __webpack_require__(299);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_home_home__ = __webpack_require__(300);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_chat_watson_chat__ = __webpack_require__(301);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_picture_analisys_picture_analisys__ = __webpack_require__(324);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_home_formbuilder_form_template_formBuilder__ = __webpack_require__(318);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_home_formbuilder_questions_template_dynamic_form_question_component__ = __webpack_require__(839);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_home_formbuilder_questions_question_control_service__ = __webpack_require__(321);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_home_formbuilder_questions_question_service__ = __webpack_require__(319);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__mappers_question_mapper_service__ = __webpack_require__(320);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__mappers_event_mapper_service__ = __webpack_require__(323);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__angular_platform_browser_animations__ = __webpack_require__(840);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_tabs_tabs__ = __webpack_require__(297);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ionic_native_status_bar__ = __webpack_require__(292);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ionic_native_splash_screen__ = __webpack_require__(296);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22_ng_socket_io__ = __webpack_require__(302);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_22_ng_socket_io__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__ionic_native_camera__ = __webpack_require__(163);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__ionic_native_file_transfer__ = __webpack_require__(855);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__ionic_native_text_to_speech__ = __webpack_require__(856);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__ionic_native_native_storage__ = __webpack_require__(327);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__app_service__ = __webpack_require__(169);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__ionic_native_speech_recognition__ = __webpack_require__(337);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__providers__ = __webpack_require__(184);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__ionic_native_camera__ = __webpack_require__(162);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__ionic_native_file_transfer__ = __webpack_require__(842);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__ionic_native_text_to_speech__ = __webpack_require__(843);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__ionic_native_native_storage__ = __webpack_require__(326);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__app_service__ = __webpack_require__(168);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__ionic_native_speech_recognition__ = __webpack_require__(336);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__providers__ = __webpack_require__(183);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2387,19 +2485,19 @@ AppModule = __decorate([
 
 /***/ }),
 
-/***/ 500:
+/***/ 498:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(293);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(297);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_tabs_tabs__ = __webpack_require__(298);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_cognitive_services_cognitive_service__ = __webpack_require__(164);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_service__ = __webpack_require__(169);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_web_audio_wav_recorder__ = __webpack_require__(338);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(292);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(296);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_tabs_tabs__ = __webpack_require__(297);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_cognitive_services_cognitive_service__ = __webpack_require__(163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_service__ = __webpack_require__(168);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_web_audio_wav_recorder__ = __webpack_require__(337);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2459,12 +2557,12 @@ let MyApp = class MyApp {
         if (!this.speaking) {
             this.speaking = true;
             this.spokenMessage = '';
-            // this.recorder.start().then(() => {
-            //   // READY
-            //   this.debug += 'READY TO SPEAK';
-            //   console.log('READY TO SPEAK');
-            // });
-            this.cognitiveService.speak();
+            this.recorder.start().then(() => {
+                // READY
+                this.debug += 'READY TO SPEAK';
+                console.log('READY TO SPEAK');
+            });
+            // this.cognitiveService.speak();
         }
         else {
             this.stop(true);
@@ -2475,26 +2573,29 @@ let MyApp = class MyApp {
         this.spokenMessage = erase ? '' : this.spokenMessage;
         this.speaking = false;
         this.debug = '';
-        // this.recorder.stop().subscribe((file: File | Blob) => {
-        //   console.log(file);
-        //   self.debug += 'Stoped! File created';
-        //   // TODO send to Azure Bing Speech API by POST
-        //   self.debug = '';
-        //   self.cognitiveService.analyseSound(file).subscribe((data) => {
-        //     console.log('analyseSound() @ success');
-        //     self.debug = '';
-        //     self.debug += file.size + ' -> ';
-        //     self.debug += 'Success!!';
-        //     self.cognitiveService.emitMessage(data);
-        //   }, (error) => {
-        //     self.debug = '';
-        //     self.debug += `An Error ocurred: ${JSON.stringify(error)}`;
-        //     console.log(error);
-        //   });
-        // }, (err: any) => {
-        //   console.log("ERROR ->", err)
-        // });
-        this.cognitiveService.stopSpeaking();
+        let subs = this.recorder.stop().subscribe((file) => {
+            console.log(file);
+            self.debug += 'Stoped! File created';
+            // TODO send to Azure Bing Speech API by POST
+            self.debug = '';
+            self.cognitiveService.analyseSound(file).subscribe((data) => {
+                console.log('analyseSound() @ success');
+                self.debug = '';
+                self.debug += file.size + ' -> ';
+                self.debug += 'Success!!';
+                self.cognitiveService.emitMessage(data);
+                //subs.unsubscribe();
+            }, (error) => {
+                self.debug = '';
+                self.debug += `An Error ocurred: ${JSON.stringify(error)}`;
+                console.log(error);
+                subs.unsubscribe();
+            });
+        }, (err) => {
+            console.log("ERROR ->", err);
+            subs.unsubscribe();
+        });
+        // this.cognitiveService.stopSpeaking();
     }
 };
 MyApp = __decorate([
@@ -2510,18 +2611,18 @@ MyApp = __decorate([
 
 /***/ }),
 
-/***/ 525:
+/***/ 523:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 528:
+/***/ 526:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__question_model__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__question_model__ = __webpack_require__(63);
 
 class DropdownQuestion extends __WEBPACK_IMPORTED_MODULE_0__question_model__["a" /* Question */] {
     constructor(question) {
@@ -2537,11 +2638,11 @@ class DropdownQuestion extends __WEBPACK_IMPORTED_MODULE_0__question_model__["a"
 
 /***/ }),
 
-/***/ 529:
+/***/ 527:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__question_model__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__question_model__ = __webpack_require__(63);
 
 class ToggleQuestion extends __WEBPACK_IMPORTED_MODULE_0__question_model__["a" /* Question */] {
     constructor(options) {
@@ -2555,11 +2656,11 @@ class ToggleQuestion extends __WEBPACK_IMPORTED_MODULE_0__question_model__["a" /
 
 /***/ }),
 
-/***/ 530:
+/***/ 528:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__question_model__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__question_model__ = __webpack_require__(63);
 
 class TextboxQuestion extends __WEBPACK_IMPORTED_MODULE_0__question_model__["a" /* Question */] {
     constructor(options = {}) {
@@ -2573,7 +2674,7 @@ class TextboxQuestion extends __WEBPACK_IMPORTED_MODULE_0__question_model__["a" 
 
 /***/ }),
 
-/***/ 531:
+/***/ 529:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2605,7 +2706,7 @@ const LoaderConfigs = {
 
 /***/ }),
 
-/***/ 64:
+/***/ 63:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2627,11 +2728,11 @@ class Question {
 
 /***/ }),
 
-/***/ 836:
+/***/ 834:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__ = __webpack_require__(95);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__);
 
 /** @const {string} Mime type of wav file */
@@ -2735,7 +2836,7 @@ class WavFile {
 
 /***/ }),
 
-/***/ 837:
+/***/ 835:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2828,13 +2929,13 @@ class DoubleBufferSetter extends DoubleBuffer {
 
 /***/ }),
 
-/***/ 838:
+/***/ 836:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__ = __webpack_require__(95);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models__ = __webpack_require__(430);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models__ = __webpack_require__(429);
 // Copyright (c) 2017 Tracktunes Inc
 
 
@@ -3327,7 +3428,7 @@ class Filesystem {
 
 /***/ }),
 
-/***/ 839:
+/***/ 837:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3654,7 +3755,7 @@ function simulateClick(element) {
 
 /***/ }),
 
-/***/ 840:
+/***/ 838:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3704,14 +3805,14 @@ AudioContextGenerator = __decorate([
 
 /***/ }),
 
-/***/ 852:
+/***/ 839:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DynamicFormQuestionComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__questions_question_model__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__questions_question_model__ = __webpack_require__(63);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3769,5 +3870,5 @@ DynamicFormQuestionComponent = __decorate([
 
 /***/ })
 
-},[434]);
+},[432]);
 //# sourceMappingURL=main.js.map
