@@ -39,12 +39,12 @@ export class MyApp implements OnInit{
         const lowerMsg = this.spokenMessage.toLowerCase();
         if(lowerMsg.indexOf('go to') != -1 && lowerMsg.indexOf('heart disease') != -1) {
           // this.goToForm('hd');
-          this.stop(true);
           this.appService.emitMessage('hd');
+          // this.stop(true); // Dont need to stop here when using DEVICE AUDIOINPUT, only need with native SpeechRecognition
         }
         if(lowerMsg.indexOf('go to') != -1 && lowerMsg.indexOf('flu') != -1) {
-          this.stop(true);
           this.appService.emitMessage('flu');
+          // this.stop(true);
         }
       }
       if(typeof message == 'string'){
@@ -85,17 +85,16 @@ export class MyApp implements OnInit{
         self.debug = '';
         self.debug += file.size + ' -> ';
         self.debug += 'Success!!';
+        console.log(JSON.stringify(data));
         self.cognitiveService.emitMessage(data);
         //subs.unsubscribe();
       }, (error) => {
         self.debug = '';
         self.debug += `An Error ocurred: ${JSON.stringify(error)}`;
         console.log(error);
-        subs.unsubscribe();
       });
     }, (err: any) => {
       console.log("ERROR ->", err);
-      subs.unsubscribe();
     });
     // this.cognitiveService.stopSpeaking();
   }

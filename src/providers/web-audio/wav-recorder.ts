@@ -8,7 +8,9 @@ import { AudioContextGenerator } from '../';
 import { Platform } from 'ionic-angular';
 
 // make this a multiple of PROCESSING_BUFFER_LENGTH (from record.ts)
-export const WAV_CHUNK_LENGTH: number = 131072;
+// export const WAV_CHUNK_LENGTH: number = 4096;
+export const WAV_CHUNK_LENGTH: number = 262144;
+// export const WAV_CHUNK_LENGTH: number = 131072;
 
 // pre-allocate the double chunk buffers used for saving to DB
 const WAV_CHUNK1: Int16Array = new Int16Array(WAV_CHUNK_LENGTH);

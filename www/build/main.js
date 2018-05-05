@@ -393,7 +393,7 @@ let TabsPage = class TabsPage {
     }
 };
 TabsPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"/Users/gabrielfreiredev/Documents/ai_diagnosis/src/pages/tabs/tabs.html"*/'<ion-tabs>\n    <ion-tab [root]="tab1Root" tabTitle="Home" tabIcon="home"></ion-tab>\n    <ion-tab [root]="tab2Root" tabTitle="About" tabIcon="information-circle"></ion-tab>\n    <ion-tab [root]="tab3Root" tabTitle="Contact" tabIcon="contacts"></ion-tab>\n</ion-tabs>'/*ion-inline-end:"/Users/gabrielfreiredev/Documents/ai_diagnosis/src/pages/tabs/tabs.html"*/
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\tabs\tabs.html"*/'<ion-tabs>\n\n    <ion-tab [root]="tab1Root" tabTitle="Home" tabIcon="home"></ion-tab>\n\n    <ion-tab [root]="tab2Root" tabTitle="About" tabIcon="information-circle"></ion-tab>\n\n    <ion-tab [root]="tab3Root" tabTitle="Contact" tabIcon="contacts"></ion-tab>\n\n</ion-tabs>'/*ion-inline-end:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\tabs\tabs.html"*/
     }),
     __metadata("design:paramtypes", [])
 ], TabsPage);
@@ -762,7 +762,7 @@ let AboutPage = class AboutPage {
 };
 AboutPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-about',template:/*ion-inline-start:"/Users/gabrielfreiredev/Documents/ai_diagnosis/src/pages/about/about.html"*/'<ion-header>\n    <ion-navbar>\n        <ion-title>\n            About\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <ion-card color="dark">\n        <ion-card-header>Question data format</ion-card-header>\n        <ion-card-content>\n            <pre>{{dataie}}</pre>\n        </ion-card-content>\n    </ion-card>\n    <ion-card color="dark">\n        <ion-card-header>Rule data format</ion-card-header>\n        <ion-card-content>\n            <pre>{{ruleie}}</pre>\n        </ion-card-content>\n    </ion-card>\n    <ion-card color="dark">\n        <ion-card-header>Heart Disease Data</ion-card-header>\n        <ion-card-content>\n            <img src="assets/imgs/age_patients.png">\n            <img src="assets/imgs/hd_patients.png">\n        </ion-card-content>\n    </ion-card>\n    <ion-card color="dark">\n        <ion-card-header>Heart Disease Neural Network Model</ion-card-header>\n        <ion-card-content>\n            <img src="assets/imgs/nn_graph.png">\n            <img src="assets/imgs/accuracy_cost.png">\n        </ion-card-content>\n    </ion-card>\n    <ion-card color="dark">\n        <ion-card-header>New Heart Disease Neural Network Model</ion-card-header>\n        <ion-card-content>\n            <img src="assets/imgs/nn_graph_97.png">\n            <img src="assets/imgs/accuracy_cost_2.png">\n        </ion-card-content>\n    </ion-card>\n</ion-content>'/*ion-inline-end:"/Users/gabrielfreiredev/Documents/ai_diagnosis/src/pages/about/about.html"*/
+        selector: 'page-about',template:/*ion-inline-start:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\about\about.html"*/'<ion-header>\n\n    <ion-navbar>\n\n        <ion-title>\n\n            About\n\n        </ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n    <ion-card color="dark">\n\n        <ion-card-header>Question data format</ion-card-header>\n\n        <ion-card-content>\n\n            <pre>{{dataie}}</pre>\n\n        </ion-card-content>\n\n    </ion-card>\n\n    <ion-card color="dark">\n\n        <ion-card-header>Rule data format</ion-card-header>\n\n        <ion-card-content>\n\n            <pre>{{ruleie}}</pre>\n\n        </ion-card-content>\n\n    </ion-card>\n\n    <ion-card color="dark">\n\n        <ion-card-header>Heart Disease Data</ion-card-header>\n\n        <ion-card-content>\n\n            <img src="assets/imgs/age_patients.png">\n\n            <img src="assets/imgs/hd_patients.png">\n\n        </ion-card-content>\n\n    </ion-card>\n\n    <ion-card color="dark">\n\n        <ion-card-header>Heart Disease Neural Network Model</ion-card-header>\n\n        <ion-card-content>\n\n            <img src="assets/imgs/nn_graph.png">\n\n            <img src="assets/imgs/accuracy_cost.png">\n\n        </ion-card-content>\n\n    </ion-card>\n\n    <ion-card color="dark">\n\n        <ion-card-header>New Heart Disease Neural Network Model</ion-card-header>\n\n        <ion-card-content>\n\n            <img src="assets/imgs/nn_graph_97.png">\n\n            <img src="assets/imgs/accuracy_cost_2.png">\n\n        </ion-card-content>\n\n    </ion-card>\n\n</ion-content>'/*ion-inline-end:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\about\about.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */]])
 ], AboutPage);
@@ -796,7 +796,7 @@ let ContactPage = class ContactPage {
 };
 ContactPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-contact',template:/*ion-inline-start:"/Users/gabrielfreiredev/Documents/ai_diagnosis/src/pages/contact/contact.html"*/'<ion-header>\n    <ion-navbar>\n        <ion-title>\n            Contact\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <ion-list>\n        <ion-list-header>Follow IMS on LinkedIn</ion-list-header>\n        <ion-item>\n            <ion-icon name="ionic" item-start></ion-icon>\n            <a href="https://www.linkedin.com/company/1308682/" style="font-size:11px">https://www.linkedin.com/company/1308682/</a>\n        </ion-item>\n    </ion-list>\n</ion-content>'/*ion-inline-end:"/Users/gabrielfreiredev/Documents/ai_diagnosis/src/pages/contact/contact.html"*/
+        selector: 'page-contact',template:/*ion-inline-start:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\contact\contact.html"*/'<ion-header>\n\n    <ion-navbar>\n\n        <ion-title>\n\n            Contact\n\n        </ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n    <ion-list>\n\n        <ion-list-header>Follow IMS on LinkedIn</ion-list-header>\n\n        <ion-item>\n\n            <ion-icon name="ionic" item-start></ion-icon>\n\n            <a href="https://www.linkedin.com/company/1308682/" style="font-size:11px">https://www.linkedin.com/company/1308682/</a>\n\n        </ion-item>\n\n    </ion-list>\n\n</ion-content>'/*ion-inline-end:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\contact\contact.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */]])
 ], ContactPage);
@@ -863,7 +863,7 @@ let HomePage = class HomePage {
 };
 HomePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-home',template:/*ion-inline-start:"/Users/gabrielfreiredev/Documents/ai_diagnosis/src/pages/home/home.html"*/'<ion-header>\n    <ion-navbar>\n        <ion-title>IMS Diagnosis</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <h3>Select a Diagnosis</h3>\n    <button full ion-button color="calm" (click)="goToForm(\'flu\')">Flu Diagnosis</button>\n    <button full ion-button color="calm" (click)="goToForm(\'hd\')">Heart Disease Diagnosis</button>\n    <button full ion-button color="calm" (click)="goToForm(\'mh\')">Patient Health Questionnaire (PHQ-9)</button>\n    <h3>Watson Services</h3>\n    <button full ion-button color="calm" (click)="goToForm(\'watson\')">Ask Watson Discovery</button>\n    <button full ion-button color="calm" (click)="goToChat()">Ask Watson in a Conversation</button>\n    <h3>MS Azure Services</h3>\n    <button full ion-button color="calm" (click)="goToPictureAnalisys()">Analyze a picture</button>\n    <!-- <div class="speakerContainer">\n        <h4 *ngIf="spokenMessage && spokenMessage !== undefined">{{spokenMessage}}</h4>\n        <button (click)="speakStop()" [ngClass]="{\'active\': speaking}" class="floating" color="calm">\n            <ion-icon name="mic"></ion-icon>\n        </button>\n    </div> -->\n</ion-content>'/*ion-inline-end:"/Users/gabrielfreiredev/Documents/ai_diagnosis/src/pages/home/home.html"*/
+        selector: 'page-home',template:/*ion-inline-start:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\home\home.html"*/'<ion-header>\n\n    <ion-navbar>\n\n        <ion-title>IMS Diagnosis</ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n    <h3>Select a Diagnosis</h3>\n\n    <button full ion-button color="calm" (click)="goToForm(\'flu\')">Flu Diagnosis</button>\n\n    <button full ion-button color="calm" (click)="goToForm(\'hd\')">Heart Disease Diagnosis</button>\n\n    <button full ion-button color="calm" (click)="goToForm(\'mh\')">Patient Health Questionnaire (PHQ-9)</button>\n\n    <h3>Watson Services</h3>\n\n    <button full ion-button color="calm" (click)="goToForm(\'watson\')">Ask Watson Discovery</button>\n\n    <button full ion-button color="calm" (click)="goToChat()">Ask Watson in a Conversation</button>\n\n    <h3>MS Azure Services</h3>\n\n    <button full ion-button color="calm" (click)="goToPictureAnalisys()">Analyze a picture</button>\n\n    <!-- <div class="speakerContainer">\n\n        <h4 *ngIf="spokenMessage && spokenMessage !== undefined">{{spokenMessage}}</h4>\n\n        <button (click)="speakStop()" [ngClass]="{\'active\': speaking}" class="floating" color="calm">\n\n            <ion-icon name="mic"></ion-icon>\n\n        </button>\n\n    </div> -->\n\n</ion-content>'/*ion-inline-end:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\home\home.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */], __WEBPACK_IMPORTED_MODULE_4__ionic_native_camera__["a" /* Camera */],
         __WEBPACK_IMPORTED_MODULE_6__app_app_service__["a" /* AppService */]])
@@ -940,7 +940,7 @@ __decorate([
 ], ChatPage.prototype, "content", void 0);
 ChatPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'app-chat',template:/*ion-inline-start:"/Users/gabrielfreiredev/Documents/ai_diagnosis/src/pages/chat_watson/chat.html"*/'<ion-header>\n    <ion-navbar>\n        <ion-title>\n            Ask Dr. Watson\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content #content class="scroll-content" padding class="home">\n\n    <ion-list #list padding no-lines>\n        <span *ngFor="let message of messages">\n                <ion-item *ngIf="message.indexOf(\'Dr. Watson:\') !== -1">\n                    <ion-card class="chat-baloon" color="white" item-left>\n                        <ion-card-content>\n                            <h2 [style.color]="\'black\'" [innerHTML]="message"></h2>\n                        </ion-card-content>\n                    </ion-card>\n                </ion-item>\n                <ion-item *ngIf="message.indexOf(\'Dr. Watson:\') == -1">\n                    <ion-card class="chat-baloon" color="white" item-right>\n                        <ion-card-content>\n                            <h2 [style.color]="\'gray\'" [innerHTML]="message"></h2>\n                        </ion-card-content>\n                    </ion-card>\n                </ion-item>\n            </span>\n    </ion-list>\n\n</ion-content>\n<ion-footer>\n    <ion-item-group>\n        <ion-input item-left class="chat-input" type="text" [(ngModel)]="chatBox" placeholder="Your message...">\n        </ion-input>\n        <button block item-right ion-button (click)="send(chatBox)">Send</button>\n    </ion-item-group>\n</ion-footer>'/*ion-inline-end:"/Users/gabrielfreiredev/Documents/ai_diagnosis/src/pages/chat_watson/chat.html"*/,
+        selector: 'app-chat',template:/*ion-inline-start:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\chat_watson\chat.html"*/'<ion-header>\n\n    <ion-navbar>\n\n        <ion-title>\n\n            Ask Dr. Watson\n\n        </ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content #content class="scroll-content" padding class="home">\n\n\n\n    <ion-list #list padding no-lines>\n\n        <span *ngFor="let message of messages">\n\n                <ion-item *ngIf="message.indexOf(\'Dr. Watson:\') !== -1">\n\n                    <ion-card class="chat-baloon" color="white" item-left>\n\n                        <ion-card-content>\n\n                            <h2 [style.color]="\'black\'" [innerHTML]="message"></h2>\n\n                        </ion-card-content>\n\n                    </ion-card>\n\n                </ion-item>\n\n                <ion-item *ngIf="message.indexOf(\'Dr. Watson:\') == -1">\n\n                    <ion-card class="chat-baloon" color="white" item-right>\n\n                        <ion-card-content>\n\n                            <h2 [style.color]="\'gray\'" [innerHTML]="message"></h2>\n\n                        </ion-card-content>\n\n                    </ion-card>\n\n                </ion-item>\n\n            </span>\n\n    </ion-list>\n\n\n\n</ion-content>\n\n<ion-footer>\n\n    <ion-item-group>\n\n        <ion-input item-left class="chat-input" type="text" [(ngModel)]="chatBox" placeholder="Your message...">\n\n        </ion-input>\n\n        <button block item-right ion-button (click)="send(chatBox)">Send</button>\n\n    </ion-item-group>\n\n</ion-footer>'/*ion-inline-end:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\chat_watson\chat.html"*/,
         styles: ['./chat.scss']
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ng_socket_io__["Socket"]])
@@ -1102,7 +1102,7 @@ __decorate([
 ], FormBuilderCustom.prototype, "changeEvent", void 0);
 FormBuilderCustom = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'app-form',template:/*ion-inline-start:"/Users/gabrielfreiredev/Documents/ai_diagnosis/src/pages/home/formbuilder/form-template/formBuilder.html"*/'<ion-header>\n    <ion-navbar>\n        <ion-title>{{title}}</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n    <div *ngIf="form">\n        <!-- <h4 *ngIf="questions && questions.length">{{title}}</h4> -->\n        <form (ngSubmit)="onSubmit()" [formGroup]="form">\n            <div *ngFor="let question of questions" class="form-row">\n                <df-question [changeEvent]="changeEvent" [question]="question" [form]="form"></df-question>\n            </div>\n\n            <div *ngIf="hasSubmit" class="form-row">\n\n                <button full ion-button color="calm" type="submit" [disabled]="!form.valid">Get Diagnostic</button>\n\n            </div>\n        </form>\n\n\n        <!-- ASK WATSON DISCOVERY -->\n        <div *ngIf="payLoad && !payLoad.data.prediction && payLoad.data.usage" class="form-row">\n            <pre>{{ payLoad.data | json }}</pre>\n        </div>\n        <div *ngIf="payLoad && !payLoad.data.prediction && !payLoad.data.usage && payLoad.data.results" class="form-row">\n            <ion-card>\n                <ion-card-header>\n                    <h1 ion-text>WATSON</h1>\n                </ion-card-header>\n                <ion-card-content>\n                    <h1 *ngIf="payLoad.data.results.length == 0">No results were found</h1>\n                    <!-- <h1 *ngIf="payLoad.data.results.length">{{payLoad.data.results.length}} results...</h1> -->\n                    <h1 *ngIf="payLoad.data.results.length">Categories:</h1>\n                    <ion-item-group *ngFor="let res of payLoad.data.results">\n                        <ion-item-divider color="light"><strong>Result score: {{res.result_metadata.score}}</strong></ion-item-divider>\n                        <ion-item *ngFor="let cat of res.enriched_text.categories">\n\n                            <p class="label-result-watson-discovery"><strong>Category label:</strong> <span>{{cat.label}}</span></p>\n                            <p class="label-result-watson-discovery"><strong>Category score:</strong> <span>{{cat.score}}</span></p>\n\n                        </ion-item>\n                        <ion-item-divider color="light"><strong>Concepts</strong></ion-item-divider>\n                        <ion-item *ngFor="let concpt of res.enriched_text.concepts">\n\n                            <p class="label-result-watson-discovery"><strong>Concept: </strong><span>{{concpt.text}}</span></p>\n                            <p class="label-result-watson-discovery"><strong>Concept relevance: </strong><span>{{concpt.relevance}}</span></p>\n\n                            <strong>Concept source: </strong>\n                            <a class="label-result-watson-discovery" [href]="concpt.dbpedia_resource" target="_blank"><span>{{concpt.dbpedia_resource}}</span></a>\n                        </ion-item>\n                    </ion-item-group>\n                    <h1 *ngIf="payLoad.data.results.length">Passages:</h1>\n                    <ion-item-group *ngFor="let passage of payLoad.data.passages">\n                        <ion-item-divider color="light"><strong>Relevance score: {{passage.passage_score.toFixed(2)}}</strong></ion-item-divider>\n                        <ion-item>\n                            <p class="label-result-watson-discovery" [innerHTML]="passage.passage_text"></p>\n                        </ion-item>\n                    </ion-item-group>\n                </ion-card-content>\n            </ion-card>\n\n        </div>\n\n\n        <!-- FLU DIAGNOSIS -->\n        <div *ngIf="payLoad && !payLoad.data.score && !payLoad.data.prediction && !payLoad.data.usage && !payLoad.data.results" class="form-row">\n\n            <ion-card [style.backgroundColor]="payLoad.data.message ? \'#ffdada\' : \'#e6ffe6\'">\n\n                <ion-card-header>\n                    <!-- <h1>Diagnosis:</h1> -->\n                </ion-card-header>\n\n                <ion-card-content>\n                    <!-- Add card content here! -->\n                    <h1 ion-text [style.color]="payLoad.data.message ? \'red\' : \'green\'">\n                        <ion-icon name="{{payLoad.data.message ? \'alert\' : \'checkmark\'}}"></ion-icon> {{payLoad.data.message ? payLoad.data.message : \'This patient does not seem to have the flu\'}}</h1>\n                    <span *ngIf="payLoad.data.recommendations && payLoad.data.recommendations.length">\n                        <ion-item-group>\n                            <ion-item-divider color="light"><strong>Recommendations:</strong></ion-item-divider>\n                            <ion-item *ngFor="let rec of payLoad.data.recommendations">\n                                    <ion-icon name="alert"></ion-icon> {{rec}}\n                            </ion-item>\n                        </ion-item-group>\n                    </span>\n                </ion-card-content>\n\n            </ion-card>\n        </div>\n\n        <!-- MENTAL HEALTH DIAGNOSIS -->\n        <div *ngIf="payLoad && payLoad.data.score && !payLoad.data.prediction && !payLoad.data.usage && !payLoad.data.results" class="form-row">\n\n            <ion-card [style.backgroundColor]="payLoad.data.score >= 15 ? \'#ffdada\' : \'#e6ffe6\'">\n\n                <ion-card-header>\n                    <!-- <h1>Diagnosis:</h1> -->\n                </ion-card-header>\n\n                <ion-card-content>\n                    <!-- Add card content here! -->\n                    <h1 ion-text [style.color]="payLoad.data.score >= 15 ? \'red\' : \'green\'">\n                        <!-- <ion-icon name="{{payLoad.data.message ? \'alert\' : \'checkmark\'}}"></ion-icon> {{payLoad.data.message ? payLoad.data.message : \'This patient does not seem to have the flu\'}}</h1> -->\n                        <ion-icon name="{{payLoad.data.score >= 15 ? \'alert\' : \'checkmark\'}}"></ion-icon> {{\'Score: \' + payLoad.data.score}}</h1>\n                    <h2 ion-text [style.color]="payLoad.data.score >= 15 ? \'red\' : \'green\'">\n                        <ion-icon name="{{payLoad.data.score >= 15 ? \'alert\' : \'checkmark\'}}"></ion-icon> Hi, {{payLoad.data.event.params.message}}</h2>\n                    <span *ngIf="payLoad.data.recommendations && payLoad.data.recommendations.length">\n                        <ion-item-group>\n                            <ion-item-divider color="light"><strong>Recommendations:</strong></ion-item-divider>\n                            <ion-item *ngFor="let rec of payLoad.data.recommendations">\n                                    <ion-icon name="alert"></ion-icon> {{rec}}\n                            </ion-item>\n                        </ion-item-group>\n                    </span>\n                </ion-card-content>\n\n            </ion-card>\n        </div>\n\n\n        <!-- PRESENCE OF HEART DISEASE AI NEURAL NETWORK -->\n        <div *ngIf="payLoad && payLoad.data.prediction && !payLoad.data.usage && !payLoad.data.results" class="form-row">\n\n            <ion-card [style.backgroundColor]="payLoad.data.prediction[0] > 5 ? \'#ffdada\' : \'#e6ffe6\'">\n\n                <ion-card-header>\n                    <h1 ion-text>AI Predicted:</h1>\n                </ion-card-header>\n\n                <ion-card-content>\n                    <span *ngIf="payLoad.data.prediction && payLoad.data.prediction.length">\n                            <ion-item-group>\n                                <ion-item>\n                                    <p style="font-size:1.2em; text-align:center; justify-content:center; margin: 0 auto; color:rgb(19, 19, 38)"><strong>Presence of Heart Disease score from 0 to 10 where 0 means no presence and 10 means <br>absolute presence of some Heart Disease:</strong></p><br>\n                                </ion-item>\n                                <ion-item>\n                                    <p style="font-size:2em; text-align:center; justify-content:center; margin: 0 auto; color:rgb(19, 19, 38)"><strong>Score: {{payLoad.data.prediction[0].toFixed(2)}}</strong></p>\n                                <br>\n                                    <p style="font-size:1.4em; text-align:center; justify-content:center; margin: 0 auto;" [style.color]=\'payLoad.data.prediction[0] > 5 ? "red" : "green"\'>\n                                        <ion-icon name="{{payLoad.data.prediction[0] > 5 ? \'alert\' : \'checkmark\'}}"></ion-icon> Hi, {{payLoad.data.event?.params?.message}}\n                                    </p>\n                                </ion-item>\n                                <ion-item>\n                                    <strong>Accuracy:</strong>\n                                    {{payLoad.data.accuracy.toFixed(2)}}%\n                                </ion-item>\n                            </ion-item-group>\n                        </span>\n                </ion-card-content>\n\n            </ion-card>\n            <ion-card *ngIf="payLoad.data.prediction[0] > 5" [style.backgroundColor]="payLoad.data.prediction[0] > 5 ? \'#ffdada\' : \'#e6ffe6\'">\n\n                <ion-card-header>\n                    <h1>Suggestions for treatment:</h1>\n                </ion-card-header>\n\n                <ion-card-content>\n                    <span *ngIf="payLoad.data.prediction && payLoad.data.prediction.length">\n                            <ion-item-group>\n                                <ion-item>\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Excess weight causes your heart to work harder and increases the risk for heart disease,<br> \n                                        high blood pressure, diabetes and high cholesterol. Exercising regularly and eating smaller \n                                        portions of nutrient-rich foods may help you maintain a healthy weight.<br> \n                                        Learn the warning signs of a heart attack and stroke.</strong></p>\n                                </ion-item>\n                                <ion-item>\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Don’t smoke or expose yourself to second-hand smoke.</strong></p>\n                                </ion-item>\n                                <ion-item>\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Maintain a healthy blood pressure.</strong></p>\n                                </ion-item>\n                                <ion-item>\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Monitor your cholesterol (blood lipids).</strong></p>\n                                </ion-item>\n                                <ion-item>\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Make exercise a daily habit.</strong></p>\n                                </ion-item>\n                                <ion-item>\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Reduce stress.</strong></p>\n                                </ion-item>\n                            </ion-item-group>\n                        </span>\n                </ion-card-content>\n\n            </ion-card>\n        </div>\n    </div>\n</ion-content>'/*ion-inline-end:"/Users/gabrielfreiredev/Documents/ai_diagnosis/src/pages/home/formbuilder/form-template/formBuilder.html"*/,
+        selector: 'app-form',template:/*ion-inline-start:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\home\formbuilder\form-template\formBuilder.html"*/'<ion-header>\n\n    <ion-navbar>\n\n        <ion-title>{{title}}</ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n    <div *ngIf="form">\n\n        <!-- <h4 *ngIf="questions && questions.length">{{title}}</h4> -->\n\n        <form (ngSubmit)="onSubmit()" [formGroup]="form">\n\n            <div *ngFor="let question of questions" class="form-row">\n\n                <df-question [changeEvent]="changeEvent" [question]="question" [form]="form"></df-question>\n\n            </div>\n\n\n\n            <div *ngIf="hasSubmit" class="form-row">\n\n\n\n                <button full ion-button color="calm" type="submit" [disabled]="!form.valid">Get Diagnostic</button>\n\n\n\n            </div>\n\n        </form>\n\n\n\n\n\n        <!-- ASK WATSON DISCOVERY -->\n\n        <div *ngIf="payLoad && !payLoad.data.prediction && payLoad.data.usage" class="form-row">\n\n            <pre>{{ payLoad.data | json }}</pre>\n\n        </div>\n\n        <div *ngIf="payLoad && !payLoad.data.prediction && !payLoad.data.usage && payLoad.data.results" class="form-row">\n\n            <ion-card>\n\n                <ion-card-header>\n\n                    <h1 ion-text>WATSON</h1>\n\n                </ion-card-header>\n\n                <ion-card-content>\n\n                    <h1 *ngIf="payLoad.data.results.length == 0">No results were found</h1>\n\n                    <!-- <h1 *ngIf="payLoad.data.results.length">{{payLoad.data.results.length}} results...</h1> -->\n\n                    <h1 *ngIf="payLoad.data.results.length">Categories:</h1>\n\n                    <ion-item-group *ngFor="let res of payLoad.data.results">\n\n                        <ion-item-divider color="light"><strong>Result score: {{res.result_metadata.score}}</strong></ion-item-divider>\n\n                        <ion-item *ngFor="let cat of res.enriched_text.categories">\n\n\n\n                            <p class="label-result-watson-discovery"><strong>Category label:</strong> <span>{{cat.label}}</span></p>\n\n                            <p class="label-result-watson-discovery"><strong>Category score:</strong> <span>{{cat.score}}</span></p>\n\n\n\n                        </ion-item>\n\n                        <ion-item-divider color="light"><strong>Concepts</strong></ion-item-divider>\n\n                        <ion-item *ngFor="let concpt of res.enriched_text.concepts">\n\n\n\n                            <p class="label-result-watson-discovery"><strong>Concept: </strong><span>{{concpt.text}}</span></p>\n\n                            <p class="label-result-watson-discovery"><strong>Concept relevance: </strong><span>{{concpt.relevance}}</span></p>\n\n\n\n                            <strong>Concept source: </strong>\n\n                            <a class="label-result-watson-discovery" [href]="concpt.dbpedia_resource" target="_blank"><span>{{concpt.dbpedia_resource}}</span></a>\n\n                        </ion-item>\n\n                    </ion-item-group>\n\n                    <h1 *ngIf="payLoad.data.results.length">Passages:</h1>\n\n                    <ion-item-group *ngFor="let passage of payLoad.data.passages">\n\n                        <ion-item-divider color="light"><strong>Relevance score: {{passage.passage_score.toFixed(2)}}</strong></ion-item-divider>\n\n                        <ion-item>\n\n                            <p class="label-result-watson-discovery" [innerHTML]="passage.passage_text"></p>\n\n                        </ion-item>\n\n                    </ion-item-group>\n\n                </ion-card-content>\n\n            </ion-card>\n\n\n\n        </div>\n\n\n\n\n\n        <!-- FLU DIAGNOSIS -->\n\n        <div *ngIf="payLoad && !payLoad.data.score && !payLoad.data.prediction && !payLoad.data.usage && !payLoad.data.results" class="form-row">\n\n\n\n            <ion-card [style.backgroundColor]="payLoad.data.message ? \'#ffdada\' : \'#e6ffe6\'">\n\n\n\n                <ion-card-header>\n\n                    <!-- <h1>Diagnosis:</h1> -->\n\n                </ion-card-header>\n\n\n\n                <ion-card-content>\n\n                    <!-- Add card content here! -->\n\n                    <h1 ion-text [style.color]="payLoad.data.message ? \'red\' : \'green\'">\n\n                        <ion-icon name="{{payLoad.data.message ? \'alert\' : \'checkmark\'}}"></ion-icon> {{payLoad.data.message ? payLoad.data.message : \'This patient does not seem to have the flu\'}}</h1>\n\n                    <span *ngIf="payLoad.data.recommendations && payLoad.data.recommendations.length">\n\n                        <ion-item-group>\n\n                            <ion-item-divider color="light"><strong>Recommendations:</strong></ion-item-divider>\n\n                            <ion-item *ngFor="let rec of payLoad.data.recommendations">\n\n                                    <ion-icon name="alert"></ion-icon> {{rec}}\n\n                            </ion-item>\n\n                        </ion-item-group>\n\n                    </span>\n\n                </ion-card-content>\n\n\n\n            </ion-card>\n\n        </div>\n\n\n\n        <!-- MENTAL HEALTH DIAGNOSIS -->\n\n        <div *ngIf="payLoad && payLoad.data.score && !payLoad.data.prediction && !payLoad.data.usage && !payLoad.data.results" class="form-row">\n\n\n\n            <ion-card [style.backgroundColor]="payLoad.data.score >= 15 ? \'#ffdada\' : \'#e6ffe6\'">\n\n\n\n                <ion-card-header>\n\n                    <!-- <h1>Diagnosis:</h1> -->\n\n                </ion-card-header>\n\n\n\n                <ion-card-content>\n\n                    <!-- Add card content here! -->\n\n                    <h1 ion-text [style.color]="payLoad.data.score >= 15 ? \'red\' : \'green\'">\n\n                        <!-- <ion-icon name="{{payLoad.data.message ? \'alert\' : \'checkmark\'}}"></ion-icon> {{payLoad.data.message ? payLoad.data.message : \'This patient does not seem to have the flu\'}}</h1> -->\n\n                        <ion-icon name="{{payLoad.data.score >= 15 ? \'alert\' : \'checkmark\'}}"></ion-icon> {{\'Score: \' + payLoad.data.score}}</h1>\n\n                    <h2 ion-text [style.color]="payLoad.data.score >= 15 ? \'red\' : \'green\'">\n\n                        <ion-icon name="{{payLoad.data.score >= 15 ? \'alert\' : \'checkmark\'}}"></ion-icon> Hi, {{payLoad.data.event.params.message}}</h2>\n\n                    <span *ngIf="payLoad.data.recommendations && payLoad.data.recommendations.length">\n\n                        <ion-item-group>\n\n                            <ion-item-divider color="light"><strong>Recommendations:</strong></ion-item-divider>\n\n                            <ion-item *ngFor="let rec of payLoad.data.recommendations">\n\n                                    <ion-icon name="alert"></ion-icon> {{rec}}\n\n                            </ion-item>\n\n                        </ion-item-group>\n\n                    </span>\n\n                </ion-card-content>\n\n\n\n            </ion-card>\n\n        </div>\n\n\n\n\n\n        <!-- PRESENCE OF HEART DISEASE AI NEURAL NETWORK -->\n\n        <div *ngIf="payLoad && payLoad.data.prediction && !payLoad.data.usage && !payLoad.data.results" class="form-row">\n\n\n\n            <ion-card [style.backgroundColor]="payLoad.data.prediction[0] > 5 ? \'#ffdada\' : \'#e6ffe6\'">\n\n\n\n                <ion-card-header>\n\n                    <h1 ion-text>AI Predicted:</h1>\n\n                </ion-card-header>\n\n\n\n                <ion-card-content>\n\n                    <span *ngIf="payLoad.data.prediction && payLoad.data.prediction.length">\n\n                            <ion-item-group>\n\n                                <ion-item>\n\n                                    <p style="font-size:1.2em; text-align:center; justify-content:center; margin: 0 auto; color:rgb(19, 19, 38)"><strong>Presence of Heart Disease score from 0 to 10 where 0 means no presence and 10 means <br>absolute presence of some Heart Disease:</strong></p><br>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p style="font-size:2em; text-align:center; justify-content:center; margin: 0 auto; color:rgb(19, 19, 38)"><strong>Score: {{payLoad.data.prediction[0].toFixed(2)}}</strong></p>\n\n                                <br>\n\n                                    <p style="font-size:1.4em; text-align:center; justify-content:center; margin: 0 auto;" [style.color]=\'payLoad.data.prediction[0] > 5 ? "red" : "green"\'>\n\n                                        <ion-icon name="{{payLoad.data.prediction[0] > 5 ? \'alert\' : \'checkmark\'}}"></ion-icon> Hi, {{payLoad.data.event?.params?.message}}\n\n                                    </p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <strong>Accuracy:</strong>\n\n                                    {{payLoad.data.accuracy.toFixed(2)}}%\n\n                                </ion-item>\n\n                            </ion-item-group>\n\n                        </span>\n\n                </ion-card-content>\n\n\n\n            </ion-card>\n\n            <ion-card *ngIf="payLoad.data.prediction[0] > 5" [style.backgroundColor]="payLoad.data.prediction[0] > 5 ? \'#ffdada\' : \'#e6ffe6\'">\n\n\n\n                <ion-card-header>\n\n                    <h1>Suggestions for treatment:</h1>\n\n                </ion-card-header>\n\n\n\n                <ion-card-content>\n\n                    <span *ngIf="payLoad.data.prediction && payLoad.data.prediction.length">\n\n                            <ion-item-group>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Excess weight causes your heart to work harder and increases the risk for heart disease,<br> \n\n                                        high blood pressure, diabetes and high cholesterol. Exercising regularly and eating smaller \n\n                                        portions of nutrient-rich foods may help you maintain a healthy weight.<br> \n\n                                        Learn the warning signs of a heart attack and stroke.</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Don’t smoke or expose yourself to second-hand smoke.</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Maintain a healthy blood pressure.</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Monitor your cholesterol (blood lipids).</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Make exercise a daily habit.</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Reduce stress.</strong></p>\n\n                                </ion-item>\n\n                            </ion-item-group>\n\n                        </span>\n\n                </ion-card-content>\n\n\n\n            </ion-card>\n\n        </div>\n\n    </div>\n\n</ion-content>'/*ion-inline-end:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\home\formbuilder\form-template\formBuilder.html"*/,
         styles: ['./formBuilder.scss']
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__questions_question_control_service__["a" /* QuestionControlService */],
@@ -1598,7 +1598,7 @@ let PictureAnalisysPage = class PictureAnalisysPage {
 };
 PictureAnalisysPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-picture-analisys',template:/*ion-inline-start:"/Users/gabrielfreiredev/Documents/ai_diagnosis/src/pages/picture-analisys/picture-analisys.html"*/'<!--\n  Generated template for the PictureAnalisysPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n    <ion-navbar>\n        <ion-title>pictureAnalisys</ion-title>\n    </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n    <img *ngIf="picture" [src]="picture" />\n    <div class="container-description" (click)="takePicture()">\n        <!-- Image description -->\n        <p class="image-description">{{imageDescription}}</p>\n        <p *ngIf="error" class="error">{{error}}</p>\n    </div>\n</ion-content>'/*ion-inline-end:"/Users/gabrielfreiredev/Documents/ai_diagnosis/src/pages/picture-analisys/picture-analisys.html"*/,
+        selector: 'page-picture-analisys',template:/*ion-inline-start:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\picture-analisys\picture-analisys.html"*/'<!--\n\n  Generated template for the PictureAnalisysPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n    <ion-navbar>\n\n        <ion-title>pictureAnalisys</ion-title>\n\n    </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n    <img *ngIf="picture" [src]="picture" />\n\n    <div class="container-description" (click)="takePicture()">\n\n        <!-- Image description -->\n\n        <p class="image-description">{{imageDescription}}</p>\n\n        <p *ngIf="error" class="error">{{error}}</p>\n\n    </div>\n\n</ion-content>'/*ion-inline-end:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\picture-analisys\picture-analisys.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */],
@@ -1694,9 +1694,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 
 
 // make this a multiple of PROCESSING_BUFFER_LENGTH (from record.ts)
-const WAV_CHUNK_LENGTH = 131072;
+// export const WAV_CHUNK_LENGTH: number = 4096;
+const WAV_CHUNK_LENGTH = 262144;
 /* unused harmony export WAV_CHUNK_LENGTH */
 
+// export const WAV_CHUNK_LENGTH: number = 131072;
 // pre-allocate the double chunk buffers used for saving to DB
 const WAV_CHUNK1 = new Int16Array(WAV_CHUNK_LENGTH);
 const WAV_CHUNK2 = new Int16Array(WAV_CHUNK_LENGTH);
@@ -1873,7 +1875,7 @@ const RECORDER_CLOCK_FUNCTION_NAME = 'recorder';
  * @const {string} Length of script processing buffer - (a) this must be a
  * power of 2; (b) the smaller this is, the more accurately we track time.
  */
-const PROCESSING_BUFFER_LENGTH = 4096;
+const PROCESSING_BUFFER_LENGTH = 16384;
 /** @const {number}  Waiting time between checks that WAA is initialized */
 const WAIT_MSEC = 50;
 // statuses
@@ -1914,14 +1916,13 @@ let WebAudioRecorder = class WebAudioRecorder {
         this.audioContextGenerator = audioContextGenerator;
         this.platform = platform;
         console.log('constructor()');
+        const self = this;
         this.nClipped = 0;
-        // WONT CREATE AUDIO CONTEXT HERE BECAUSE IOS DOENS'T ALLOW IT TO BE CREATED THIS WAY
-        // if (!AUDIO_CONTEXT) {
-        //     this.status = RecordStatus.NO_CONTEXT_ERROR;
-        //     return;
-        // }
         this.status = RecordStatus.UNINITIALIZED_STATE;
         this.isMobileAudioInput = false;
+        window.addEventListener('audioinput', (event) => {
+            self.onAudioProcess(event);
+        }, false);
     }
     /**
      * Wait indefinitely until DB is ready for use, via an observable.
@@ -1970,16 +1971,16 @@ let WebAudioRecorder = class WebAudioRecorder {
                     audioinput.initialize(captureCfg, () => {
                         audioinput.checkMicrophonePermission((hasPermission) => {
                             if (hasPermission) {
-                                console.log('Already have permission to record');
+                                console.warn('Already have permission to record');
                                 // startRecording
                                 this.connectNodes();
                             }
                             else {
-                                console.log('No permission to record yet');
-                                console.log('Asking...');
+                                console.warn('No permission to record yet');
+                                console.warn('Asking...');
                                 audioinput.getMicrophonePermission((hasPermission, message) => {
                                     if (hasPermission) {
-                                        console.log('User granted permission to record');
+                                        console.warn('User granted permission to record');
                                         this.connectNodes();
                                     }
                                     else {
@@ -2012,9 +2013,7 @@ let WebAudioRecorder = class WebAudioRecorder {
                 })
                     .catch((err) => {
                     this.status = RecordStatus.NO_MICROPHONE_ERROR;
-                    const msg = 'initAudio(new): err: ' +
-                        err + ', code: ' + err.code;
-                    // alert(msg);
+                    const msg = 'initAudio(new): err: ' + err + ', code: ' + err.code;
                     console.log(msg);
                 });
             }
@@ -2031,24 +2030,19 @@ let WebAudioRecorder = class WebAudioRecorder {
                             this.connectNodes(stream);
                         }, (err) => {
                             this.status = RecordStatus.NO_MICROPHONE_ERROR;
-                            const msg = 'initAudio(old1): err: ' +
-                                err + ', code: ' + err.code;
-                            // alert(msg);
+                            const msg = 'initAudio(old1): err: ' + err + ', code: ' + err.code;
                             console.log(msg);
                         });
                     }
                     catch (err) {
                         this.status = RecordStatus.GETUSERMEDIA_ERROR;
-                        const msg = 'initAudio(old2): err: ' +
-                            err + ', code: ' + err.code;
-                        // alert(msg);
+                        const msg = 'initAudio(old2): err: ' + err + ', code: ' + err.code;
                         console.log(msg);
                     }
                 }
                 else {
                     // neither old nor new getUserMedia are available
                     console.warn('initAudio() Error: no getUserMedia');
-                    // alert('initAudio() Error: no getUserMedia');
                     this.status = RecordStatus.NO_GETUSERMEDIA_ERROR;
                 }
             }
@@ -2062,7 +2056,7 @@ let WebAudioRecorder = class WebAudioRecorder {
         // console.log('onAudioProcess() ' + this.isRecording);
         if (this.isMobileAudioInput) {
             // DO MOBILE STUFF
-            console.log('mobile onAudioProcess() ->', processingEvent.data.length);
+            // console.log('mobile onAudioProcess() -> ' + (<any>processingEvent).data.length); // DEBUG ONLY
             if (processingEvent && processingEvent.data) {
                 let inputData = processingEvent.data;
                 let i;
@@ -2072,29 +2066,27 @@ let WebAudioRecorder = class WebAudioRecorder {
                 let audioBuffer = this.audioContext.createBuffer(1, (inputData.length / 1), this.audioContext.sampleRate);
                 //let buffer = _normalizeAudio(inputData);
                 let buffer = [];
-                for (i = 0; i < inputData.length; i++) {
+                for (i = 0; i < PROCESSING_BUFFER_LENGTH; i++) {
                     value = inputData[i];
+                    //   const clippedValue: number = value / 32767.0;
                     const clippedValue = Math.max(-1.0, Math.min(1.0, value));
                     if (value !== clippedValue) {
                         this.nClipped++;
                     }
-                    absValue = Math.abs(clippedValue);
-                    // keep track of volume using abs value
-                    if (absValue > this.currentVolume) {
-                        this.currentVolume = absValue;
-                    }
                     if (this.isRecording) {
-                        // outputData[i] = clippedValue;
                         buffer.push(clippedValue);
                         this.valueCB(clippedValue);
                         this.nRecordedSamples++;
                     }
                 }
-                audioBuffer.getChannelData(0).set(buffer);
-                let source = this.audioContext.createBufferSource();
-                source.buffer = audioBuffer;
-                source.connect(this.audioGainNode);
-                source.start(0);
+                // Listen to myself for debugging purposes
+                if (this.isRecording) {
+                    audioBuffer.getChannelData(0).set(buffer);
+                    let source = this.audioContext.createBufferSource();
+                    source.buffer = audioBuffer;
+                    source.connect(this.audioContext.destination);
+                    source.start(2);
+                }
             }
             return;
         }
@@ -2127,7 +2119,7 @@ let WebAudioRecorder = class WebAudioRecorder {
             // save every time a fill-up occurs)
             // if (this.valueCB && this.isRecording) {
             if (this.isRecording) {
-                outputData[i] = clippedValue;
+                // outputData[i] = clippedValue;
                 this.valueCB(clippedValue);
                 this.nRecordedSamples++;
             }
@@ -2165,15 +2157,8 @@ let WebAudioRecorder = class WebAudioRecorder {
         console.log('connectNodes()');
         const self = this;
         if (this.isMobileAudioInput) {
-            // DO MOBILE STUFF WITH AUDIOINPUT
             audioinput.start({ bufferSize: PROCESSING_BUFFER_LENGTH, streamToWebAudio: false });
-            window.addEventListener('audioinput', (event) => {
-                self.onAudioProcess(event);
-                // console.log('DATA FROM AUDIOINPUT', event);
-            }, false);
-            audioinput.connect(this.audioGainNode);
-            this.audioGainNode.connect(this.audioContext.destination);
-            // audioinput.connect(this.audioContext.destination);
+            audioinput.connect(this.audioContext.destination);
             this.status = RecordStatus.READY_STATE;
             return;
         }
@@ -2182,16 +2167,11 @@ let WebAudioRecorder = class WebAudioRecorder {
         // (the other nodes, which do not require a stream for their
         // initialization, are created in this.createNodes())
         this.sourceNode = this.audioContext.createMediaStreamSource(stream);
-        // create a destination node (need something to connect the
-        // scriptProcessorNode with or else it won't process audio)
-        // let dest: MediaStreamAudioDestinationNode =
-        //     this.audioContext.createMediaStreamDestination();
         // sourceNode (microphone) -> gainNode
         this.sourceNode.connect(this.audioGainNode);
         // gainNode -> scriptProcessorNode
         this.audioGainNode.connect(this.scriptProcessorNode);
         // scriptProcessorNode -> destination
-        // this.scriptProcessorNode.connect(dest);
         this.scriptProcessorNode.connect(this.audioContext.destination);
         // call the reset() function to normalize state
         this.reset();
@@ -2207,28 +2187,6 @@ let WebAudioRecorder = class WebAudioRecorder {
      */
     startMonitoring() {
         console.log('startMonitoring()');
-        // this.heartbeat.addFunction(RECORDER_CLOCK_FUNCTION_NAME,// the monitoring actions are in the following function:
-        //     () => {
-        //         // update displayTime property
-        //         // TODO: do the formatting outside this function, test heavily
-        //         // but it should significantly help efficiency
-        //         this.displayTime = formatTime(this.getTime(), Infinity);
-        //         // console.log(this.displayTime);
-        //         // update currentVolume property
-        //         this.nPeakMeasurements += 1;
-        //         if (this.currentVolume > this.maxVolumeSinceReset) {
-        //             // on new maximum, re-start counting peaks
-        //             this.resetPeaks();
-        //             this.maxVolumeSinceReset = this.currentVolume;
-        //         }
-        //         else if (this.currentVolume === this.maxVolumeSinceReset) {
-        //             this.nPeaksAtMax += 1;
-        //         }
-        //         // update percentPeaksAtMax property
-        //         this.percentPeaksAtMax =
-        //             (100.0 * this.nPeaksAtMax / this.nPeakMeasurements)
-        //             .toFixed(1);
-        //     });
     }
     /**
      * Stops monitoring (stops change detection)
@@ -2236,7 +2194,6 @@ let WebAudioRecorder = class WebAudioRecorder {
      */
     stopMonitoring() {
         console.log('stopMonitoring()');
-        // this.heartbeat.removeFunction(RECORDER_CLOCK_FUNCTION_NAME);
     }
     /**
      * Reset all peak stats as if we've just started playing audio at
@@ -2538,12 +2495,12 @@ let MyApp = class MyApp {
                 const lowerMsg = this.spokenMessage.toLowerCase();
                 if (lowerMsg.indexOf('go to') != -1 && lowerMsg.indexOf('heart disease') != -1) {
                     // this.goToForm('hd');
-                    this.stop(true);
                     this.appService.emitMessage('hd');
+                    // this.stop(true); // Dont need to stop here when using DEVICE AUDIOINPUT, only need with native SpeechRecognition
                 }
                 if (lowerMsg.indexOf('go to') != -1 && lowerMsg.indexOf('flu') != -1) {
-                    this.stop(true);
                     this.appService.emitMessage('flu');
+                    // this.stop(true);
                 }
             }
             if (typeof message == 'string') {
@@ -2583,23 +2540,22 @@ let MyApp = class MyApp {
                 self.debug = '';
                 self.debug += file.size + ' -> ';
                 self.debug += 'Success!!';
+                console.log(JSON.stringify(data));
                 self.cognitiveService.emitMessage(data);
                 //subs.unsubscribe();
             }, (error) => {
                 self.debug = '';
                 self.debug += `An Error ocurred: ${JSON.stringify(error)}`;
                 console.log(error);
-                subs.unsubscribe();
             });
         }, (err) => {
             console.log("ERROR ->", err);
-            subs.unsubscribe();
         });
         // this.cognitiveService.stopSpeaking();
     }
 };
 MyApp = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"/Users/gabrielfreiredev/Documents/ai_diagnosis/src/app/app.html"*/'<ion-nav [root]="rootPage">\n</ion-nav>\n<div class="speakerContainer">\n    <h4 id="debug">DEBUG LOG: {{debug}}</h4>\n    <h4 id="answer">Output: {{spokenMessage}}</h4>\n    <button (click)="speakStop()" [ngClass]="{\'active\': speaking}" class="floating" color="calm">\n        <ion-icon name="mic"></ion-icon>\n    </button>\n</div>\n'/*ion-inline-end:"/Users/gabrielfreiredev/Documents/ai_diagnosis/src/app/app.html"*/
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\app\app.html"*/'<ion-nav [root]="rootPage">\n\n</ion-nav>\n\n<div class="speakerContainer">\n\n    <h4 id="debug">DEBUG LOG: {{debug}}</h4>\n\n    <h4 id="answer">Output: {{spokenMessage}}</h4>\n\n    <button (click)="speakStop()" [ngClass]="{\'active\': speaking}" class="floating" color="calm">\n\n        <ion-icon name="mic"></ion-icon>\n\n    </button>\n\n</div>\n\n'/*ion-inline-end:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\app\app.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
         __WEBPACK_IMPORTED_MODULE_5__providers_cognitive_services_cognitive_service__["a" /* CognitiveService */],
@@ -3860,7 +3816,7 @@ __decorate([
 ], DynamicFormQuestionComponent.prototype, "changeEvent", void 0);
 DynamicFormQuestionComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'df-question',template:/*ion-inline-start:"/Users/gabrielfreiredev/Documents/ai_diagnosis/src/pages/home/formbuilder/questions-template/dynamic-form-question.component.html"*/'<!-- Item wrapper -->\n<ion-item [hidden]="question.visibility == \'hidden\'" [formGroup]="form" [ngSwitch]="question.controlType">\n    <!-- Label -->\n    <ion-label class="question-label question-label-sm" stacked [attr.for]="question.key">{{question.label}}</ion-label>\n\n    <!-- Input text field -->\n    <ion-input class="question-input" *ngSwitchCase="\'textbox\'" [formControlName]="question.key" [id]="question.key" [type]="question.type"></ion-input>\n\n    <!-- Input text area -->\n    <ion-textarea rows="8" class="question-input" *ngSwitchCase="\'textarea\'" [formControlName]="question.key" [id]="question.key" [type]="question.type"></ion-textarea>\n\n    <!-- Input combobox area -->\n    <ion-select [id]="question.key" *ngSwitchCase="\'dropdown\'" [formControlName]="question.key">\n        <ion-option *ngFor="let opt of question.options" [value]="opt.key">{{opt.value}}</ion-option>\n    </ion-select>\n\n    <!-- Input true/false toggle area -->\n    <ion-toggle (ionChange)="onChangeAnswer($event, question)" *ngSwitchCase="\'toggle\'" [formControlName]="question.key" [id]="question.key" [(ngModel)]="question.value"></ion-toggle>\n\n</ion-item>\n<!-- Required label -->\n<!-- <div class="errorMessage" *ngIf="!isValid">{{question.label}} is required</div> -->\n<div class="errorMessage" *ngIf="!isValid">Required</div>'/*ion-inline-end:"/Users/gabrielfreiredev/Documents/ai_diagnosis/src/pages/home/formbuilder/questions-template/dynamic-form-question.component.html"*/,
+        selector: 'df-question',template:/*ion-inline-start:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\home\formbuilder\questions-template\dynamic-form-question.component.html"*/'<!-- Item wrapper -->\n\n<ion-item [hidden]="question.visibility == \'hidden\'" [formGroup]="form" [ngSwitch]="question.controlType">\n\n    <!-- Label -->\n\n    <ion-label class="question-label question-label-sm" stacked [attr.for]="question.key">{{question.label}}</ion-label>\n\n\n\n    <!-- Input text field -->\n\n    <ion-input class="question-input" *ngSwitchCase="\'textbox\'" [formControlName]="question.key" [id]="question.key" [type]="question.type"></ion-input>\n\n\n\n    <!-- Input text area -->\n\n    <ion-textarea rows="8" class="question-input" *ngSwitchCase="\'textarea\'" [formControlName]="question.key" [id]="question.key" [type]="question.type"></ion-textarea>\n\n\n\n    <!-- Input combobox area -->\n\n    <ion-select [id]="question.key" *ngSwitchCase="\'dropdown\'" [formControlName]="question.key">\n\n        <ion-option *ngFor="let opt of question.options" [value]="opt.key">{{opt.value}}</ion-option>\n\n    </ion-select>\n\n\n\n    <!-- Input true/false toggle area -->\n\n    <ion-toggle (ionChange)="onChangeAnswer($event, question)" *ngSwitchCase="\'toggle\'" [formControlName]="question.key" [id]="question.key" [(ngModel)]="question.value"></ion-toggle>\n\n\n\n</ion-item>\n\n<!-- Required label -->\n\n<!-- <div class="errorMessage" *ngIf="!isValid">{{question.label}} is required</div> -->\n\n<div class="errorMessage" *ngIf="!isValid">Required</div>'/*ion-inline-end:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\home\formbuilder\questions-template\dynamic-form-question.component.html"*/,
         styles: ['./dynamic-form-question.component.css']
     }),
     __metadata("design:paramtypes", [])

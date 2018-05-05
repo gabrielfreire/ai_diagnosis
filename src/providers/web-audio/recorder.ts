@@ -15,7 +15,7 @@ const RECORDER_CLOCK_FUNCTION_NAME: string = 'recorder';
  * @const {string} Length of script processing buffer - (a) this must be a
  * power of 2; (b) the smaller this is, the more accurately we track time.
  */
-const PROCESSING_BUFFER_LENGTH: number = 4096;
+const PROCESSING_BUFFER_LENGTH: number = 16384;
 
 /** @const {number}  Waiting time between checks that WAA is initialized */
 const WAIT_MSEC: number = 50;
@@ -97,17 +97,14 @@ export abstract class WebAudioRecorder {
     // this is how we signal
     constructor(public audioContextGenerator: AudioContextGenerator, public platform: Platform) {
         console.log('constructor()');
-
+        const self = this;
         this.nClipped = 0;
-
-        // WONT CREATE AUDIO CONTEXT HERE BECAUSE IOS DOENS'T ALLOW IT TO BE CREATED THIS WAY
-        // if (!AUDIO_CONTEXT) {
-        //     this.status = RecordStatus.NO_CONTEXT_ERROR;
-        //     return;
-        // }
 
         this.status = RecordStatus.UNINITIALIZED_STATE;
         this.isMobileAudioInput = false;
+        window.addEventListener('audioinput', (event) => {
+            self.onAudioProcess(event);
+        }, false);
     }
 
     /**
@@ -159,15 +156,15 @@ export abstract class WebAudioRecorder {
                     audioinput.initialize(captureCfg, () => {
                         audioinput.checkMicrophonePermission((hasPermission) => {
                             if(hasPermission){
-                                console.log('Already have permission to record');
+                                console.warn('Already have permission to record');
                                 // startRecording
                                 this.connectNodes();
                             } else {
-                                console.log('No permission to record yet');
-                                console.log('Asking...');
+                                console.warn('No permission to record yet');
+                                console.warn('Asking...');
                                 audioinput.getMicrophonePermission((hasPermission, message) => {
                                     if(hasPermission) {
-                                        console.log('User granted permission to record');
+                                        console.warn('User granted permission to record');
                                         this.connectNodes();
                                     } else {
                                         console.warn('User denied permission to record');
@@ -198,9 +195,7 @@ export abstract class WebAudioRecorder {
                     })
                     .catch((err: any) => {
                         this.status = RecordStatus.NO_MICROPHONE_ERROR;
-                        const msg: string = 'initAudio(new): err: ' +
-                              err + ', code: ' + err.code;
-                        // alert(msg);
+                        const msg: string = 'initAudio(new): err: ' + err + ', code: ' + err.code;
                         console.log(msg);
                     });
             }
@@ -218,23 +213,18 @@ export abstract class WebAudioRecorder {
                         },
                         (err: any) => {
                             this.status = RecordStatus.NO_MICROPHONE_ERROR;
-                            const msg: string = 'initAudio(old1): err: ' +
-                                    err + ', code: ' + err.code;
-                            // alert(msg);
+                            const msg: string = 'initAudio(old1): err: ' + err + ', code: ' + err.code;
                             console.log(msg);
                         });
                     }
                     catch (err) {
                         this.status = RecordStatus.GETUSERMEDIA_ERROR;
-                        const msg: string = 'initAudio(old2): err: ' +
-                              err + ', code: ' + err.code;
-                        // alert(msg);
+                        const msg: string = 'initAudio(old2): err: ' + err + ', code: ' + err.code;
                         console.log(msg);
                     }
                 } else {
                     // neither old nor new getUserMedia are available
                     console.warn('initAudio() Error: no getUserMedia');
-                    // alert('initAudio() Error: no getUserMedia');
                     this.status = RecordStatus.NO_GETUSERMEDIA_ERROR;
 
                 }
@@ -250,7 +240,7 @@ export abstract class WebAudioRecorder {
         // console.log('onAudioProcess() ' + this.isRecording);
         if(this.isMobileAudioInput) {
             // DO MOBILE STUFF
-            console.log('mobile onAudioProcess() ->', (<any>processingEvent).data.length);
+            // console.log('mobile onAudioProcess() -> ' + (<any>processingEvent).data.length); // DEBUG ONLY
             if((<any>processingEvent) && (<any>processingEvent).data) {
                 let inputData: number[] = (<any>processingEvent).data;
                 let i: number;
@@ -260,32 +250,30 @@ export abstract class WebAudioRecorder {
                 let audioBuffer = this.audioContext.createBuffer(1, (inputData.length / 1), this.audioContext.sampleRate);
                 //let buffer = _normalizeAudio(inputData);
                 let buffer = []
-                for(i = 0; i < inputData.length; i++) {
+                for(i = 0; i < PROCESSING_BUFFER_LENGTH; i++) {
                   value = inputData[i];
+                //   const clippedValue: number = value / 32767.0;
                   const clippedValue: number = Math.max(-1.0, Math.min(1.0, value));
                   if (value !== clippedValue) {
                     this.nClipped++;
                   }
-                  absValue = Math.abs(clippedValue);
-                  // keep track of volume using abs value
-                  if (absValue > this.currentVolume) {
-                    this.currentVolume = absValue;
-                  }
                   if (this.isRecording) {
-                    // outputData[i] = clippedValue;
                     buffer.push(clippedValue);
                     this.valueCB(clippedValue);
                     this.nRecordedSamples++;
                   }
                 }
-                audioBuffer.getChannelData(0).set(buffer);
-                let source = this.audioContext.createBufferSource();
-                source.buffer = audioBuffer;
-                source.connect(this.audioGainNode);
-                source.start(0);
+                // Listen to myself for debugging purposes
+                if(this.isRecording) {
+                    audioBuffer.getChannelData(0).set(buffer);
+                    let source = this.audioContext.createBufferSource();
+                    source.buffer = audioBuffer;
+                    source.connect(this.audioContext.destination);
+                    source.start(2);
+                }
             }
             return;
-        }
+        } 
         // console.log('browser onAudioProcess() ->', processingEvent);
         let inputBuffer: AudioBuffer = (<AudioProcessingEvent>processingEvent).inputBuffer;
         let outputBuffer: AudioBuffer = (<AudioProcessingEvent>processingEvent).outputBuffer;
@@ -315,7 +303,7 @@ export abstract class WebAudioRecorder {
             // save every time a fill-up occurs)
             // if (this.valueCB && this.isRecording) {
             if (this.isRecording) {
-                outputData[i] = clippedValue;
+                // outputData[i] = clippedValue;
                 this.valueCB(clippedValue);
                 this.nRecordedSamples++;
             }
@@ -356,43 +344,24 @@ export abstract class WebAudioRecorder {
         console.log('connectNodes()');
         const self = this;
         if(this.isMobileAudioInput) {
-            // DO MOBILE STUFF WITH AUDIOINPUT
             audioinput.start({ bufferSize: PROCESSING_BUFFER_LENGTH, streamToWebAudio: false });
-            window.addEventListener('audioinput', (event) => {
-                self.onAudioProcess(event);
-                // console.log('DATA FROM AUDIOINPUT', event);
-            }, false);
-            audioinput.connect(this.audioGainNode);
-            this.audioGainNode.connect(this.audioContext.destination);
-            // audioinput.connect(this.audioContext.destination);
+            audioinput.connect(this.audioContext.destination);
             this.status = RecordStatus.READY_STATE;
             return;
         }
         // TODO: a check here that this.mediaStream is valid
-
         // create a source node out of the audio media stream
         // (the other nodes, which do not require a stream for their
         // initialization, are created in this.createNodes())
         this.sourceNode = this.audioContext.createMediaStreamSource(stream);
-
-        // create a destination node (need something to connect the
-        // scriptProcessorNode with or else it won't process audio)
-        // let dest: MediaStreamAudioDestinationNode =
-        //     this.audioContext.createMediaStreamDestination();
-
         // sourceNode (microphone) -> gainNode
         this.sourceNode.connect(this.audioGainNode);
-
         // gainNode -> scriptProcessorNode
         this.audioGainNode.connect(this.scriptProcessorNode);
-
         // scriptProcessorNode -> destination
-        // this.scriptProcessorNode.connect(dest);
         this.scriptProcessorNode.connect(this.audioContext.destination);
-
         // call the reset() function to normalize state
         this.reset();
-
         // now, after nodes are connected, we can tell the world we're ready
         this.status = RecordStatus.READY_STATE;
     }
@@ -407,29 +376,6 @@ export abstract class WebAudioRecorder {
      */
     public startMonitoring(): void {
         console.log('startMonitoring()');
-        // this.heartbeat.addFunction(RECORDER_CLOCK_FUNCTION_NAME,// the monitoring actions are in the following function:
-        //     () => {
-        //         // update displayTime property
-        //         // TODO: do the formatting outside this function, test heavily
-        //         // but it should significantly help efficiency
-        //         this.displayTime = formatTime(this.getTime(), Infinity);
-        //         // console.log(this.displayTime);
-        //         // update currentVolume property
-        //         this.nPeakMeasurements += 1;
-        //         if (this.currentVolume > this.maxVolumeSinceReset) {
-        //             // on new maximum, re-start counting peaks
-        //             this.resetPeaks();
-        //             this.maxVolumeSinceReset = this.currentVolume;
-        //         }
-        //         else if (this.currentVolume === this.maxVolumeSinceReset) {
-        //             this.nPeaksAtMax += 1;
-        //         }
-
-        //         // update percentPeaksAtMax property
-        //         this.percentPeaksAtMax =
-        //             (100.0 * this.nPeaksAtMax / this.nPeakMeasurements)
-        //             .toFixed(1);
-        //     });
     }
 
     /**
@@ -438,7 +384,6 @@ export abstract class WebAudioRecorder {
      */
     public stopMonitoring(): void {
         console.log('stopMonitoring()');
-        // this.heartbeat.removeFunction(RECORDER_CLOCK_FUNCTION_NAME);
     }
 
     /**
