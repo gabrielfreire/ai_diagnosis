@@ -123,7 +123,7 @@ export class CognitiveService {
 
     analyseSound(soundFile: File | Blob): Observable<any> {
         const headers = new Headers();
-        headers.append('Ocp-Apim-Subscription-Key','17328acb588e413eaf4f56c885b3511f');
+        headers.append('Ocp-Apim-Subscription-Key','e99f9943707441f1a6a84ca793341229');
         headers.append('Content-Type','audio/wav; codec="audio/pcm"; samplerate=16000');
         const src: Observable<any> = Observable.create((observer) => {
             let speechURL ="https://speech.platform.bing.com/speech/recognition/dictation/cognitiveservices/v1?language=en-US&format=simple";
