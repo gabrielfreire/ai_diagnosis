@@ -24,7 +24,7 @@ export class CognitiveService {
         this.emitChangeSource.next(change);
     }
     speak() {
-        this.recognizer = this._RecognizerSetup(SDK, "Dictation", "en-US", "Simple", "6c2ca639591f4c00bea957ad371c36ac");
+        this.recognizer = this._RecognizerSetup(SDK, "Dictation", "en-US", "Simple", "e99f9943707441f1a6a84ca793341229");
         console.log('Loaded SDK');
         console.log(SDK);
         const self = this;
