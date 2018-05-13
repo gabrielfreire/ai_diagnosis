@@ -142,7 +142,7 @@ export abstract class WebAudioRecorder {
         };
 
         if(this.platform.is('ios') || this.platform.is('android') || this.platform.is('cordova')){
-            if(audioinput){
+            if(this._hasAudioInput()){
                 console.log('Using audioinput');
                 this.isMobileAudioInput = true;
                 try {
@@ -419,20 +419,26 @@ export abstract class WebAudioRecorder {
      * Start recording
      * @returns void
      */
-    public start(): void {
-        // create nodes that do not require a stream in their constructor
-        this.createNodes();
-        // this call to resetPeaks() also initializes private variables
-        this.resetPeaks();
-        // grab microphone, init nodes that rely on stream, connect nodes
-        this.initAudio();
-        this.waitForWAA().subscribe(() => {
-            // reset peaks again when WAA is ready
+    public start(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            // create nodes that do not require a stream in their constructor
+            this.createNodes();
+            // this call to resetPeaks() also initializes private variables
             this.resetPeaks();
-            this.nRecordedSamples = 0;
-            this.isRecording = true;
-            this.isInactive = false;
-        });
+            // grab microphone, init nodes that rely on stream, connect nodes
+            this.initAudio();
+            this.waitForWAA().subscribe(() => {
+                // reset peaks again when WAA is ready
+                this.resetPeaks();
+                this.nRecordedSamples = 0;
+                this.isRecording = true;
+                this.isInactive = false;
+                resolve();
+            }, (error) => {
+                console.log('ERROR AT -> RECORDER START()');
+                reject();
+            });
+        })
     }
 
     /**
@@ -456,14 +462,16 @@ export abstract class WebAudioRecorder {
      * @returns void
      */
     protected reset(): void {
+        const self = this;
         this.isRecording = false;
         this.isInactive = true;
-        //if(this.isMobileAudioInput) this.status = RecordStatus.UNINITIALIZED_STATE;
-        if(audioinput && this.isMobileAudioInput) {
-          audioinput.stop((url) => { console.log('FINAL URL -> ', url) });
-          audioinput.disconnect();
+        this.status = RecordStatus.UNINITIALIZED_STATE;
+        if(this._hasAudioInput() && this.isMobileAudioInput) {
+            audioinput.stop(() => {  
+                self.isMobileAudioInput = false;
+            });
+            audioinput.disconnect();
         }
-
     }
 
     /**
@@ -472,6 +480,10 @@ export abstract class WebAudioRecorder {
      */
     private getTime(): number {
         return this.isInactive ? 0 : this.nRecordedSamples / this.sampleRate;
+    }
+
+    private _hasAudioInput(): boolean {
+        return typeof audioinput !== "undefined";
     }
 
 }

@@ -38,7 +38,7 @@ export class WavRecorder extends WebAudioRecorder {
             //     // alert('Error in RecordWav.setter(): ' + err);
             //     console.log('Error in RecordWav.setter(): ' + err);
             // });
-            console.log('Recording:', this.setter.bufferIndex);
+            console.log('Recording: ' + this.setter.bufferIndex);
         });
         this.nChunksSaved = 0;
     }
@@ -88,13 +88,20 @@ export class WavRecorder extends WebAudioRecorder {
     /**
      * Start recording
      */
-    public async start(): Promise<void> {
-        super.start();
-        const dateCreated: number = Date.now();
-        const displayDateCreated: string = formatUnixTimestamp(dateCreated);
-        const filePath: string = '/' + displayDateCreated;
-        console.log('start() - ' + filePath);
-        this.filePath = filePath;
+    public start(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            super.start().then(() => {
+                const dateCreated: number = Date.now();
+                const displayDateCreated: string = formatUnixTimestamp(dateCreated);
+                const filePath: string = '/' + displayDateCreated;
+                console.log('start() - ' + filePath);
+                this.filePath = filePath;
+                resolve();
+            }, (error) => {
+                console.log('ERROR AT -> WAV-RECORDER START()');
+                reject();
+            });
+        });
     }
 
     /**
@@ -110,17 +117,17 @@ export class WavRecorder extends WebAudioRecorder {
         let src: Observable<File | Blob> = Observable.create((observer) => {
           this.saveWav(this.setter.activeBuffer.subarray(0, this.setter.bufferIndex)).subscribe((formDataFile: File | Blob) => {
                 console.log("WavFile:saveWav() @ Saved");
-                console.log('form data', formDataFile);
+                console.log('form data ' + JSON.stringify(formDataFile));
                 this.nChunksSaved = 0;
                 this.setter.reset();
                 //downloadBlob(formDataFile, "somewav.wav");
                 if(this.audioContext.close) {
                   this.audioContext.close().then(() => {
-                    console.log('CLOSED');
+                    console.log('AUDIO CONTEXT CLOSED');
                   });
                 } else if(this.audioContext.state == "running") {
                   this.audioContext.suspend().then(() => {
-                    console.log('SUSPENDED');
+                    console.log('AUDIO CONTEXT SUSPENDED');
                   });
                 }
                 observer.next(formDataFile);

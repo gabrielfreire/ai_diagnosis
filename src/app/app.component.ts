@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform, LoadingController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -20,6 +20,7 @@ export class MyApp implements OnInit{
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,
     public cognitiveService: CognitiveService,
     public appService: AppService,
+    public loadingCtrl: LoadingController,
     public recorder: WavRecorder) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -58,10 +59,22 @@ export class MyApp implements OnInit{
     if(!this.speaking) {
       this.speaking = true;
       this.spokenMessage = '';
+      const loading = this.loadingCtrl.create({
+        spinner: 'bubbles',
+        content: `
+            <div class="custom-spinner-container">
+                <div class="custom-spinner-box">
+                    Analyzing, please wait...
+                </div>
+            </div>`,
+        duration: 100000
+      });
+      loading.present();
       this.recorder.start().then(() => {
         // READY
         this.debug += 'READY TO SPEAK';
         console.log('READY TO SPEAK');
+        loading.dismiss()
       });
       // this.cognitiveService.speak();
     } else {
@@ -85,7 +98,7 @@ export class MyApp implements OnInit{
         self.debug = '';
         self.debug += file.size + ' -> ';
         self.debug += 'Success!!';
-        console.log(JSON.stringify(data));
+        console.log(`DATA  ${JSON.stringify(data)}`);
         self.cognitiveService.emitMessage(data);
         //subs.unsubscribe();
       }, (error) => {
@@ -94,7 +107,7 @@ export class MyApp implements OnInit{
         console.log(error);
       });
     }, (err: any) => {
-      console.log("ERROR ->", err);
+      console.log(`ERROR -> , ${JSON.stringify(err)}`);
     });
     // this.cognitiveService.stopSpeaking();
   }
