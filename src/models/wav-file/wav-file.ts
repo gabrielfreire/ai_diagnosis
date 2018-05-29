@@ -37,6 +37,30 @@ function sampleToByte(iSample: number): number {
   }
 */
 
+class BlobFactory {
+    parts: any[];
+    blob: Blob;
+    constructor(){
+        this.parts = [];
+    }
+    append (part): void {
+        this.parts.push(part);
+        this.blob = undefined;
+    }
+    getBlob(): Blob {
+        if(!this.blob) {
+            this.blob = new Blob(this.parts, {type: WAV_MIME_TYPE });
+        }
+        return this.blob;
+    }
+    clear(): void {
+        this.parts = [];
+        this.blob = undefined;
+    }
+}
+
+
+const blobFactory: BlobFactory = new BlobFactory();
 /**
  *
  */
@@ -89,6 +113,7 @@ function makeWavBlobHeaderView(nSamples: number, sampleRate: number): DataView {
 
 let AUDIO_CONTEXT: AudioContext;
 let SAMPLE_RATE: number = 0;
+let HEADER_VIEW: DataView;
 /**
  *
  */
@@ -104,13 +129,41 @@ export class WavFile {
         }
         const src: Observable<Blob> = Observable.create((observer) => {
             const nSamples: number = wavData.length;
-            const headerView: DataView = makeWavBlobHeaderView(nSamples, SAMPLE_RATE);
-            const blob: Blob = new Blob([ headerView, wavData ], { type: WAV_MIME_TYPE });
+            HEADER_VIEW = makeWavBlobHeaderView(nSamples, SAMPLE_RATE);
+            blobFactory.append(HEADER_VIEW);
+            blobFactory.append(wavData);
+            const blob = blobFactory.getBlob();
             console.log('The blob created -->', blob);
             // downloadBlob(blob, "somewav.wav");
+            // observer.next(blob);
             observer.next(blob);
             observer.complete();
         });
         return src;
+    }
+
+    public static appendToWavFile(wavData: Int16Array, nPreAppendSample: number): Observable<Blob> {
+        const src: Observable<Blob> = Observable.create((observer) => {
+            const nSamples: number = nPreAppendSample + wavData.length;
+            const subchunk2size: number = 2 * nSamples;
+            const chunkSize: number = 36 + subchunk2size;
+            let view: DataView = new DataView(new ArrayBuffer(4));
+            // this.clearBlob();
+            // blobFactory.append(HEADER_VIEW);
+            view.setUint32(0, chunkSize, true);
+            blobFactory.append(view);
+            view.setUint32(0, subchunk2size, true);
+            blobFactory.append(view);
+            blobFactory.append(wavData);
+            const blob = blobFactory.getBlob();
+            observer.next(blob);
+            observer.complete();
+        });
+
+        return src;
+    }
+
+    public static clearBlob(): void {
+        blobFactory.clear();
     }
 }

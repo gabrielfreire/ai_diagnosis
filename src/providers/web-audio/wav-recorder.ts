@@ -1,5 +1,6 @@
 // Copyright (c) 2017 Tracktunes Inc
 
+import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
 import { formatUnixTimestamp, DoubleBufferSetter, WavFile, downloadBlob, Filesystem } from '../../models';
@@ -9,8 +10,8 @@ import { Platform } from 'ionic-angular';
 
 // make this a multiple of PROCESSING_BUFFER_LENGTH (from record.ts)
 // export const WAV_CHUNK_LENGTH: number = 4096;
-export const WAV_CHUNK_LENGTH: number = 262144;
-// export const WAV_CHUNK_LENGTH: number = 131072;
+// export const WAV_CHUNK_LENGTH: number = 262144;
+export const WAV_CHUNK_LENGTH: number = 131072;
 
 // pre-allocate the double chunk buffers used for saving to DB
 const WAV_CHUNK1: Int16Array = new Int16Array(WAV_CHUNK_LENGTH);
@@ -25,6 +26,10 @@ export class WavRecorder extends WebAudioRecorder {
     private setter: DoubleBufferSetter;
     private nChunksSaved: number;
     private filePath: string;
+    // Observable string sources
+    private emitChangeSource = new Subject<any>();
+    // Observable string streams
+    listenBlobs = this.emitChangeSource.asObservable();
 
     // this is how we signal
     constructor(public audioContextGenerator: AudioContextGenerator,public platform: Platform) {
@@ -34,11 +39,11 @@ export class WavRecorder extends WebAudioRecorder {
         this.setter = new DoubleBufferSetter(WAV_CHUNK1, WAV_CHUNK2, () => {
             // THIS CALLBACK IS CALLED MULTIPLE TIMES WHILE THE AUDIO IS BEING RECORDED
             // TODO remove saveWavFileChunk from this callback and maybe replace for a debugging log to see activeBuffer change
-            // this.saveWavFileChunk(this.setter.activeBuffer).subscribe(null, (err: any) => {
-            //     // alert('Error in RecordWav.setter(): ' + err);
-            //     console.log('Error in RecordWav.setter(): ' + err);
-            // });
-            console.log('Recording: ' + this.setter.bufferIndex);
+            this.saveWav(this.setter.activeBuffer).subscribe(null, (err: any) => {
+                // alert('Error in RecordWav.setter(): ' + err);
+                console.error('Error in RecordWav.setter(): ' + err);
+            });
+            // console.log('Recording: ' + this.setter.bufferIndex);
         });
         this.nChunksSaved = 0;
     }
@@ -66,6 +71,11 @@ export class WavRecorder extends WebAudioRecorder {
         this.filePath = null;
     }
 
+    // Service message commands
+    private emit(blob: Blob) {
+        this.emitChangeSource.next(blob);
+    }
+
     /**
      * Save the next wav file chunk
      * TODO change this method in a way i don't save chunks, but the whole file in the end of recording from buffer data
@@ -74,13 +84,29 @@ export class WavRecorder extends WebAudioRecorder {
     private saveWav(arr: Int16Array): Observable<File | Blob> {
         console.log('saveWav(arr.size=' + arr.length + ', nSamples: ' + this.nRecordedSamples + ')');
         let src: Observable<File | Blob> = Observable.create((observer) => {
-            WavFile.createWavFile(this.filePath, arr, this.audioContext).subscribe((blob: Blob) => {
-                this.nChunksSaved = 1;
-                observer.next(blob);
-                observer.complete();
-            },(err1: any) => {
-                observer.error(err1);
-            });
+            if(this.nChunksSaved == 0) {
+                WavFile.createWavFile(this.filePath, arr, this.audioContext).subscribe((blob: Blob) => {
+                    this.nChunksSaved = 1;
+                    this.emit(blob);
+                    observer.next(blob);
+                    observer.complete();
+                },(err1: any) => {
+                    observer.error(err1);
+                });
+            } else {
+                WavFile.appendToWavFile(arr, this.nRecordedSamples - arr.length).subscribe((blob: Blob) => {
+                    this.nChunksSaved++;
+                    // emit blob every 100 chunks
+                    // if(this.nChunksSaved % 2 == 0) {
+                    // }
+                    this.emit(blob);
+                    observer.next(blob);
+                    observer.complete();
+                },(err1: any) => {
+                    observer.error(err1);
+                });
+
+            }
         });
         return src;
     }
@@ -94,7 +120,6 @@ export class WavRecorder extends WebAudioRecorder {
                 const dateCreated: number = Date.now();
                 const displayDateCreated: string = formatUnixTimestamp(dateCreated);
                 const filePath: string = '/' + displayDateCreated;
-                console.log('start() - ' + filePath);
                 this.filePath = filePath;
                 resolve();
             }, (error) => {
@@ -130,7 +155,9 @@ export class WavRecorder extends WebAudioRecorder {
                     console.log('AUDIO CONTEXT SUSPENDED');
                   });
                 }
-                observer.next(formDataFile);
+                WavFile.clearBlob();
+                // observer.next(formDataFile);
+                observer.next();
                 observer.complete();
 
             },(err: any) => {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Platform, LoadingController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -17,6 +17,8 @@ export class MyApp implements OnInit{
   spokenMessage: string;
   messageSubscription: Subscription;
   debug:string;
+  isMobile: Boolean;
+  zone;
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,
     public cognitiveService: CognitiveService,
     public appService: AppService,
@@ -31,22 +33,33 @@ export class MyApp implements OnInit{
     // recorder.waitForWAA().subscribe(()=>{
     //   recorder.resetPeaks();
     // });
+    this.zone = new NgZone({enableLongStackTrace: false});
+    this.isMobile = true;
   }
 
   ngOnInit() {
     this.messageSubscription = this.cognitiveService.listenMessage.subscribe((message) => {
       if(message.RecognitionStatus == 'Success'){
-        this.spokenMessage += ' ' + message.DisplayText;
-        const lowerMsg = this.spokenMessage.toLowerCase();
-        if(lowerMsg.indexOf('go to') != -1 && lowerMsg.indexOf('heart disease') != -1) {
-          // this.goToForm('hd');
-          this.appService.emitMessage('hd');
-          this.stop(true); // Dont need to stop here when using DEVICE AUDIOINPUT, only need with native SpeechRecognition
-        }
-        if(lowerMsg.indexOf('go to') != -1 && lowerMsg.indexOf('flu') != -1) {
-          this.appService.emitMessage('flu');
-          this.stop(true);
-        }
+        this.zone.run(() => {
+          if(message.DisplayText.length > this.spokenMessage.length) {
+            this.spokenMessage = message.DisplayText;
+          }
+          console.log(`Spoken -----------> ${this.spokenMessage}` );
+          const lowerMsg = this.spokenMessage.toLowerCase();
+          if(lowerMsg.indexOf('go to') != -1 && lowerMsg.indexOf('heart disease') != -1) {
+            // this.goToForm('hd');
+            this.appService.emitMessage('hd');
+            if(!this.isMobile){
+              this.stop(false); // Dont need to stop here when using DEVICE AUDIOINPUT, only need with native SpeechRecognition
+            }
+          }
+          if(lowerMsg.indexOf('go to') != -1 && lowerMsg.indexOf('flu') != -1) {
+            this.appService.emitMessage('flu');
+            if(!this.isMobile){
+              this.stop(false);
+            }
+          }
+        });
       }
       if(typeof message == 'string'){
         this.debug = '';
@@ -54,61 +67,110 @@ export class MyApp implements OnInit{
       }
     });
   }
+
+  
+  // ********************************************
+  //                MOBILE
+  // ********************************************
   speakStop() {
+    const self = this;
     this.debug = '';
     if(!this.speaking) {
       this.speaking = true;
       this.spokenMessage = '';
-      // const loading = this.loadingCtrl.create({
-      //   spinner: 'bubbles',
-      //   content: `
-      //       <div class="custom-spinner-container">
-      //           <div class="custom-spinner-box">
-      //               Analyzing, please wait...
-      //           </div>
-      //       </div>`,
-      //   duration: 100000
-      // });
-      // loading.present();
-      // this.recorder.start().then(() => {
-      //   // READY
-      //   this.debug += 'READY TO SPEAK';
-      //   console.log('READY TO SPEAK');
-      //   loading.dismiss()
-      // });
-      this.cognitiveService.speak();
+      const loading = this.loadingCtrl.create({
+        spinner: 'bubbles',
+        content: `
+            <div class="custom-spinner-container">
+                <div class="custom-spinner-box">
+                    Analyzing, please wait...
+                </div>
+            </div>`,
+        duration: 100000
+      });
+      loading.present();
+      this.recorder.start().then(() => {
+        // READY
+        this.debug += 'READY TO SPEAK';
+        console.log('READY TO SPEAK');
+        loading.dismiss()
+        this.recorder.listenBlobs.subscribe((blob: Blob) => {
+          console.log('Listening to BLOBS...');
+          self.cognitiveService.analyseSound(blob).subscribe((data) => {
+            console.log('**************** analyseSound() @ SUCCESS *****************');
+            self.debug = '';
+            self.debug += blob.size + ' -> ';
+            self.debug += 'Success!!';
+            console.log(`DATA  ${JSON.stringify(data)}`);
+            self.cognitiveService.emitMessage(data);
+            //subs.unsubscribe();
+          }, (error) => {
+            self.debug = '';
+            self.debug += `An Error ocurred: ${JSON.stringify(error)}`;
+            console.log(error);
+          });
+        });
+      });
     } else {
-      this.stop(true);
+      this.stop(false);
     }
-
   }
-
   stop(erase: boolean) {
     const self = this;
     this.spokenMessage = erase ? '' : this.spokenMessage;
     this.speaking = false;
     this.debug = '';
-    // let subs = this.recorder.stop().subscribe((file: File | Blob) => {
-    //   console.log(file);
-    //   self.debug += 'Stoped! File created';
-    //   // TODO send to Azure Bing Speech API by POST
-    //   self.debug = '';
-    //   self.cognitiveService.analyseSound(file).subscribe((data) => {
-    //     console.log('analyseSound() @ success');
-    //     self.debug = '';
-    //     self.debug += file.size + ' -> ';
-    //     self.debug += 'Success!!';
-    //     console.log(`DATA  ${JSON.stringify(data)}`);
-    //     self.cognitiveService.emitMessage(data);
-    //     //subs.unsubscribe();
-    //   }, (error) => {
-    //     self.debug = '';
-    //     self.debug += `An Error ocurred: ${JSON.stringify(error)}`;
-    //     console.log(error);
-    //   });
-    // }, (err: any) => {
-    //   console.log(`ERROR -> , ${JSON.stringify(err)}`);
-    // });
-    this.cognitiveService.stopSpeaking();
+    let subs = this.recorder.stop().subscribe((file: File | Blob) => {
+      console.log('FINAL FILE SIZE ->', file.size);
+      self.debug += 'Stoped! File created';
+      // TODO send to Azure Bing Speech API by POST
+      self.debug = '';
+      // self.cognitiveService.analyseSound(file).subscribe((data) => {
+      //   console.log('*********************************');
+      //   console.log('*********************************');
+      //   console.log('**************** analyseSound() @ SUCCESS *****************');
+      //   console.log('*********************************');
+      //   console.log('*********************************');
+      //   self.debug = '';
+      //   self.debug += file.size + ' -> ';
+      //   self.debug += 'Success!!';
+      //   console.log(`DATA  ${JSON.stringify(data)}`);
+      //   self.cognitiveService.emitMessage(data);
+      //   //subs.unsubscribe();
+      // }, (error) => {
+      //   self.debug = '';
+      //   self.debug += `An Error ocurred: ${JSON.stringify(error)}`;
+      //   console.log(error);
+      // });
+    }, (err: any) => {
+      console.log(`ERROR -> , ${JSON.stringify(err)}`);
+    });
   }
+
+
+
+
+
+  // ********************************************
+  //                WEB
+  // ********************************************
+  // speakStop() {
+  //   this.debug = '';
+  //   if(!this.speaking) {
+  //     this.speaking = true;
+  //     this.spokenMessage = '';
+  //     this.cognitiveService.speak();
+  //   } else {
+  //     this.stop(true);
+  //   }
+
+  // }
+
+  // stop(erase: boolean) {
+  //   const self = this;
+  //   this.spokenMessage = erase ? '' : this.spokenMessage;
+  //   this.speaking = false;
+  //   this.debug = '';
+  //   this.cognitiveService.stopSpeaking();
+  // }
 }

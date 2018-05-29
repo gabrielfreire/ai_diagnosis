@@ -15,7 +15,10 @@ const RECORDER_CLOCK_FUNCTION_NAME: string = 'recorder';
  * @const {string} Length of script processing buffer - (a) this must be a
  * power of 2; (b) the smaller this is, the more accurately we track time.
  */
-const PROCESSING_BUFFER_LENGTH: number = 16384;
+// const PROCESSING_BUFFER_LENGTH: number = 19456;
+// const PROCESSING_BUFFER_LENGTH: number = 16384;
+const PROCESSING_BUFFER_LENGTH: number = 8192;
+// const PROCESSING_BUFFER_LENGTH: number = 1024;
 
 /** @const {number}  Waiting time between checks that WAA is initialized */
 const WAIT_MSEC: number = 50;

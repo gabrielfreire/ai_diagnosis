@@ -1660,13 +1660,15 @@ CameraProvider = __decorate([
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WavRecorder; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__ = __webpack_require__(95);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models__ = __webpack_require__(429);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__recorder__ = __webpack_require__(430);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4____ = __webpack_require__(183);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Subject__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Subject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_rxjs_Subject__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models__ = __webpack_require__(429);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__recorder__ = __webpack_require__(430);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5____ = __webpack_require__(183);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ionic_angular__ = __webpack_require__(33);
 // Copyright (c) 2017 Tracktunes Inc
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1683,12 +1685,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 // make this a multiple of PROCESSING_BUFFER_LENGTH (from record.ts)
 // export const WAV_CHUNK_LENGTH: number = 4096;
-const WAV_CHUNK_LENGTH = 262144;
+// export const WAV_CHUNK_LENGTH: number = 262144;
+const WAV_CHUNK_LENGTH = 131072;
 /* unused harmony export WAV_CHUNK_LENGTH */
 
-// export const WAV_CHUNK_LENGTH: number = 131072;
 // pre-allocate the double chunk buffers used for saving to DB
 const WAV_CHUNK1 = new Int16Array(WAV_CHUNK_LENGTH);
 const WAV_CHUNK2 = new Int16Array(WAV_CHUNK_LENGTH);
@@ -1696,22 +1699,26 @@ const WAV_CHUNK2 = new Int16Array(WAV_CHUNK_LENGTH);
  * Audio Record functions based on WebAudio.
  * @class WebAudioRecorder
  */
-let WavRecorder = class WavRecorder extends __WEBPACK_IMPORTED_MODULE_3__recorder__["a" /* WebAudioRecorder */] {
+let WavRecorder = class WavRecorder extends __WEBPACK_IMPORTED_MODULE_4__recorder__["a" /* WebAudioRecorder */] {
     // this is how we signal
     constructor(audioContextGenerator, platform) {
         super(audioContextGenerator, platform);
         this.audioContextGenerator = audioContextGenerator;
         this.platform = platform;
+        // Observable string sources
+        this.emitChangeSource = new __WEBPACK_IMPORTED_MODULE_0_rxjs_Subject__["Subject"]();
+        // Observable string streams
+        this.listenBlobs = this.emitChangeSource.asObservable();
         console.log('constructor()');
         this.filePath = null;
-        this.setter = new __WEBPACK_IMPORTED_MODULE_2__models__["a" /* DoubleBufferSetter */](WAV_CHUNK1, WAV_CHUNK2, () => {
+        this.setter = new __WEBPACK_IMPORTED_MODULE_3__models__["a" /* DoubleBufferSetter */](WAV_CHUNK1, WAV_CHUNK2, () => {
             // THIS CALLBACK IS CALLED MULTIPLE TIMES WHILE THE AUDIO IS BEING RECORDED
             // TODO remove saveWavFileChunk from this callback and maybe replace for a debugging log to see activeBuffer change
-            // this.saveWavFileChunk(this.setter.activeBuffer).subscribe(null, (err: any) => {
-            //     // alert('Error in RecordWav.setter(): ' + err);
-            //     console.log('Error in RecordWav.setter(): ' + err);
-            // });
-            console.log('Recording: ' + this.setter.bufferIndex);
+            this.saveWav(this.setter.activeBuffer).subscribe(null, (err) => {
+                // alert('Error in RecordWav.setter(): ' + err);
+                console.error('Error in RecordWav.setter(): ' + err);
+            });
+            // console.log('Recording: ' + this.setter.bufferIndex);
         });
         this.nChunksSaved = 0;
     }
@@ -1735,6 +1742,10 @@ let WavRecorder = class WavRecorder extends __WEBPACK_IMPORTED_MODULE_3__recorde
     unloadRecordedFile() {
         this.filePath = null;
     }
+    // Service message commands
+    emit(blob) {
+        this.emitChangeSource.next(blob);
+    }
     /**
      * Save the next wav file chunk
      * TODO change this method in a way i don't save chunks, but the whole file in the end of recording from buffer data
@@ -1742,14 +1753,30 @@ let WavRecorder = class WavRecorder extends __WEBPACK_IMPORTED_MODULE_3__recorde
      */
     saveWav(arr) {
         console.log('saveWav(arr.size=' + arr.length + ', nSamples: ' + this.nRecordedSamples + ')');
-        let src = __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__["Observable"].create((observer) => {
-            __WEBPACK_IMPORTED_MODULE_2__models__["b" /* WavFile */].createWavFile(this.filePath, arr, this.audioContext).subscribe((blob) => {
-                this.nChunksSaved = 1;
-                observer.next(blob);
-                observer.complete();
-            }, (err1) => {
-                observer.error(err1);
-            });
+        let src = __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__["Observable"].create((observer) => {
+            if (this.nChunksSaved == 0) {
+                __WEBPACK_IMPORTED_MODULE_3__models__["b" /* WavFile */].createWavFile(this.filePath, arr, this.audioContext).subscribe((blob) => {
+                    this.nChunksSaved = 1;
+                    this.emit(blob);
+                    observer.next(blob);
+                    observer.complete();
+                }, (err1) => {
+                    observer.error(err1);
+                });
+            }
+            else {
+                __WEBPACK_IMPORTED_MODULE_3__models__["b" /* WavFile */].appendToWavFile(arr, this.nRecordedSamples - arr.length).subscribe((blob) => {
+                    this.nChunksSaved++;
+                    // emit blob every 100 chunks
+                    // if(this.nChunksSaved % 2 == 0) {
+                    // }
+                    this.emit(blob);
+                    observer.next(blob);
+                    observer.complete();
+                }, (err1) => {
+                    observer.error(err1);
+                });
+            }
         });
         return src;
     }
@@ -1760,9 +1787,8 @@ let WavRecorder = class WavRecorder extends __WEBPACK_IMPORTED_MODULE_3__recorde
         return new Promise((resolve, reject) => {
             super.start().then(() => {
                 const dateCreated = Date.now();
-                const displayDateCreated = Object(__WEBPACK_IMPORTED_MODULE_2__models__["d" /* formatUnixTimestamp */])(dateCreated);
+                const displayDateCreated = Object(__WEBPACK_IMPORTED_MODULE_3__models__["d" /* formatUnixTimestamp */])(dateCreated);
                 const filePath = '/' + displayDateCreated;
-                console.log('start() - ' + filePath);
                 this.filePath = filePath;
                 resolve();
             }, (error) => {
@@ -1781,7 +1807,7 @@ let WavRecorder = class WavRecorder extends __WEBPACK_IMPORTED_MODULE_3__recorde
     stop() {
         console.log('WavRecorder:stop() @ ' + this.setter.bufferIndex + ', len: ' + this.setter.activeBuffer.subarray(0, this.setter.bufferIndex).length);
         this.reset();
-        let src = __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__["Observable"].create((observer) => {
+        let src = __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__["Observable"].create((observer) => {
             this.saveWav(this.setter.activeBuffer.subarray(0, this.setter.bufferIndex)).subscribe((formDataFile) => {
                 console.log("WavFile:saveWav() @ Saved");
                 console.log('form data ' + JSON.stringify(formDataFile));
@@ -1798,7 +1824,9 @@ let WavRecorder = class WavRecorder extends __WEBPACK_IMPORTED_MODULE_3__recorde
                         console.log('AUDIO CONTEXT SUSPENDED');
                     });
                 }
-                observer.next(formDataFile);
+                __WEBPACK_IMPORTED_MODULE_3__models__["b" /* WavFile */].clearBlob();
+                // observer.next(formDataFile);
+                observer.next();
                 observer.complete();
             }, (err) => {
                 observer.error(err);
@@ -1808,8 +1836,8 @@ let WavRecorder = class WavRecorder extends __WEBPACK_IMPORTED_MODULE_3__recorde
     }
 };
 WavRecorder = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4____["a" /* AudioContextGenerator */], __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["g" /* Platform */]])
+    Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5____["a" /* AudioContextGenerator */], __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["g" /* Platform */]])
 ], WavRecorder);
 
 //# sourceMappingURL=wav-recorder.js.map
@@ -1869,7 +1897,10 @@ const RECORDER_CLOCK_FUNCTION_NAME = 'recorder';
  * @const {string} Length of script processing buffer - (a) this must be a
  * power of 2; (b) the smaller this is, the more accurately we track time.
  */
-const PROCESSING_BUFFER_LENGTH = 16384;
+// const PROCESSING_BUFFER_LENGTH: number = 19456;
+// const PROCESSING_BUFFER_LENGTH: number = 16384;
+const PROCESSING_BUFFER_LENGTH = 8192;
+// const PROCESSING_BUFFER_LENGTH: number = 1024;
 /** @const {number}  Waiting time between checks that WAA is initialized */
 const WAIT_MSEC = 50;
 // statuses
@@ -2497,21 +2528,32 @@ let MyApp = class MyApp {
         // recorder.waitForWAA().subscribe(()=>{
         //   recorder.resetPeaks();
         // });
+        this.zone = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]({ enableLongStackTrace: false });
+        this.isMobile = true;
     }
     ngOnInit() {
         this.messageSubscription = this.cognitiveService.listenMessage.subscribe((message) => {
             if (message.RecognitionStatus == 'Success') {
-                this.spokenMessage += ' ' + message.DisplayText;
-                const lowerMsg = this.spokenMessage.toLowerCase();
-                if (lowerMsg.indexOf('go to') != -1 && lowerMsg.indexOf('heart disease') != -1) {
-                    // this.goToForm('hd');
-                    this.appService.emitMessage('hd');
-                    this.stop(true); // Dont need to stop here when using DEVICE AUDIOINPUT, only need with native SpeechRecognition
-                }
-                if (lowerMsg.indexOf('go to') != -1 && lowerMsg.indexOf('flu') != -1) {
-                    this.appService.emitMessage('flu');
-                    this.stop(true);
-                }
+                this.zone.run(() => {
+                    if (message.DisplayText.length > this.spokenMessage.length) {
+                        this.spokenMessage = message.DisplayText;
+                    }
+                    console.log(`Spoken -----------> ${this.spokenMessage}`);
+                    const lowerMsg = this.spokenMessage.toLowerCase();
+                    if (lowerMsg.indexOf('go to') != -1 && lowerMsg.indexOf('heart disease') != -1) {
+                        // this.goToForm('hd');
+                        this.appService.emitMessage('hd');
+                        if (!this.isMobile) {
+                            this.stop(false); // Dont need to stop here when using DEVICE AUDIOINPUT, only need with native SpeechRecognition
+                        }
+                    }
+                    if (lowerMsg.indexOf('go to') != -1 && lowerMsg.indexOf('flu') != -1) {
+                        this.appService.emitMessage('flu');
+                        if (!this.isMobile) {
+                            this.stop(false);
+                        }
+                    }
+                });
             }
             if (typeof message == 'string') {
                 this.debug = '';
@@ -2519,32 +2561,51 @@ let MyApp = class MyApp {
             }
         });
     }
+    // ********************************************
+    //                MOBILE
+    // ********************************************
     speakStop() {
+        const self = this;
         this.debug = '';
         if (!this.speaking) {
             this.speaking = true;
             this.spokenMessage = '';
-            // const loading = this.loadingCtrl.create({
-            //   spinner: 'bubbles',
-            //   content: `
-            //       <div class="custom-spinner-container">
-            //           <div class="custom-spinner-box">
-            //               Analyzing, please wait...
-            //           </div>
-            //       </div>`,
-            //   duration: 100000
-            // });
-            // loading.present();
-            // this.recorder.start().then(() => {
-            //   // READY
-            //   this.debug += 'READY TO SPEAK';
-            //   console.log('READY TO SPEAK');
-            //   loading.dismiss()
-            // });
-            this.cognitiveService.speak();
+            const loading = this.loadingCtrl.create({
+                spinner: 'bubbles',
+                content: `
+            <div class="custom-spinner-container">
+                <div class="custom-spinner-box">
+                    Analyzing, please wait...
+                </div>
+            </div>`,
+                duration: 100000
+            });
+            loading.present();
+            this.recorder.start().then(() => {
+                // READY
+                this.debug += 'READY TO SPEAK';
+                console.log('READY TO SPEAK');
+                loading.dismiss();
+                this.recorder.listenBlobs.subscribe((blob) => {
+                    console.log('Listening to BLOBS...');
+                    self.cognitiveService.analyseSound(blob).subscribe((data) => {
+                        console.log('**************** analyseSound() @ SUCCESS *****************');
+                        self.debug = '';
+                        self.debug += blob.size + ' -> ';
+                        self.debug += 'Success!!';
+                        console.log(`DATA  ${JSON.stringify(data)}`);
+                        self.cognitiveService.emitMessage(data);
+                        //subs.unsubscribe();
+                    }, (error) => {
+                        self.debug = '';
+                        self.debug += `An Error ocurred: ${JSON.stringify(error)}`;
+                        console.log(error);
+                    });
+                });
+            });
         }
         else {
-            this.stop(true);
+            this.stop(false);
         }
     }
     stop(erase) {
@@ -2552,28 +2613,31 @@ let MyApp = class MyApp {
         this.spokenMessage = erase ? '' : this.spokenMessage;
         this.speaking = false;
         this.debug = '';
-        // let subs = this.recorder.stop().subscribe((file: File | Blob) => {
-        //   console.log(file);
-        //   self.debug += 'Stoped! File created';
-        //   // TODO send to Azure Bing Speech API by POST
-        //   self.debug = '';
-        //   self.cognitiveService.analyseSound(file).subscribe((data) => {
-        //     console.log('analyseSound() @ success');
-        //     self.debug = '';
-        //     self.debug += file.size + ' -> ';
-        //     self.debug += 'Success!!';
-        //     console.log(`DATA  ${JSON.stringify(data)}`);
-        //     self.cognitiveService.emitMessage(data);
-        //     //subs.unsubscribe();
-        //   }, (error) => {
-        //     self.debug = '';
-        //     self.debug += `An Error ocurred: ${JSON.stringify(error)}`;
-        //     console.log(error);
-        //   });
-        // }, (err: any) => {
-        //   console.log(`ERROR -> , ${JSON.stringify(err)}`);
-        // });
-        this.cognitiveService.stopSpeaking();
+        let subs = this.recorder.stop().subscribe((file) => {
+            console.log('FINAL FILE SIZE ->', file.size);
+            self.debug += 'Stoped! File created';
+            // TODO send to Azure Bing Speech API by POST
+            self.debug = '';
+            // self.cognitiveService.analyseSound(file).subscribe((data) => {
+            //   console.log('*********************************');
+            //   console.log('*********************************');
+            //   console.log('**************** analyseSound() @ SUCCESS *****************');
+            //   console.log('*********************************');
+            //   console.log('*********************************');
+            //   self.debug = '';
+            //   self.debug += file.size + ' -> ';
+            //   self.debug += 'Success!!';
+            //   console.log(`DATA  ${JSON.stringify(data)}`);
+            //   self.cognitiveService.emitMessage(data);
+            //   //subs.unsubscribe();
+            // }, (error) => {
+            //   self.debug = '';
+            //   self.debug += `An Error ocurred: ${JSON.stringify(error)}`;
+            //   console.log(error);
+            // });
+        }, (err) => {
+            console.log(`ERROR -> , ${JSON.stringify(err)}`);
+        });
     }
 };
 MyApp = __decorate([
@@ -2739,6 +2803,26 @@ function sampleToByte(iSample) {
   return iByte / 2 - N_HEADER_BYTES;
   }
 */
+class BlobFactory {
+    constructor() {
+        this.parts = [];
+    }
+    append(part) {
+        this.parts.push(part);
+        this.blob = undefined;
+    }
+    getBlob() {
+        if (!this.blob) {
+            this.blob = new Blob(this.parts, { type: WAV_MIME_TYPE });
+        }
+        return this.blob;
+    }
+    clear() {
+        this.parts = [];
+        this.blob = undefined;
+    }
+}
+const blobFactory = new BlobFactory();
 /**
  *
  */
@@ -2784,6 +2868,7 @@ function makeWavBlobHeaderView(nSamples, sampleRate) {
 } // public static makeWavBlobHeaderView(
 let AUDIO_CONTEXT;
 let SAMPLE_RATE = 0;
+let HEADER_VIEW;
 /**
  *
  */
@@ -2799,14 +2884,39 @@ class WavFile {
         }
         const src = __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__["Observable"].create((observer) => {
             const nSamples = wavData.length;
-            const headerView = makeWavBlobHeaderView(nSamples, SAMPLE_RATE);
-            const blob = new Blob([headerView, wavData], { type: WAV_MIME_TYPE });
+            HEADER_VIEW = makeWavBlobHeaderView(nSamples, SAMPLE_RATE);
+            blobFactory.append(HEADER_VIEW);
+            blobFactory.append(wavData);
+            const blob = blobFactory.getBlob();
             console.log('The blob created -->', blob);
             // downloadBlob(blob, "somewav.wav");
+            // observer.next(blob);
             observer.next(blob);
             observer.complete();
         });
         return src;
+    }
+    static appendToWavFile(wavData, nPreAppendSample) {
+        const src = __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__["Observable"].create((observer) => {
+            const nSamples = nPreAppendSample + wavData.length;
+            const subchunk2size = 2 * nSamples;
+            const chunkSize = 36 + subchunk2size;
+            let view = new DataView(new ArrayBuffer(4));
+            // this.clearBlob();
+            // blobFactory.append(HEADER_VIEW);
+            view.setUint32(0, chunkSize, true);
+            blobFactory.append(view);
+            view.setUint32(0, subchunk2size, true);
+            blobFactory.append(view);
+            blobFactory.append(wavData);
+            const blob = blobFactory.getBlob();
+            observer.next(blob);
+            observer.complete();
+        });
+        return src;
+    }
+    static clearBlob() {
+        blobFactory.clear();
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = WavFile;

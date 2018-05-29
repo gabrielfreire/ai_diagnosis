@@ -11,12 +11,16 @@ import {  NgZone } from '@angular/core';
 @Injectable()
 export class CognitiveService {
     private recognizer;
+    private soundAnalysisHeader: Headers;
     // Observable string sources
     private emitChangeSource = new Subject<any>();
     // Observable string streams
     listenMessage = this.emitChangeSource.asObservable();
     constructor(private http: Http, public speechRecognition: SpeechRecognition, public zone: NgZone) {
         // this.recognizer = this._RecognizerSetup(SDK, "Dictation", "en-US", "Simple", "17328acb588e413eaf4f56c885b3511f");
+        this.soundAnalysisHeader = new Headers();
+        this.soundAnalysisHeader.append('Ocp-Apim-Subscription-Key','803f5c8476884b0baf897ed24e28fbf7');
+        this.soundAnalysisHeader.append('Content-Type','audio/wav; codec="audio/pcm"; samplerate=16000');
         
     }
     // Service message commands
@@ -122,12 +126,9 @@ export class CognitiveService {
     }
 
     analyseSound(soundFile: File | Blob): Observable<any> {
-        const headers = new Headers();
-        headers.append('Ocp-Apim-Subscription-Key','803f5c8476884b0baf897ed24e28fbf7');
-        headers.append('Content-Type','audio/wav; codec="audio/pcm"; samplerate=16000');
         const src: Observable<any> = Observable.create((observer) => {
             let speechURL ="https://speech.platform.bing.com/speech/recognition/dictation/cognitiveservices/v1?language=en-US&format=simple";
-            this.http.post(speechURL, soundFile, {headers: headers}).subscribe((data) => {
+            this.http.post(speechURL, soundFile, {headers: this.soundAnalysisHeader}).subscribe((data) => {
                 data = data.json();
                 console.log(data);
                 observer.next(data);
