@@ -269,7 +269,7 @@ export abstract class WebAudioRecorder {
                     let source = this.audioContext.createBufferSource();
                     source.buffer = audioBuffer;
                     source.connect(this.audioContext.destination);
-                    source.start(2);
+                    source.start(1);
                 }
             }
             return;
@@ -346,6 +346,9 @@ export abstract class WebAudioRecorder {
         if(this.isMobileAudioInput) {
             audioinput.start({ bufferSize: PROCESSING_BUFFER_LENGTH, streamToWebAudio: false });
             audioinput.connect(this.audioContext.destination);
+            // call the reset() function to normalize state
+            this.reset();
+            // now, after nodes are connected, we can tell the world we're ready
             this.status = RecordStatus.READY_STATE;
             return;
         }
@@ -465,13 +468,13 @@ export abstract class WebAudioRecorder {
         const self = this;
         this.isRecording = false;
         this.isInactive = true;
-        this.status = RecordStatus.UNINITIALIZED_STATE;
-        if(this._hasAudioInput() && this.isMobileAudioInput) {
+        if(this._hasAudioInput() && this.isMobileAudioInput && this.status == RecordStatus.READY_STATE) {
             audioinput.stop(() => {  
                 self.isMobileAudioInput = false;
             });
             audioinput.disconnect();
         }
+        this.status = RecordStatus.UNINITIALIZED_STATE;
     }
 
     /**

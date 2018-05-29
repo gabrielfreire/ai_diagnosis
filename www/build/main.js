@@ -66,64 +66,62 @@ let CognitiveService = class CognitiveService {
         this.emitChangeSource.next(change);
     }
     speak() {
-        this.recognizer = this._RecognizerSetup(__WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__, "Dictation", "en-US", "Simple", "17328acb588e413eaf4f56c885b3511f");
+        this.recognizer = this._RecognizerSetup(__WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__, "Dictation", "en-US", "Simple", "803f5c8476884b0baf897ed24e28fbf7");
         console.log('Loaded SDK');
         console.log(__WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__);
         const self = this;
-        this.speechRecognition.isRecognitionAvailable().then((available) => {
-            console.log('available ?', available);
-            this.speechRecognition.hasPermission().then((has) => {
-                console.log('Permission', has);
-                if (has) {
-                    let res = {};
-                    self.speechRecognition.startListening({ language: 'en-US', matches: 5, showPartial: true }).subscribe((matches) => {
-                        console.log('Listening');
-                        res['DisplayText'] = matches[0];
-                        res['RecognitionStatus'] = 'Success';
-                        console.log(res);
-                        self.emitMessage(res);
-                    }, (error) => {
-                        console.log('error->', error);
-                        self.emitMessage(error);
-                    });
-                    // self._recognizerStart(SDK, self.recognizer);
-                }
-                else {
-                    self.emitMessage("No permission!");
-                    console.log('Permission', has);
-                    self.speechRecognition.requestPermission().then(() => {
-                        console.log('Permitted');
-                        self.emitMessage("Permitted!");
-                        let res = {};
-                        self.speechRecognition.startListening({ language: 'en-US', matches: 5, showPartial: true }).subscribe((matches) => {
-                            console.log('Listening');
-                            res['DisplayText'] = matches[0];
-                            res['RecognitionStatus'] = 'Success';
-                            console.log(res);
-                            self.emitMessage(res);
-                        }, (error) => {
-                            console.log('error->', error);
-                            self.emitMessage(error);
-                        });
-                        // self._recognizerStart(SDK, self.recognizer);
-                    }, (error) => {
-                        console.log('error->', error);
-                        self.emitMessage(error);
-                    });
-                }
-            }, (error) => self.emitMessage(error));
-        }, (error) => {
-            console.log('Error ocurred ->', error);
-            self.emitMessage('Error ' + JSON.stringify(error));
-        });
-        // this._recognizerStart(SDK, this.recognizer);
+        // this.speechRecognition.isRecognitionAvailable().then((available: boolean) => {
+        //     console.log('available ?', available);
+        //     this.speechRecognition.hasPermission().then((has) => {
+        //         console.log('Permission', has);
+        //         if(has) {
+        //             let res = {};
+        //             self.speechRecognition.startListening({language: 'en-US', matches:5, showPartial: true}).subscribe((matches) => {
+        //                 console.log('Listening');
+        //                 res['DisplayText'] = matches[0];
+        //                 res['RecognitionStatus'] = 'Success';
+        //                 console.log(res);
+        //                 self.emitMessage(res);
+        //             }, (error) => {
+        //                 console.log('error->', error);
+        //                 self.emitMessage(error)
+        //             });
+        //             // self._recognizerStart(SDK, self.recognizer);
+        //         } else {
+        //             self.emitMessage("No permission!");
+        //             console.log('Permission', has);
+        //             self.speechRecognition.requestPermission().then(()=>{
+        //                 console.log('Permitted');
+        //                 self.emitMessage("Permitted!");
+        //                 let res = {};
+        //                 self.speechRecognition.startListening({language: 'en-US', matches:5, showPartial: true}).subscribe((matches) => {
+        //                     console.log('Listening');
+        //                     res['DisplayText'] = matches[0];
+        //                     res['RecognitionStatus'] = 'Success';
+        //                     console.log(res);
+        //                     self.emitMessage(res);
+        //                 }, (error) => {
+        //                     console.log('error->', error);
+        //                     self.emitMessage(error)
+        //                 });
+        //                 // self._recognizerStart(SDK, self.recognizer);
+        //             }, (error) => {
+        //                 console.log('error->', error);
+        //                 self.emitMessage(error)
+        //             });
+        //         }
+        //     }, (error) => self.emitMessage(error));
+        // }, (error) => {
+        //     console.log('Error ocurred ->', error);
+        //     self.emitMessage('Error ' + JSON.stringify(error));
+        // });
+        this._recognizerStart(__WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__, this.recognizer);
     }
     stopSpeaking() {
         const self = this;
-        // this._RecognizerStop(SDK, this.recognizer);
+        this._RecognizerStop(__WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__, this.recognizer);
         console.log('Stopped');
-        if (this.speechRecognition.stopListening)
-            this.speechRecognition.stopListening().then(() => console.log('stoped'), (error) => self.emitMessage(error));
+        // if(this.speechRecognition.stopListening) this.speechRecognition.stopListening().then(() => console.log('stoped'), (error) => self.emitMessage(error));
     }
     analyzeImage(imageDataURL) {
         const uriBase = __WEBPACK_IMPORTED_MODULE_2__app_server_connection__["a" /* server */].vision_url;
@@ -159,7 +157,7 @@ let CognitiveService = class CognitiveService {
     }
     analyseSound(soundFile) {
         const headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
-        headers.append('Ocp-Apim-Subscription-Key', 'e99f9943707441f1a6a84ca793341229');
+        headers.append('Ocp-Apim-Subscription-Key', '803f5c8476884b0baf897ed24e28fbf7');
         headers.append('Content-Type', 'audio/wav; codec="audio/pcm"; samplerate=16000');
         const src = __WEBPACK_IMPORTED_MODULE_5_rxjs_Observable__["Observable"].create((observer) => {
             let speechURL = "https://speech.platform.bing.com/speech/recognition/dictation/cognitiveservices/v1?language=en-US&format=simple";
@@ -2081,7 +2079,7 @@ let WebAudioRecorder = class WebAudioRecorder {
                     let source = this.audioContext.createBufferSource();
                     source.buffer = audioBuffer;
                     source.connect(this.audioContext.destination);
-                    source.start(2);
+                    source.start(1);
                 }
             }
             return;
@@ -2155,6 +2153,9 @@ let WebAudioRecorder = class WebAudioRecorder {
         if (this.isMobileAudioInput) {
             audioinput.start({ bufferSize: PROCESSING_BUFFER_LENGTH, streamToWebAudio: false });
             audioinput.connect(this.audioContext.destination);
+            // call the reset() function to normalize state
+            this.reset();
+            // now, after nodes are connected, we can tell the world we're ready
             this.status = RecordStatus.READY_STATE;
             return;
         }
@@ -2265,13 +2266,13 @@ let WebAudioRecorder = class WebAudioRecorder {
         const self = this;
         this.isRecording = false;
         this.isInactive = true;
-        this.status = RecordStatus.UNINITIALIZED_STATE;
-        if (this._hasAudioInput() && this.isMobileAudioInput) {
+        if (this._hasAudioInput() && this.isMobileAudioInput && this.status == RecordStatus.READY_STATE) {
             audioinput.stop(() => {
                 self.isMobileAudioInput = false;
             });
             audioinput.disconnect();
         }
+        this.status = RecordStatus.UNINITIALIZED_STATE;
     }
     /**
      * Returns recording time, in seconds.
@@ -2286,10 +2287,9 @@ let WebAudioRecorder = class WebAudioRecorder {
 };
 WebAudioRecorder = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2____["a" /* AudioContextGenerator */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2____["a" /* AudioContextGenerator */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["g" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["g" /* Platform */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2____["a" /* AudioContextGenerator */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["g" /* Platform */]])
 ], WebAudioRecorder);
 
-var _a, _b;
 //# sourceMappingURL=recorder.js.map
 
 /***/ }),
@@ -2506,11 +2506,11 @@ let MyApp = class MyApp {
                 if (lowerMsg.indexOf('go to') != -1 && lowerMsg.indexOf('heart disease') != -1) {
                     // this.goToForm('hd');
                     this.appService.emitMessage('hd');
-                    // this.stop(true); // Dont need to stop here when using DEVICE AUDIOINPUT, only need with native SpeechRecognition
+                    this.stop(true); // Dont need to stop here when using DEVICE AUDIOINPUT, only need with native SpeechRecognition
                 }
                 if (lowerMsg.indexOf('go to') != -1 && lowerMsg.indexOf('flu') != -1) {
                     this.appService.emitMessage('flu');
-                    // this.stop(true);
+                    this.stop(true);
                 }
             }
             if (typeof message == 'string') {
@@ -2524,24 +2524,24 @@ let MyApp = class MyApp {
         if (!this.speaking) {
             this.speaking = true;
             this.spokenMessage = '';
-            const loading = this.loadingCtrl.create({
-                spinner: 'bubbles',
-                content: `
-            <div class="custom-spinner-container">
-                <div class="custom-spinner-box">
-                    Analyzing, please wait...
-                </div>
-            </div>`,
-                duration: 100000
-            });
-            loading.present();
-            this.recorder.start().then(() => {
-                // READY
-                this.debug += 'READY TO SPEAK';
-                console.log('READY TO SPEAK');
-                loading.dismiss();
-            });
-            // this.cognitiveService.speak();
+            // const loading = this.loadingCtrl.create({
+            //   spinner: 'bubbles',
+            //   content: `
+            //       <div class="custom-spinner-container">
+            //           <div class="custom-spinner-box">
+            //               Analyzing, please wait...
+            //           </div>
+            //       </div>`,
+            //   duration: 100000
+            // });
+            // loading.present();
+            // this.recorder.start().then(() => {
+            //   // READY
+            //   this.debug += 'READY TO SPEAK';
+            //   console.log('READY TO SPEAK');
+            //   loading.dismiss()
+            // });
+            this.cognitiveService.speak();
         }
         else {
             this.stop(true);
@@ -2552,28 +2552,28 @@ let MyApp = class MyApp {
         this.spokenMessage = erase ? '' : this.spokenMessage;
         this.speaking = false;
         this.debug = '';
-        let subs = this.recorder.stop().subscribe((file) => {
-            console.log(file);
-            self.debug += 'Stoped! File created';
-            // TODO send to Azure Bing Speech API by POST
-            self.debug = '';
-            self.cognitiveService.analyseSound(file).subscribe((data) => {
-                console.log('analyseSound() @ success');
-                self.debug = '';
-                self.debug += file.size + ' -> ';
-                self.debug += 'Success!!';
-                console.log(`DATA  ${JSON.stringify(data)}`);
-                self.cognitiveService.emitMessage(data);
-                //subs.unsubscribe();
-            }, (error) => {
-                self.debug = '';
-                self.debug += `An Error ocurred: ${JSON.stringify(error)}`;
-                console.log(error);
-            });
-        }, (err) => {
-            console.log(`ERROR -> , ${JSON.stringify(err)}`);
-        });
-        // this.cognitiveService.stopSpeaking();
+        // let subs = this.recorder.stop().subscribe((file: File | Blob) => {
+        //   console.log(file);
+        //   self.debug += 'Stoped! File created';
+        //   // TODO send to Azure Bing Speech API by POST
+        //   self.debug = '';
+        //   self.cognitiveService.analyseSound(file).subscribe((data) => {
+        //     console.log('analyseSound() @ success');
+        //     self.debug = '';
+        //     self.debug += file.size + ' -> ';
+        //     self.debug += 'Success!!';
+        //     console.log(`DATA  ${JSON.stringify(data)}`);
+        //     self.cognitiveService.emitMessage(data);
+        //     //subs.unsubscribe();
+        //   }, (error) => {
+        //     self.debug = '';
+        //     self.debug += `An Error ocurred: ${JSON.stringify(error)}`;
+        //     console.log(error);
+        //   });
+        // }, (err: any) => {
+        //   console.log(`ERROR -> , ${JSON.stringify(err)}`);
+        // });
+        this.cognitiveService.stopSpeaking();
     }
 };
 MyApp = __decorate([

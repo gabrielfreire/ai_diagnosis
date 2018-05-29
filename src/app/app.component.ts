@@ -41,11 +41,11 @@ export class MyApp implements OnInit{
         if(lowerMsg.indexOf('go to') != -1 && lowerMsg.indexOf('heart disease') != -1) {
           // this.goToForm('hd');
           this.appService.emitMessage('hd');
-          // this.stop(true); // Dont need to stop here when using DEVICE AUDIOINPUT, only need with native SpeechRecognition
+          this.stop(true); // Dont need to stop here when using DEVICE AUDIOINPUT, only need with native SpeechRecognition
         }
         if(lowerMsg.indexOf('go to') != -1 && lowerMsg.indexOf('flu') != -1) {
           this.appService.emitMessage('flu');
-          // this.stop(true);
+          this.stop(true);
         }
       }
       if(typeof message == 'string'){
@@ -59,24 +59,24 @@ export class MyApp implements OnInit{
     if(!this.speaking) {
       this.speaking = true;
       this.spokenMessage = '';
-      const loading = this.loadingCtrl.create({
-        spinner: 'bubbles',
-        content: `
-            <div class="custom-spinner-container">
-                <div class="custom-spinner-box">
-                    Analyzing, please wait...
-                </div>
-            </div>`,
-        duration: 100000
-      });
-      loading.present();
-      this.recorder.start().then(() => {
-        // READY
-        this.debug += 'READY TO SPEAK';
-        console.log('READY TO SPEAK');
-        loading.dismiss()
-      });
-      // this.cognitiveService.speak();
+      // const loading = this.loadingCtrl.create({
+      //   spinner: 'bubbles',
+      //   content: `
+      //       <div class="custom-spinner-container">
+      //           <div class="custom-spinner-box">
+      //               Analyzing, please wait...
+      //           </div>
+      //       </div>`,
+      //   duration: 100000
+      // });
+      // loading.present();
+      // this.recorder.start().then(() => {
+      //   // READY
+      //   this.debug += 'READY TO SPEAK';
+      //   console.log('READY TO SPEAK');
+      //   loading.dismiss()
+      // });
+      this.cognitiveService.speak();
     } else {
       this.stop(true);
     }
@@ -88,27 +88,27 @@ export class MyApp implements OnInit{
     this.spokenMessage = erase ? '' : this.spokenMessage;
     this.speaking = false;
     this.debug = '';
-    let subs = this.recorder.stop().subscribe((file: File | Blob) => {
-      console.log(file);
-      self.debug += 'Stoped! File created';
-      // TODO send to Azure Bing Speech API by POST
-      self.debug = '';
-      self.cognitiveService.analyseSound(file).subscribe((data) => {
-        console.log('analyseSound() @ success');
-        self.debug = '';
-        self.debug += file.size + ' -> ';
-        self.debug += 'Success!!';
-        console.log(`DATA  ${JSON.stringify(data)}`);
-        self.cognitiveService.emitMessage(data);
-        //subs.unsubscribe();
-      }, (error) => {
-        self.debug = '';
-        self.debug += `An Error ocurred: ${JSON.stringify(error)}`;
-        console.log(error);
-      });
-    }, (err: any) => {
-      console.log(`ERROR -> , ${JSON.stringify(err)}`);
-    });
-    // this.cognitiveService.stopSpeaking();
+    // let subs = this.recorder.stop().subscribe((file: File | Blob) => {
+    //   console.log(file);
+    //   self.debug += 'Stoped! File created';
+    //   // TODO send to Azure Bing Speech API by POST
+    //   self.debug = '';
+    //   self.cognitiveService.analyseSound(file).subscribe((data) => {
+    //     console.log('analyseSound() @ success');
+    //     self.debug = '';
+    //     self.debug += file.size + ' -> ';
+    //     self.debug += 'Success!!';
+    //     console.log(`DATA  ${JSON.stringify(data)}`);
+    //     self.cognitiveService.emitMessage(data);
+    //     //subs.unsubscribe();
+    //   }, (error) => {
+    //     self.debug = '';
+    //     self.debug += `An Error ocurred: ${JSON.stringify(error)}`;
+    //     console.log(error);
+    //   });
+    // }, (err: any) => {
+    //   console.log(`ERROR -> , ${JSON.stringify(err)}`);
+    // });
+    this.cognitiveService.stopSpeaking();
   }
 }

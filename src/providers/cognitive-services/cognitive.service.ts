@@ -24,64 +24,64 @@ export class CognitiveService {
         this.emitChangeSource.next(change);
     }
     speak() {
-        this.recognizer = this._RecognizerSetup(SDK, "Dictation", "en-US", "Simple", "17328acb588e413eaf4f56c885b3511f");
+        this.recognizer = this._RecognizerSetup(SDK, "Dictation", "en-US", "Simple", "803f5c8476884b0baf897ed24e28fbf7");
         console.log('Loaded SDK');
         console.log(SDK);
         const self = this;
-        this.speechRecognition.isRecognitionAvailable().then((available: boolean) => {
-            console.log('available ?', available);
-            this.speechRecognition.hasPermission().then((has) => {
-                console.log('Permission', has);
-                if(has) {
-                    let res = {};
-                    self.speechRecognition.startListening({language: 'en-US', matches:5, showPartial: true}).subscribe((matches) => {
-                        console.log('Listening');
-                        res['DisplayText'] = matches[0];
-                        res['RecognitionStatus'] = 'Success';
-                        console.log(res);
-                        self.emitMessage(res);
-                    }, (error) => {
-                        console.log('error->', error);
-                        self.emitMessage(error)
-                    });
-                    // self._recognizerStart(SDK, self.recognizer);
-                } else {
-                    self.emitMessage("No permission!");
-                    console.log('Permission', has);
-                    self.speechRecognition.requestPermission().then(()=>{
-                        console.log('Permitted');
-                        self.emitMessage("Permitted!");
-                        let res = {};
-                        self.speechRecognition.startListening({language: 'en-US', matches:5, showPartial: true}).subscribe((matches) => {
-                            console.log('Listening');
-                            res['DisplayText'] = matches[0];
-                            res['RecognitionStatus'] = 'Success';
-                            console.log(res);
-                            self.emitMessage(res);
-                        }, (error) => {
-                            console.log('error->', error);
-                            self.emitMessage(error)
-                        });
-                        // self._recognizerStart(SDK, self.recognizer);
+        // this.speechRecognition.isRecognitionAvailable().then((available: boolean) => {
+        //     console.log('available ?', available);
+        //     this.speechRecognition.hasPermission().then((has) => {
+        //         console.log('Permission', has);
+        //         if(has) {
+        //             let res = {};
+        //             self.speechRecognition.startListening({language: 'en-US', matches:5, showPartial: true}).subscribe((matches) => {
+        //                 console.log('Listening');
+        //                 res['DisplayText'] = matches[0];
+        //                 res['RecognitionStatus'] = 'Success';
+        //                 console.log(res);
+        //                 self.emitMessage(res);
+        //             }, (error) => {
+        //                 console.log('error->', error);
+        //                 self.emitMessage(error)
+        //             });
+        //             // self._recognizerStart(SDK, self.recognizer);
+        //         } else {
+        //             self.emitMessage("No permission!");
+        //             console.log('Permission', has);
+        //             self.speechRecognition.requestPermission().then(()=>{
+        //                 console.log('Permitted');
+        //                 self.emitMessage("Permitted!");
+        //                 let res = {};
+        //                 self.speechRecognition.startListening({language: 'en-US', matches:5, showPartial: true}).subscribe((matches) => {
+        //                     console.log('Listening');
+        //                     res['DisplayText'] = matches[0];
+        //                     res['RecognitionStatus'] = 'Success';
+        //                     console.log(res);
+        //                     self.emitMessage(res);
+        //                 }, (error) => {
+        //                     console.log('error->', error);
+        //                     self.emitMessage(error)
+        //                 });
+        //                 // self._recognizerStart(SDK, self.recognizer);
     
-                    }, (error) => {
-                        console.log('error->', error);
-                        self.emitMessage(error)
-                    });
-                }
-            }, (error) => self.emitMessage(error));
-        }, (error) => {
-            console.log('Error ocurred ->', error);
-            self.emitMessage('Error ' + JSON.stringify(error));
-        });
-        // this._recognizerStart(SDK, this.recognizer);
+        //             }, (error) => {
+        //                 console.log('error->', error);
+        //                 self.emitMessage(error)
+        //             });
+        //         }
+        //     }, (error) => self.emitMessage(error));
+        // }, (error) => {
+        //     console.log('Error ocurred ->', error);
+        //     self.emitMessage('Error ' + JSON.stringify(error));
+        // });
+        this._recognizerStart(SDK, this.recognizer);
     }
 
     stopSpeaking() {
         const self = this;
-        // this._RecognizerStop(SDK, this.recognizer);
+        this._RecognizerStop(SDK, this.recognizer);
         console.log('Stopped');
-        if(this.speechRecognition.stopListening) this.speechRecognition.stopListening().then(() => console.log('stoped'), (error) => self.emitMessage(error));
+        // if(this.speechRecognition.stopListening) this.speechRecognition.stopListening().then(() => console.log('stoped'), (error) => self.emitMessage(error));
     }
 
     analyzeImage(imageDataURL: string): Observable<any> {
@@ -123,7 +123,7 @@ export class CognitiveService {
 
     analyseSound(soundFile: File | Blob): Observable<any> {
         const headers = new Headers();
-        headers.append('Ocp-Apim-Subscription-Key','e99f9943707441f1a6a84ca793341229');
+        headers.append('Ocp-Apim-Subscription-Key','803f5c8476884b0baf897ed24e28fbf7');
         headers.append('Content-Type','audio/wav; codec="audio/pcm"; samplerate=16000');
         const src: Observable<any> = Observable.create((observer) => {
             let speechURL ="https://speech.platform.bing.com/speech/recognition/dictation/cognitiveservices/v1?language=en-US&format=simple";
