@@ -125,23 +125,6 @@ export class MyApp implements OnInit{
       self.debug += 'Stoped! File created';
       // TODO send to Azure Bing Speech API by POST
       self.debug = '';
-      // self.cognitiveService.analyseSound(file).subscribe((data) => {
-      //   console.log('*********************************');
-      //   console.log('*********************************');
-      //   console.log('**************** analyseSound() @ SUCCESS *****************');
-      //   console.log('*********************************');
-      //   console.log('*********************************');
-      //   self.debug = '';
-      //   self.debug += file.size + ' -> ';
-      //   self.debug += 'Success!!';
-      //   console.log(`DATA  ${JSON.stringify(data)}`);
-      //   self.cognitiveService.emitMessage(data);
-      //   //subs.unsubscribe();
-      // }, (error) => {
-      //   self.debug = '';
-      //   self.debug += `An Error ocurred: ${JSON.stringify(error)}`;
-      //   console.log(error);
-      // });
     }, (err: any) => {
       console.log(`ERROR -> , ${JSON.stringify(err)}`);
     });
