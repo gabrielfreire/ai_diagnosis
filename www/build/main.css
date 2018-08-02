@@ -30612,15 +30612,89 @@ ion-label {
 }
 
 app-chat .chat-baloon {
-  width: 50%;
-}
-
-app-chat .chat-input {
-  background-color: white;
+  width: 100%;
 }
 
 app-chat .scroll-content {
   height: 80%;
+}
+
+app-chat ion-footer {
+  height: 255px;
+}
+
+app-chat .line-breaker {
+  white-space: pre-line;
+}
+
+app-chat .input-wrap {
+  padding: 3px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+app-chat .input-wrap textarea {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  border: 0;
+  border-bottom: 1px #5ad0c5;
+  border-style: solid;
+}
+
+app-chat .message-wrap {
+  padding: 0 6px;
+}
+
+app-chat .message-wrap .message {
+  padding: 4px 0;
+}
+
+app-chat .message-wrap .message .message-detail {
+  width: 100%;
+  display: inline-block;
+}
+
+app-chat .message-wrap .message .message-detail .message-info p {
+  font-size: .8em;
+  color: #888;
+}
+
+app-chat .message-wrap .message .message-detail .message-content {
+  margin-top: 5px;
+  border-radius: 5px;
+  padding: 5px;
+  border: 1px solid #ddd;
+  color: #fff;
+  width: auto;
+  max-width: 80%;
+}
+
+app-chat .message.left .message-detail .message.info {
+  text-align: left;
+}
+
+app-chat .message.left .message-detail .message-content {
+  font-size: 13px;
+  background-color: #6594ff;
+  color: white;
+  float: left;
+  text-align: left;
+}
+
+app-chat .message.right .message-detail .message-info {
+  text-align: right;
+}
+
+app-chat .message.right .message-detail .message-content {
+  font-size: 13px;
+  background-color: white;
+  color: black;
+  float: right;
+  text-align: right;
 }
 
 page-home .floating {

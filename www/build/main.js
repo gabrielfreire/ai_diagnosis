@@ -29,7 +29,7 @@ const server = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_Subject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_Subject__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_Observable__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_Observable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__ = __webpack_require__(530);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__ = __webpack_require__(532);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_speech_recognition__ = __webpack_require__(336);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -52,7 +52,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 let CognitiveService = class CognitiveService {
     constructor(http, speechRecognition, zone) {
-        // this.recognizer = this._RecognizerSetup(SDK, "Dictation", "en-US", "Simple", "17328acb588e413eaf4f56c885b3511f");
         this.http = http;
         this.speechRecognition = speechRecognition;
         this.zone = zone;
@@ -60,6 +59,10 @@ let CognitiveService = class CognitiveService {
         this.emitChangeSource = new __WEBPACK_IMPORTED_MODULE_4_rxjs_Subject__["Subject"]();
         // Observable string streams
         this.listenMessage = this.emitChangeSource.asObservable();
+        // this.recognizer = this._RecognizerSetup(SDK, "Dictation", "en-US", "Simple", "17328acb588e413eaf4f56c885b3511f");
+        this.soundAnalysisHeader = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
+        this.soundAnalysisHeader.append('Ocp-Apim-Subscription-Key', '803f5c8476884b0baf897ed24e28fbf7');
+        this.soundAnalysisHeader.append('Content-Type', 'audio/wav; codec="audio/pcm"; samplerate=16000');
     }
     // Service message commands
     emitMessage(change) {
@@ -156,12 +159,9 @@ let CognitiveService = class CognitiveService {
         return blob;
     }
     analyseSound(soundFile) {
-        const headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
-        headers.append('Ocp-Apim-Subscription-Key', '803f5c8476884b0baf897ed24e28fbf7');
-        headers.append('Content-Type', 'audio/wav; codec="audio/pcm"; samplerate=16000');
         const src = __WEBPACK_IMPORTED_MODULE_5_rxjs_Observable__["Observable"].create((observer) => {
             let speechURL = "https://speech.platform.bing.com/speech/recognition/dictation/cognitiveservices/v1?language=en-US&format=simple";
-            this.http.post(speechURL, soundFile, { headers: headers }).subscribe((data) => {
+            this.http.post(speechURL, soundFile, { headers: this.soundAnalysisHeader }).subscribe((data) => {
                 data = data.json();
                 console.log(data);
                 observer.next(data);
@@ -305,7 +305,7 @@ AppService = __decorate([
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__web_audio_audioContextGenerator_service__ = __webpack_require__(838);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__web_audio_audioContextGenerator_service__ = __webpack_require__(840);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__web_audio_audioContextGenerator_service__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__web_audio_recorder__ = __webpack_require__(430);
 /* unused harmony namespace reexport */
@@ -391,7 +391,7 @@ let TabsPage = class TabsPage {
     }
 };
 TabsPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\tabs\tabs.html"*/'<ion-tabs>\n\n    <ion-tab [root]="tab1Root" tabTitle="Home" tabIcon="home"></ion-tab>\n\n    <ion-tab [root]="tab2Root" tabTitle="About" tabIcon="information-circle"></ion-tab>\n\n    <ion-tab [root]="tab3Root" tabTitle="Contact" tabIcon="contacts"></ion-tab>\n\n</ion-tabs>'/*ion-inline-end:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\tabs\tabs.html"*/
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\tabs\tabs.html"*/'<ion-tabs>\n    <ion-tab [root]="tab1Root" tabTitle="Home" tabIcon="home"></ion-tab>\n    <ion-tab [root]="tab2Root" tabTitle="About" tabIcon="information-circle"></ion-tab>\n    <ion-tab [root]="tab3Root" tabTitle="Contact" tabIcon="contacts"></ion-tab>\n</ion-tabs>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\tabs\tabs.html"*/
     }),
     __metadata("design:paramtypes", [])
 ], TabsPage);
@@ -760,9 +760,9 @@ let AboutPage = class AboutPage {
 };
 AboutPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-about',template:/*ion-inline-start:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\about\about.html"*/'<ion-header>\n\n    <ion-navbar>\n\n        <ion-title>\n\n            About\n\n        </ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n    <ion-card color="dark">\n\n        <ion-card-header>Question data format</ion-card-header>\n\n        <ion-card-content>\n\n            <pre>{{dataie}}</pre>\n\n        </ion-card-content>\n\n    </ion-card>\n\n    <ion-card color="dark">\n\n        <ion-card-header>Rule data format</ion-card-header>\n\n        <ion-card-content>\n\n            <pre>{{ruleie}}</pre>\n\n        </ion-card-content>\n\n    </ion-card>\n\n    <ion-card color="dark">\n\n        <ion-card-header>Heart Disease Data</ion-card-header>\n\n        <ion-card-content>\n\n            <img src="assets/imgs/age_patients.png">\n\n            <img src="assets/imgs/hd_patients.png">\n\n        </ion-card-content>\n\n    </ion-card>\n\n    <ion-card color="dark">\n\n        <ion-card-header>Heart Disease Neural Network Model</ion-card-header>\n\n        <ion-card-content>\n\n            <img src="assets/imgs/nn_graph.png">\n\n            <img src="assets/imgs/accuracy_cost.png">\n\n        </ion-card-content>\n\n    </ion-card>\n\n    <ion-card color="dark">\n\n        <ion-card-header>New Heart Disease Neural Network Model</ion-card-header>\n\n        <ion-card-content>\n\n            <img src="assets/imgs/nn_graph_97.png">\n\n            <img src="assets/imgs/accuracy_cost_2.png">\n\n        </ion-card-content>\n\n    </ion-card>\n\n</ion-content>'/*ion-inline-end:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\about\about.html"*/
+        selector: 'page-about',template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\about\about.html"*/'<ion-header>\n    <ion-navbar>\n        <ion-title>\n            About\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <ion-card color="dark">\n        <ion-card-header>Question data format</ion-card-header>\n        <ion-card-content>\n            <pre>{{dataie}}</pre>\n        </ion-card-content>\n    </ion-card>\n    <ion-card color="dark">\n        <ion-card-header>Rule data format</ion-card-header>\n        <ion-card-content>\n            <pre>{{ruleie}}</pre>\n        </ion-card-content>\n    </ion-card>\n    <ion-card color="dark">\n        <ion-card-header>Heart Disease Data</ion-card-header>\n        <ion-card-content>\n            <img src="assets/imgs/age_patients.png">\n            <img src="assets/imgs/hd_patients.png">\n        </ion-card-content>\n    </ion-card>\n    <ion-card color="dark">\n        <ion-card-header>Heart Disease Neural Network Model</ion-card-header>\n        <ion-card-content>\n            <img src="assets/imgs/nn_graph.png">\n            <img src="assets/imgs/accuracy_cost.png">\n        </ion-card-content>\n    </ion-card>\n    <ion-card color="dark">\n        <ion-card-header>New Heart Disease Neural Network Model</ion-card-header>\n        <ion-card-content>\n            <img src="assets/imgs/nn_graph_97.png">\n            <img src="assets/imgs/accuracy_cost_2.png">\n        </ion-card-content>\n    </ion-card>\n</ion-content>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\about\about.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]])
 ], AboutPage);
 
 //# sourceMappingURL=about.js.map
@@ -794,9 +794,9 @@ let ContactPage = class ContactPage {
 };
 ContactPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-contact',template:/*ion-inline-start:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\contact\contact.html"*/'<ion-header>\n\n    <ion-navbar>\n\n        <ion-title>\n\n            Contact\n\n        </ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n    <ion-list>\n\n        <ion-list-header>Follow IMS on LinkedIn</ion-list-header>\n\n        <ion-item>\n\n            <ion-icon name="ionic" item-start></ion-icon>\n\n            <a href="https://www.linkedin.com/company/1308682/" style="font-size:11px">https://www.linkedin.com/company/1308682/</a>\n\n        </ion-item>\n\n    </ion-list>\n\n</ion-content>'/*ion-inline-end:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\contact\contact.html"*/
+        selector: 'page-contact',template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\contact\contact.html"*/'<ion-header>\n    <ion-navbar>\n        <ion-title>\n            Contact\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <ion-list>\n        <ion-list-header>Follow IMS on LinkedIn</ion-list-header>\n        <ion-item>\n            <ion-icon name="ionic" item-start></ion-icon>\n            <a href="https://www.linkedin.com/company/1308682/" style="font-size:11px">https://www.linkedin.com/company/1308682/</a>\n        </ion-item>\n    </ion-list>\n</ion-content>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\contact\contact.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]])
 ], ContactPage);
 
 //# sourceMappingURL=contact.js.map
@@ -861,9 +861,9 @@ let HomePage = class HomePage {
 };
 HomePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-home',template:/*ion-inline-start:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\home\home.html"*/'<ion-header>\n\n    <ion-navbar>\n\n        <ion-title>IMS Diagnosis</ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n    <h3>Select a Diagnosis</h3>\n\n    <button full ion-button color="calm" (click)="goToForm(\'flu\')">Flu Diagnosis</button>\n\n    <button full ion-button color="calm" (click)="goToForm(\'hd\')">Heart Disease Diagnosis</button>\n\n    <button full ion-button color="calm" (click)="goToForm(\'mh\')">Patient Health Questionnaire (PHQ-9)</button>\n\n    <h3>Watson Services</h3>\n\n    <button full ion-button color="calm" (click)="goToForm(\'watson\')">Ask Watson Discovery</button>\n\n    <button full ion-button color="calm" (click)="goToChat()">Ask Watson in a Conversation</button>\n\n    <h3>MS Azure Services</h3>\n\n    <button full ion-button color="calm" (click)="goToPictureAnalisys()">Analyze a picture</button>\n\n    <!-- <div class="speakerContainer">\n\n        <h4 *ngIf="spokenMessage && spokenMessage !== undefined">{{spokenMessage}}</h4>\n\n        <button (click)="speakStop()" [ngClass]="{\'active\': speaking}" class="floating" color="calm">\n\n            <ion-icon name="mic"></ion-icon>\n\n        </button>\n\n    </div> -->\n\n</ion-content>'/*ion-inline-end:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\home\home.html"*/
+        selector: 'page-home',template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\home\home.html"*/'<ion-header>\n    <ion-navbar>\n        <ion-title>IMS Diagnosis</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <h3>Select a Diagnosis</h3>\n    <button full ion-button color="calm" (click)="goToForm(\'flu\')">Flu Diagnosis</button>\n    <button full ion-button color="calm" (click)="goToForm(\'hd\')">Heart Disease Diagnosis</button>\n    <button full ion-button color="calm" (click)="goToForm(\'mh\')">Patient Health Questionnaire (PHQ-9)</button>\n    <h3>Watson Services</h3>\n    <button full ion-button color="calm" (click)="goToForm(\'watson\')">Ask Watson Discovery</button>\n    <button full ion-button color="calm" (click)="goToChat()">Ask Watson in a Conversation</button>\n    <h3>MS Azure Services</h3>\n    <button full ion-button color="calm" (click)="goToPictureAnalisys()">Analyze a picture</button>\n</ion-content>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\home\home.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */], __WEBPACK_IMPORTED_MODULE_4__ionic_native_camera__["a" /* Camera */],
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_4__ionic_native_camera__["a" /* Camera */],
         __WEBPACK_IMPORTED_MODULE_6__app_app_service__["a" /* AppService */]])
 ], HomePage);
 
@@ -877,8 +877,11 @@ HomePage = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng_socket_io__ = __webpack_require__(302);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_ng_socket_io__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng_socket_io__ = __webpack_require__(302);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_ng_socket_io__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ChatUser__ = __webpack_require__(526);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ChatRoom__ = __webpack_require__(527);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -890,19 +893,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+
+
 let ChatPage = class ChatPage {
     constructor(socket) {
         this.socket = socket;
+        this.chatRoom = new __WEBPACK_IMPORTED_MODULE_4__ChatRoom__["a" /* ChatRoom */]();
     }
     ngOnInit() {
         //start watson chat
-        this.messages = [];
+        this.chatRoom.addUser(new __WEBPACK_IMPORTED_MODULE_3__ChatUser__["a" /* ChatUser */]('bot'));
+        this.chatRoom.addUser(new __WEBPACK_IMPORTED_MODULE_3__ChatUser__["a" /* ChatUser */]('user'));
         this.zone = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]({ enableLongStackTrace: false });
         this.socket.connect();
         this.chatBox = "";
         this.socket.on("chat_message", (msg) => {
             this.zone.run(() => {
-                this.messages.push('<strong>Dr. Watson:</strong><br> ' + msg);
+                this.chatRoom.addMessage('bot', `${msg}`);
                 setTimeout(() => {
                     if (this.content._scroll) {
                         this.content.scrollToBottom();
@@ -912,38 +920,53 @@ let ChatPage = class ChatPage {
         });
         this.socket.on('disconnect', () => {
             // TODO SOMETHING
+            console.warn('Disconnected from socket');
         });
     }
     ionViewDidLeave() {
         this.socket.disconnect();
     }
     send(message) {
-        if (message && message != "") {
-            this.zone.run(() => {
-                this.messages.push('<strong>You: </strong><br>' + message);
-                setTimeout(() => {
-                    if (this.content._scroll) {
-                        this.content.scrollToBottom();
-                    }
-                }, 300);
-            });
-            this.socket.emit("chat_message", message);
-        }
+        // if(message && message != "") {
+        this.zone.run(() => {
+            this.chatRoom.addMessage('user', `${this.chatBox}`);
+            setTimeout(() => {
+                if (this.content._scroll) {
+                    this.content.scrollToBottom();
+                }
+            }, 300);
+        });
+        this.socket.emit("chat_message", this.chatBox);
         this.chatBox = "";
+        this.focus();
+    }
+    onFocus() {
+        this.content.resize();
+        this.content.scrollToBottom();
+    }
+    focus() {
+        if (this.messageInput && this.messageInput.nativeElement) {
+            this.messageInput.nativeElement.focus();
+        }
     }
 };
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('content'),
-    __metadata("design:type", Object)
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* Content */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* Content */]) === "function" && _a || Object)
 ], ChatPage.prototype, "content", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('chat_input'),
+    __metadata("design:type", typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === "function" && _b || Object)
+], ChatPage.prototype, "messageInput", void 0);
 ChatPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'app-chat',template:/*ion-inline-start:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\chat_watson\chat.html"*/'<ion-header>\n\n    <ion-navbar>\n\n        <ion-title>\n\n            Ask Dr. Watson\n\n        </ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content #content class="scroll-content" padding class="home">\n\n\n\n    <ion-list #list padding no-lines>\n\n        <span *ngFor="let message of messages">\n\n                <ion-item *ngIf="message.indexOf(\'Dr. Watson:\') !== -1">\n\n                    <ion-card class="chat-baloon" color="white" item-left>\n\n                        <ion-card-content>\n\n                            <h2 [style.color]="\'black\'" [innerHTML]="message"></h2>\n\n                        </ion-card-content>\n\n                    </ion-card>\n\n                </ion-item>\n\n                <ion-item *ngIf="message.indexOf(\'Dr. Watson:\') == -1">\n\n                    <ion-card class="chat-baloon" color="white" item-right>\n\n                        <ion-card-content>\n\n                            <h2 [style.color]="\'gray\'" [innerHTML]="message"></h2>\n\n                        </ion-card-content>\n\n                    </ion-card>\n\n                </ion-item>\n\n            </span>\n\n    </ion-list>\n\n\n\n</ion-content>\n\n<ion-footer>\n\n    <ion-item-group>\n\n        <ion-input item-left class="chat-input" type="text" [(ngModel)]="chatBox" placeholder="Your message...">\n\n        </ion-input>\n\n        <button block item-right ion-button (click)="send(chatBox)">Send</button>\n\n    </ion-item-group>\n\n</ion-footer>'/*ion-inline-end:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\chat_watson\chat.html"*/,
+        selector: 'app-chat',template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\chat_watson\chat.html"*/'<ion-header>\n\n    <ion-navbar>\n\n        <ion-title>\n\n            Ask Dr. Watson\n\n        </ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content #content class="scroll-content" class="home">\n\n    <div class="message-wrap">\n\n        <div class="message" #list *ngFor="let message of chatRoom.messages" \n\n        [class.left]=" message.user == \'bot\'" \n\n        [class.right]="message.user == \'user\'">\n\n            <div class="message-detail">\n\n                <div class="message-info">\n\n                    <p>{{ message.user == \'bot\' ? "Dr. Watson" : "You"}}</p>\n\n                </div>\n\n                <div class="message-content">\n\n                    <p class="line-breaker" [innerHTML]="message.message"></p>\n\n                </div>\n\n            </div>\n\n        </div>\n\n    </div>\n\n</ion-content>\n\n<ion-footer no-border style=\'height: 55px;\'>\n\n    <div class="input-wrap">\n\n        <textarea #chat_input class="chat-input" type="text" [(ngModel)]="chatBox" (focusin)="onFocus()" (keyup.enter)="send($event)" placeholder="Type something...">\n\n        </textarea>\n\n        <button item-right icon-only ion-button (click)="send($event)">\n\n            <ion-icon name=\'ios-send\' ios=\'ios-send\' md=\'md-send\'></ion-icon>\n\n        </button>\n\n    </div>\n\n</ion-footer>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\chat_watson\chat.html"*/,
         styles: ['./chat.scss']
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ng_socket_io__["Socket"]])
+    __metadata("design:paramtypes", [typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2_ng_socket_io__["Socket"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ng_socket_io__["Socket"]) === "function" && _c || Object])
 ], ChatPage);
 
+var _a, _b, _c;
 //# sourceMappingURL=chat.js.map
 
 /***/ }),
@@ -958,7 +981,7 @@ ChatPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__questions_question_control_service__ = __webpack_require__(321);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_diagnostics_diagnostic_service__ = __webpack_require__(322);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__loaders_loaders__ = __webpack_require__(529);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__loaders_loaders__ = __webpack_require__(531);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__mappers_event_mapper_service__ = __webpack_require__(323);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1100,15 +1123,15 @@ __decorate([
 ], FormBuilderCustom.prototype, "changeEvent", void 0);
 FormBuilderCustom = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'app-form',template:/*ion-inline-start:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\home\formbuilder\form-template\formBuilder.html"*/'<ion-header>\n\n    <ion-navbar>\n\n        <ion-title>{{title}}</ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n    <div *ngIf="form">\n\n        <!-- <h4 *ngIf="questions && questions.length">{{title}}</h4> -->\n\n        <form (ngSubmit)="onSubmit()" [formGroup]="form">\n\n            <div *ngFor="let question of questions" class="form-row">\n\n                <df-question [changeEvent]="changeEvent" [question]="question" [form]="form"></df-question>\n\n            </div>\n\n\n\n            <div *ngIf="hasSubmit" class="form-row">\n\n\n\n                <button full ion-button color="calm" type="submit" [disabled]="!form.valid">Get Diagnostic</button>\n\n\n\n            </div>\n\n        </form>\n\n\n\n\n\n        <!-- ASK WATSON DISCOVERY -->\n\n        <div *ngIf="payLoad && !payLoad.data.prediction && payLoad.data.usage" class="form-row">\n\n            <pre>{{ payLoad.data | json }}</pre>\n\n        </div>\n\n        <div *ngIf="payLoad && !payLoad.data.prediction && !payLoad.data.usage && payLoad.data.results" class="form-row">\n\n            <ion-card>\n\n                <ion-card-header>\n\n                    <h1 ion-text>WATSON</h1>\n\n                </ion-card-header>\n\n                <ion-card-content>\n\n                    <h1 *ngIf="payLoad.data.results.length == 0">No results were found</h1>\n\n                    <!-- <h1 *ngIf="payLoad.data.results.length">{{payLoad.data.results.length}} results...</h1> -->\n\n                    <h1 *ngIf="payLoad.data.results.length">Categories:</h1>\n\n                    <ion-item-group *ngFor="let res of payLoad.data.results">\n\n                        <ion-item-divider color="light"><strong>Result score: {{res.result_metadata.score}}</strong></ion-item-divider>\n\n                        <ion-item *ngFor="let cat of res.enriched_text.categories">\n\n\n\n                            <p class="label-result-watson-discovery"><strong>Category label:</strong> <span>{{cat.label}}</span></p>\n\n                            <p class="label-result-watson-discovery"><strong>Category score:</strong> <span>{{cat.score}}</span></p>\n\n\n\n                        </ion-item>\n\n                        <ion-item-divider color="light"><strong>Concepts</strong></ion-item-divider>\n\n                        <ion-item *ngFor="let concpt of res.enriched_text.concepts">\n\n\n\n                            <p class="label-result-watson-discovery"><strong>Concept: </strong><span>{{concpt.text}}</span></p>\n\n                            <p class="label-result-watson-discovery"><strong>Concept relevance: </strong><span>{{concpt.relevance}}</span></p>\n\n\n\n                            <strong>Concept source: </strong>\n\n                            <a class="label-result-watson-discovery" [href]="concpt.dbpedia_resource" target="_blank"><span>{{concpt.dbpedia_resource}}</span></a>\n\n                        </ion-item>\n\n                    </ion-item-group>\n\n                    <h1 *ngIf="payLoad.data.results.length">Passages:</h1>\n\n                    <ion-item-group *ngFor="let passage of payLoad.data.passages">\n\n                        <ion-item-divider color="light"><strong>Relevance score: {{passage.passage_score.toFixed(2)}}</strong></ion-item-divider>\n\n                        <ion-item>\n\n                            <p class="label-result-watson-discovery" [innerHTML]="passage.passage_text"></p>\n\n                        </ion-item>\n\n                    </ion-item-group>\n\n                </ion-card-content>\n\n            </ion-card>\n\n\n\n        </div>\n\n\n\n\n\n        <!-- FLU DIAGNOSIS -->\n\n        <div *ngIf="payLoad && !payLoad.data.score && !payLoad.data.prediction && !payLoad.data.usage && !payLoad.data.results" class="form-row">\n\n\n\n            <ion-card [style.backgroundColor]="payLoad.data.message ? \'#ffdada\' : \'#e6ffe6\'">\n\n\n\n                <ion-card-header>\n\n                    <!-- <h1>Diagnosis:</h1> -->\n\n                </ion-card-header>\n\n\n\n                <ion-card-content>\n\n                    <!-- Add card content here! -->\n\n                    <h1 ion-text [style.color]="payLoad.data.message ? \'red\' : \'green\'">\n\n                        <ion-icon name="{{payLoad.data.message ? \'alert\' : \'checkmark\'}}"></ion-icon> {{payLoad.data.message ? payLoad.data.message : \'This patient does not seem to have the flu\'}}</h1>\n\n                    <span *ngIf="payLoad.data.recommendations && payLoad.data.recommendations.length">\n\n                        <ion-item-group>\n\n                            <ion-item-divider color="light"><strong>Recommendations:</strong></ion-item-divider>\n\n                            <ion-item *ngFor="let rec of payLoad.data.recommendations">\n\n                                    <ion-icon name="alert"></ion-icon> {{rec}}\n\n                            </ion-item>\n\n                        </ion-item-group>\n\n                    </span>\n\n                </ion-card-content>\n\n\n\n            </ion-card>\n\n        </div>\n\n\n\n        <!-- MENTAL HEALTH DIAGNOSIS -->\n\n        <div *ngIf="payLoad && payLoad.data.score && !payLoad.data.prediction && !payLoad.data.usage && !payLoad.data.results" class="form-row">\n\n\n\n            <ion-card [style.backgroundColor]="payLoad.data.score >= 15 ? \'#ffdada\' : \'#e6ffe6\'">\n\n\n\n                <ion-card-header>\n\n                    <!-- <h1>Diagnosis:</h1> -->\n\n                </ion-card-header>\n\n\n\n                <ion-card-content>\n\n                    <!-- Add card content here! -->\n\n                    <h1 ion-text [style.color]="payLoad.data.score >= 15 ? \'red\' : \'green\'">\n\n                        <!-- <ion-icon name="{{payLoad.data.message ? \'alert\' : \'checkmark\'}}"></ion-icon> {{payLoad.data.message ? payLoad.data.message : \'This patient does not seem to have the flu\'}}</h1> -->\n\n                        <ion-icon name="{{payLoad.data.score >= 15 ? \'alert\' : \'checkmark\'}}"></ion-icon> {{\'Score: \' + payLoad.data.score}}</h1>\n\n                    <h2 ion-text [style.color]="payLoad.data.score >= 15 ? \'red\' : \'green\'">\n\n                        <ion-icon name="{{payLoad.data.score >= 15 ? \'alert\' : \'checkmark\'}}"></ion-icon> Hi, {{payLoad.data.event.params.message}}</h2>\n\n                    <span *ngIf="payLoad.data.recommendations && payLoad.data.recommendations.length">\n\n                        <ion-item-group>\n\n                            <ion-item-divider color="light"><strong>Recommendations:</strong></ion-item-divider>\n\n                            <ion-item *ngFor="let rec of payLoad.data.recommendations">\n\n                                    <ion-icon name="alert"></ion-icon> {{rec}}\n\n                            </ion-item>\n\n                        </ion-item-group>\n\n                    </span>\n\n                </ion-card-content>\n\n\n\n            </ion-card>\n\n        </div>\n\n\n\n\n\n        <!-- PRESENCE OF HEART DISEASE AI NEURAL NETWORK -->\n\n        <div *ngIf="payLoad && payLoad.data.prediction && !payLoad.data.usage && !payLoad.data.results" class="form-row">\n\n\n\n            <ion-card [style.backgroundColor]="payLoad.data.prediction[0] > 5 ? \'#ffdada\' : \'#e6ffe6\'">\n\n\n\n                <ion-card-header>\n\n                    <h1 ion-text>AI Predicted:</h1>\n\n                </ion-card-header>\n\n\n\n                <ion-card-content>\n\n                    <span *ngIf="payLoad.data.prediction && payLoad.data.prediction.length">\n\n                            <ion-item-group>\n\n                                <ion-item>\n\n                                    <p style="font-size:1.2em; text-align:center; justify-content:center; margin: 0 auto; color:rgb(19, 19, 38)"><strong>Presence of Heart Disease score from 0 to 10 where 0 means no presence and 10 means <br>absolute presence of some Heart Disease:</strong></p><br>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p style="font-size:2em; text-align:center; justify-content:center; margin: 0 auto; color:rgb(19, 19, 38)"><strong>Score: {{payLoad.data.prediction[0].toFixed(2)}}</strong></p>\n\n                                <br>\n\n                                    <p style="font-size:1.4em; text-align:center; justify-content:center; margin: 0 auto;" [style.color]=\'payLoad.data.prediction[0] > 5 ? "red" : "green"\'>\n\n                                        <ion-icon name="{{payLoad.data.prediction[0] > 5 ? \'alert\' : \'checkmark\'}}"></ion-icon> Hi, {{payLoad.data.event?.params?.message}}\n\n                                    </p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <strong>Accuracy:</strong>\n\n                                    {{payLoad.data.accuracy.toFixed(2)}}%\n\n                                </ion-item>\n\n                            </ion-item-group>\n\n                        </span>\n\n                </ion-card-content>\n\n\n\n            </ion-card>\n\n            <ion-card *ngIf="payLoad.data.prediction[0] > 5" [style.backgroundColor]="payLoad.data.prediction[0] > 5 ? \'#ffdada\' : \'#e6ffe6\'">\n\n\n\n                <ion-card-header>\n\n                    <h1>Suggestions for treatment:</h1>\n\n                </ion-card-header>\n\n\n\n                <ion-card-content>\n\n                    <span *ngIf="payLoad.data.prediction && payLoad.data.prediction.length">\n\n                            <ion-item-group>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Excess weight causes your heart to work harder and increases the risk for heart disease,<br> \n\n                                        high blood pressure, diabetes and high cholesterol. Exercising regularly and eating smaller \n\n                                        portions of nutrient-rich foods may help you maintain a healthy weight.<br> \n\n                                        Learn the warning signs of a heart attack and stroke.</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Don’t smoke or expose yourself to second-hand smoke.</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Maintain a healthy blood pressure.</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Monitor your cholesterol (blood lipids).</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Make exercise a daily habit.</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Reduce stress.</strong></p>\n\n                                </ion-item>\n\n                            </ion-item-group>\n\n                        </span>\n\n                </ion-card-content>\n\n\n\n            </ion-card>\n\n        </div>\n\n    </div>\n\n</ion-content>'/*ion-inline-end:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\home\formbuilder\form-template\formBuilder.html"*/,
+        selector: 'app-form',template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\home\formbuilder\form-template\formBuilder.html"*/'<ion-header>\n\n    <ion-navbar>\n\n        <ion-title>{{title}}</ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n    <div *ngIf="form">\n\n        <!-- <h4 *ngIf="questions && questions.length">{{title}}</h4> -->\n\n        <form (ngSubmit)="onSubmit()" [formGroup]="form">\n\n            <div *ngFor="let question of questions" class="form-row">\n\n                <df-question [changeEvent]="changeEvent" [question]="question" [form]="form"></df-question>\n\n            </div>\n\n\n\n            <div *ngIf="hasSubmit" class="form-row">\n\n\n\n                <button full ion-button color="calm" type="submit" [disabled]="!form.valid">Get Diagnostic</button>\n\n\n\n            </div>\n\n        </form>\n\n\n\n\n\n        <!-- ASK WATSON DISCOVERY -->\n\n        <div *ngIf="payLoad && !payLoad.data.prediction && payLoad.data.usage" class="form-row">\n\n            <pre>{{ payLoad.data | json }}</pre>\n\n        </div>\n\n        <div *ngIf="payLoad && !payLoad.data.prediction && !payLoad.data.usage && payLoad.data.results" class="form-row">\n\n            <ion-card>\n\n                <ion-card-header>\n\n                    <h1 ion-text>WATSON</h1>\n\n                </ion-card-header>\n\n                <ion-card-content>\n\n                    <h1 *ngIf="payLoad.data.results.length == 0">No results were found</h1>\n\n                    <!-- <h1 *ngIf="payLoad.data.results.length">{{payLoad.data.results.length}} results...</h1> -->\n\n                    <h1 *ngIf="payLoad.data.results.length">Categories:</h1>\n\n                    <ion-item-group *ngFor="let res of payLoad.data.results">\n\n                        <ion-item-divider color="light"><strong>Result score: {{res.result_metadata.score}}</strong></ion-item-divider>\n\n                        <ion-item *ngFor="let cat of res.enriched_text.categories">\n\n\n\n                            <p class="label-result-watson-discovery"><strong>Category label:</strong> <span>{{cat.label}}</span></p>\n\n                            <p class="label-result-watson-discovery"><strong>Category score:</strong> <span>{{cat.score}}</span></p>\n\n\n\n                        </ion-item>\n\n                        <ion-item-divider color="light"><strong>Concepts</strong></ion-item-divider>\n\n                        <ion-item *ngFor="let concpt of res.enriched_text.concepts">\n\n\n\n                            <p class="label-result-watson-discovery"><strong>Concept: </strong><span>{{concpt.text}}</span></p>\n\n                            <p class="label-result-watson-discovery"><strong>Concept relevance: </strong><span>{{concpt.relevance}}</span></p>\n\n\n\n                            <strong>Concept source: </strong>\n\n                            <a class="label-result-watson-discovery" [href]="concpt.dbpedia_resource" target="_blank"><span>{{concpt.dbpedia_resource}}</span></a>\n\n                        </ion-item>\n\n                    </ion-item-group>\n\n                    <h1 *ngIf="payLoad.data.results.length">Passages:</h1>\n\n                    <ion-item-group *ngFor="let passage of payLoad.data.passages">\n\n                        <ion-item-divider color="light"><strong>Relevance score: {{passage.passage_score.toFixed(2)}}</strong></ion-item-divider>\n\n                        <ion-item>\n\n                            <p class="label-result-watson-discovery" [innerHTML]="passage.passage_text"></p>\n\n                        </ion-item>\n\n                    </ion-item-group>\n\n                </ion-card-content>\n\n            </ion-card>\n\n\n\n        </div>\n\n\n\n\n\n        <!-- FLU DIAGNOSIS -->\n\n        <div *ngIf="payLoad && !payLoad.data.score && !payLoad.data.prediction && !payLoad.data.usage && !payLoad.data.results" class="form-row">\n\n\n\n            <ion-card [style.backgroundColor]="payLoad.data.message ? \'#ffdada\' : \'#e6ffe6\'">\n\n\n\n                <ion-card-header>\n\n                    <!-- <h1>Diagnosis:</h1> -->\n\n                </ion-card-header>\n\n\n\n                <ion-card-content>\n\n                    <!-- Add card content here! -->\n\n                    <h1 ion-text [style.color]="payLoad.data.message ? \'red\' : \'green\'">\n\n                        <ion-icon name="{{payLoad.data.message ? \'alert\' : \'checkmark\'}}"></ion-icon> {{payLoad.data.message ? payLoad.data.message : \'This patient does not seem to have the flu\'}}</h1>\n\n                    <span *ngIf="payLoad.data.recommendations && payLoad.data.recommendations.length">\n\n                        <ion-item-group>\n\n                            <ion-item-divider color="light"><strong>Recommendations:</strong></ion-item-divider>\n\n                            <ion-item *ngFor="let rec of payLoad.data.recommendations">\n\n                                    <ion-icon name="alert"></ion-icon> {{rec}}\n\n                            </ion-item>\n\n                        </ion-item-group>\n\n                    </span>\n\n                </ion-card-content>\n\n\n\n            </ion-card>\n\n        </div>\n\n\n\n        <!-- MENTAL HEALTH DIAGNOSIS -->\n\n        <div *ngIf="payLoad && payLoad.data.score && !payLoad.data.prediction && !payLoad.data.usage && !payLoad.data.results" class="form-row">\n\n\n\n            <ion-card [style.backgroundColor]="payLoad.data.score >= 15 ? \'#ffdada\' : \'#e6ffe6\'">\n\n\n\n                <ion-card-header>\n\n                    <!-- <h1>Diagnosis:</h1> -->\n\n                </ion-card-header>\n\n\n\n                <ion-card-content>\n\n                    <!-- Add card content here! -->\n\n                    <h1 ion-text [style.color]="payLoad.data.score >= 15 ? \'red\' : \'green\'">\n\n                        <!-- <ion-icon name="{{payLoad.data.message ? \'alert\' : \'checkmark\'}}"></ion-icon> {{payLoad.data.message ? payLoad.data.message : \'This patient does not seem to have the flu\'}}</h1> -->\n\n                        <ion-icon name="{{payLoad.data.score >= 15 ? \'alert\' : \'checkmark\'}}"></ion-icon> {{\'Score: \' + payLoad.data.score}}</h1>\n\n                    <h2 ion-text [style.color]="payLoad.data.score >= 15 ? \'red\' : \'green\'">\n\n                        <ion-icon name="{{payLoad.data.score >= 15 ? \'alert\' : \'checkmark\'}}"></ion-icon> Hi, {{payLoad.data.event.params.message}}</h2>\n\n                    <span *ngIf="payLoad.data.recommendations && payLoad.data.recommendations.length">\n\n                        <ion-item-group>\n\n                            <ion-item-divider color="light"><strong>Recommendations:</strong></ion-item-divider>\n\n                            <ion-item *ngFor="let rec of payLoad.data.recommendations">\n\n                                    <ion-icon name="alert"></ion-icon> {{rec}}\n\n                            </ion-item>\n\n                        </ion-item-group>\n\n                    </span>\n\n                </ion-card-content>\n\n\n\n            </ion-card>\n\n        </div>\n\n\n\n\n\n        <!-- PRESENCE OF HEART DISEASE AI NEURAL NETWORK -->\n\n        <div *ngIf="payLoad && payLoad.data.prediction && !payLoad.data.usage && !payLoad.data.results" class="form-row">\n\n\n\n            <ion-card [style.backgroundColor]="payLoad.data.prediction[0] > 5 ? \'#ffdada\' : \'#e6ffe6\'">\n\n\n\n                <ion-card-header>\n\n                    <h1 ion-text>AI Predicted:</h1>\n\n                </ion-card-header>\n\n\n\n                <ion-card-content>\n\n                    <span *ngIf="payLoad.data.prediction && payLoad.data.prediction.length">\n\n                            <ion-item-group>\n\n                                <ion-item>\n\n                                    <p style="font-size:1.2em; text-align:center; justify-content:center; margin: 0 auto; color:rgb(19, 19, 38)"><strong>Presence of Heart Disease score from 0 to 10 where 0 means no presence and 10 means <br>absolute presence of some Heart Disease:</strong></p><br>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p style="font-size:2em; text-align:center; justify-content:center; margin: 0 auto; color:rgb(19, 19, 38)"><strong>Score: {{payLoad.data.prediction[0].toFixed(2)}}</strong></p>\n\n                                <br>\n\n                                    <p style="font-size:1.4em; text-align:center; justify-content:center; margin: 0 auto;" [style.color]=\'payLoad.data.prediction[0] > 5 ? "red" : "green"\'>\n\n                                        <ion-icon name="{{payLoad.data.prediction[0] > 5 ? \'alert\' : \'checkmark\'}}"></ion-icon> Hi, {{payLoad.data.event?.params?.message}}\n\n                                    </p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <strong>Accuracy:</strong>\n\n                                    {{payLoad.data.accuracy.toFixed(2)}}%\n\n                                </ion-item>\n\n                            </ion-item-group>\n\n                        </span>\n\n                </ion-card-content>\n\n\n\n            </ion-card>\n\n            <ion-card *ngIf="payLoad.data.prediction[0] > 5" [style.backgroundColor]="payLoad.data.prediction[0] > 5 ? \'#ffdada\' : \'#e6ffe6\'">\n\n\n\n                <ion-card-header>\n\n                    <h1>Suggestions for treatment:</h1>\n\n                </ion-card-header>\n\n\n\n                <ion-card-content>\n\n                    <span *ngIf="payLoad.data.prediction && payLoad.data.prediction.length">\n\n                            <ion-item-group>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Excess weight causes your heart to work harder and increases the risk for heart disease,<br> \n\n                                        high blood pressure, diabetes and high cholesterol. Exercising regularly and eating smaller \n\n                                        portions of nutrient-rich foods may help you maintain a healthy weight.<br> \n\n                                        Learn the warning signs of a heart attack and stroke.</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Don’t smoke or expose yourself to second-hand smoke.</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Maintain a healthy blood pressure.</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Monitor your cholesterol (blood lipids).</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Make exercise a daily habit.</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Reduce stress.</strong></p>\n\n                                </ion-item>\n\n                            </ion-item-group>\n\n                        </span>\n\n                </ion-card-content>\n\n\n\n            </ion-card>\n\n        </div>\n\n    </div>\n\n</ion-content>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\home\formbuilder\form-template\formBuilder.html"*/,
         styles: ['./formBuilder.scss']
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__questions_question_control_service__["a" /* QuestionControlService */],
         __WEBPACK_IMPORTED_MODULE_1__questions_question_service__["a" /* QuestionService */],
         __WEBPACK_IMPORTED_MODULE_3__providers_diagnostics_diagnostic_service__["a" /* DiagnosticsService */],
-        __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["d" /* LoadingController */],
+        __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["e" /* LoadingController */],
         __WEBPACK_IMPORTED_MODULE_6__mappers_event_mapper_service__["a" /* QuestionEventMapper */],
-        __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["h" /* ViewController */]])
+        __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["i" /* ViewController */]])
 ], FormBuilderCustom);
 
 //# sourceMappingURL=formBuilder.js.map
@@ -1235,9 +1258,9 @@ QuestionService = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return QuestionMapper; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_home_formbuilder_questions_question_model__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_home_formbuilder_questions_question_dropdown_model__ = __webpack_require__(526);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_home_formbuilder_questions_question_toggle_model__ = __webpack_require__(527);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_formbuilder_questions_question_textbox_model__ = __webpack_require__(528);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_home_formbuilder_questions_question_dropdown_model__ = __webpack_require__(528);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_home_formbuilder_questions_question_toggle_model__ = __webpack_require__(529);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_formbuilder_questions_question_textbox_model__ = __webpack_require__(530);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1596,13 +1619,13 @@ let PictureAnalisysPage = class PictureAnalisysPage {
 };
 PictureAnalisysPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-picture-analisys',template:/*ion-inline-start:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\picture-analisys\picture-analisys.html"*/'<!--\n\n  Generated template for the PictureAnalisysPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n    <ion-navbar>\n\n        <ion-title>pictureAnalisys</ion-title>\n\n    </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n    <img *ngIf="picture" [src]="picture" />\n\n    <div class="container-description" (click)="takePicture()">\n\n        <!-- Image description -->\n\n        <p class="image-description">{{imageDescription}}</p>\n\n        <p *ngIf="error" class="error">{{error}}</p>\n\n    </div>\n\n</ion-content>'/*ion-inline-end:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\picture-analisys\picture-analisys.html"*/,
+        selector: 'page-picture-analisys',template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\picture-analisys\picture-analisys.html"*/'<!--\n  Generated template for the PictureAnalisysPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n    <ion-navbar>\n        <ion-title>pictureAnalisys</ion-title>\n    </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n    <img *ngIf="picture" [src]="picture" />\n    <div class="container-description" (click)="takePicture()">\n        <!-- Image description -->\n        <p class="image-description">{{imageDescription}}</p>\n        <p *ngIf="error" class="error">{{error}}</p>\n    </div>\n</ion-content>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\picture-analisys\picture-analisys.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */],
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
         __WEBPACK_IMPORTED_MODULE_2__providers_camera_camera_provider__["a" /* CameraProvider */],
         __WEBPACK_IMPORTED_MODULE_4__providers_cognitive_services_cognitive_service__["a" /* CognitiveService */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* LoadingController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */],
         __WEBPACK_IMPORTED_MODULE_3__ionic_native_native_storage__["a" /* NativeStorage */]])
 ], PictureAnalisysPage);
 
@@ -1837,7 +1860,7 @@ let WavRecorder = class WavRecorder extends __WEBPACK_IMPORTED_MODULE_4__recorde
 };
 WavRecorder = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5____["a" /* AudioContextGenerator */], __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["g" /* Platform */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5____["a" /* AudioContextGenerator */], __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["h" /* Platform */]])
 ], WavRecorder);
 
 //# sourceMappingURL=wav-recorder.js.map
@@ -1848,13 +1871,13 @@ WavRecorder = __decorate([
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__wav_file_wav_file__ = __webpack_require__(834);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__wav_file_wav_file__ = __webpack_require__(836);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__wav_file_wav_file__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__double_buffer_double_buffer__ = __webpack_require__(835);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__double_buffer_double_buffer__ = __webpack_require__(837);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_1__double_buffer_double_buffer__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__filesystem_filesystem__ = __webpack_require__(836);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__filesystem_filesystem__ = __webpack_require__(838);
 /* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__misc_utils_misc_utils__ = __webpack_require__(837);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__misc_utils_misc_utils__ = __webpack_require__(839);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_3__misc_utils_misc_utils__["a"]; });
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_3__misc_utils_misc_utils__["b"]; });
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_3__misc_utils_misc_utils__["c"]; });
@@ -2318,7 +2341,7 @@ let WebAudioRecorder = class WebAudioRecorder {
 };
 WebAudioRecorder = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2____["a" /* AudioContextGenerator */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["g" /* Platform */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2____["a" /* AudioContextGenerator */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["h" /* Platform */]])
 ], WebAudioRecorder);
 
 //# sourceMappingURL=recorder.js.map
@@ -2361,20 +2384,20 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_chat_watson_chat__ = __webpack_require__(301);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_picture_analisys_picture_analisys__ = __webpack_require__(324);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_home_formbuilder_form_template_formBuilder__ = __webpack_require__(318);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_home_formbuilder_questions_template_dynamic_form_question_component__ = __webpack_require__(839);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_home_formbuilder_questions_template_dynamic_form_question_component__ = __webpack_require__(841);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_home_formbuilder_questions_question_control_service__ = __webpack_require__(321);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_home_formbuilder_questions_question_service__ = __webpack_require__(319);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__mappers_question_mapper_service__ = __webpack_require__(320);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__mappers_event_mapper_service__ = __webpack_require__(323);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__angular_platform_browser_animations__ = __webpack_require__(840);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__angular_platform_browser_animations__ = __webpack_require__(842);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_tabs_tabs__ = __webpack_require__(297);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ionic_native_status_bar__ = __webpack_require__(292);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ionic_native_splash_screen__ = __webpack_require__(296);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22_ng_socket_io__ = __webpack_require__(302);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_22_ng_socket_io__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__ionic_native_camera__ = __webpack_require__(162);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__ionic_native_file_transfer__ = __webpack_require__(842);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__ionic_native_text_to_speech__ = __webpack_require__(843);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__ionic_native_file_transfer__ = __webpack_require__(844);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__ionic_native_text_to_speech__ = __webpack_require__(845);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__ionic_native_native_storage__ = __webpack_require__(326);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__app_service__ = __webpack_require__(168);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__ionic_native_speech_recognition__ = __webpack_require__(336);
@@ -2437,12 +2460,12 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* ReactiveFormsModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_http__["c" /* HttpModule */],
             __WEBPACK_IMPORTED_MODULE_18__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
-            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["c" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* MyApp */], {}, {
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["d" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* MyApp */], {}, {
                 links: []
             }),
             __WEBPACK_IMPORTED_MODULE_22_ng_socket_io__["SocketIoModule"].forRoot(config)
         ],
-        bootstrap: [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["a" /* IonicApp */]],
+        bootstrap: [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["b" /* IonicApp */]],
         entryComponents: [
             __WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* MyApp */],
             __WEBPACK_IMPORTED_MODULE_10__pages_chat_watson_chat__["a" /* ChatPage */],
@@ -2473,7 +2496,7 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_27__app_service__["a" /* AppService */],
             __WEBPACK_IMPORTED_MODULE_29__providers__["e" /* WavRecorder */],
             __WEBPACK_IMPORTED_MODULE_29__providers__["a" /* AudioContextGenerator */],
-            { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["ErrorHandler"], useClass: __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["b" /* IonicErrorHandler */] }
+            { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["ErrorHandler"], useClass: __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["c" /* IonicErrorHandler */] }
         ]
     })
 ], AppModule);
@@ -2618,35 +2641,18 @@ let MyApp = class MyApp {
             self.debug += 'Stoped! File created';
             // TODO send to Azure Bing Speech API by POST
             self.debug = '';
-            // self.cognitiveService.analyseSound(file).subscribe((data) => {
-            //   console.log('*********************************');
-            //   console.log('*********************************');
-            //   console.log('**************** analyseSound() @ SUCCESS *****************');
-            //   console.log('*********************************');
-            //   console.log('*********************************');
-            //   self.debug = '';
-            //   self.debug += file.size + ' -> ';
-            //   self.debug += 'Success!!';
-            //   console.log(`DATA  ${JSON.stringify(data)}`);
-            //   self.cognitiveService.emitMessage(data);
-            //   //subs.unsubscribe();
-            // }, (error) => {
-            //   self.debug = '';
-            //   self.debug += `An Error ocurred: ${JSON.stringify(error)}`;
-            //   console.log(error);
-            // });
         }, (err) => {
             console.log(`ERROR -> , ${JSON.stringify(err)}`);
         });
     }
 };
 MyApp = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\app\app.html"*/'<ion-nav [root]="rootPage">\n\n</ion-nav>\n\n<div class="speakerContainer">\n\n    <h4 id="debug">DEBUG LOG: {{debug}}</h4>\n\n    <h4 id="answer">Output: {{spokenMessage}}</h4>\n\n    <button (click)="speakStop()" [ngClass]="{\'active\': speaking}" class="floating" color="calm">\n\n        <ion-icon name="mic"></ion-icon>\n\n    </button>\n\n</div>\n\n'/*ion-inline-end:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\app\app.html"*/
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\app\app.html"*/'<ion-nav [root]="rootPage">\n\n</ion-nav>\n\n<div class="speakerContainer">\n\n    <h4 id="debug">DEBUG LOG: {{debug}}</h4>\n\n    <h4 id="answer">Output: {{spokenMessage}}</h4>\n\n    <button (click)="speakStop()" [ngClass]="{\'active\': speaking}" class="floating" color="calm">\n\n        <ion-icon name="mic"></ion-icon>\n\n    </button>\n\n</div>\n\n'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\app\app.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
         __WEBPACK_IMPORTED_MODULE_5__providers_cognitive_services_cognitive_service__["a" /* CognitiveService */],
         __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* LoadingController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */],
         __WEBPACK_IMPORTED_MODULE_7__providers_web_audio_wav_recorder__["a" /* WavRecorder */]])
 ], MyApp);
 
@@ -2662,6 +2668,45 @@ MyApp = __decorate([
 /***/ }),
 
 /***/ 526:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class ChatUser {
+    constructor(name) {
+        this.name = name;
+        this.messages = [];
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = ChatUser;
+
+//# sourceMappingURL=ChatUser.js.map
+
+/***/ }),
+
+/***/ 527:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class ChatRoom {
+    constructor() {
+        this.users = {};
+        this.messages = [];
+    }
+    addUser(user) {
+        this.users[user.name] = user;
+    }
+    addMessage(userName, message) {
+        this.users[userName].messages.push(message);
+        this.messages.push({ user: userName, message: message });
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = ChatRoom;
+
+//# sourceMappingURL=ChatRoom.js.map
+
+/***/ }),
+
+/***/ 528:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2681,7 +2726,7 @@ class DropdownQuestion extends __WEBPACK_IMPORTED_MODULE_0__question_model__["a"
 
 /***/ }),
 
-/***/ 527:
+/***/ 529:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2699,7 +2744,7 @@ class ToggleQuestion extends __WEBPACK_IMPORTED_MODULE_0__question_model__["a" /
 
 /***/ }),
 
-/***/ 528:
+/***/ 530:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2717,7 +2762,7 @@ class TextboxQuestion extends __WEBPACK_IMPORTED_MODULE_0__question_model__["a" 
 
 /***/ }),
 
-/***/ 529:
+/***/ 531:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2771,7 +2816,7 @@ class Question {
 
 /***/ }),
 
-/***/ 834:
+/***/ 836:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2925,7 +2970,7 @@ class WavFile {
 
 /***/ }),
 
-/***/ 835:
+/***/ 837:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3018,7 +3063,7 @@ class DoubleBufferSetter extends DoubleBuffer {
 
 /***/ }),
 
-/***/ 836:
+/***/ 838:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3517,7 +3562,7 @@ class Filesystem {
 
 /***/ }),
 
-/***/ 837:
+/***/ 839:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3844,7 +3889,7 @@ function simulateClick(element) {
 
 /***/ }),
 
-/***/ 838:
+/***/ 840:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3894,7 +3939,7 @@ AudioContextGenerator = __decorate([
 
 /***/ }),
 
-/***/ 839:
+/***/ 841:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3949,7 +3994,7 @@ __decorate([
 ], DynamicFormQuestionComponent.prototype, "changeEvent", void 0);
 DynamicFormQuestionComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'df-question',template:/*ion-inline-start:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\home\formbuilder\questions-template\dynamic-form-question.component.html"*/'<!-- Item wrapper -->\n\n<ion-item [hidden]="question.visibility == \'hidden\'" [formGroup]="form" [ngSwitch]="question.controlType">\n\n    <!-- Label -->\n\n    <ion-label class="question-label question-label-sm" stacked [attr.for]="question.key">{{question.label}}</ion-label>\n\n\n\n    <!-- Input text field -->\n\n    <ion-input class="question-input" *ngSwitchCase="\'textbox\'" [formControlName]="question.key" [id]="question.key" [type]="question.type"></ion-input>\n\n\n\n    <!-- Input text area -->\n\n    <ion-textarea rows="8" class="question-input" *ngSwitchCase="\'textarea\'" [formControlName]="question.key" [id]="question.key" [type]="question.type"></ion-textarea>\n\n\n\n    <!-- Input combobox area -->\n\n    <ion-select [id]="question.key" *ngSwitchCase="\'dropdown\'" [formControlName]="question.key">\n\n        <ion-option *ngFor="let opt of question.options" [value]="opt.key">{{opt.value}}</ion-option>\n\n    </ion-select>\n\n\n\n    <!-- Input true/false toggle area -->\n\n    <ion-toggle (ionChange)="onChangeAnswer($event, question)" *ngSwitchCase="\'toggle\'" [formControlName]="question.key" [id]="question.key" [(ngModel)]="question.value"></ion-toggle>\n\n\n\n</ion-item>\n\n<!-- Required label -->\n\n<!-- <div class="errorMessage" *ngIf="!isValid">{{question.label}} is required</div> -->\n\n<div class="errorMessage" *ngIf="!isValid">Required</div>'/*ion-inline-end:"C:\Users\gabri\Documents\workspace\ai_diagnosis\src\pages\home\formbuilder\questions-template\dynamic-form-question.component.html"*/,
+        selector: 'df-question',template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\home\formbuilder\questions-template\dynamic-form-question.component.html"*/'<!-- Item wrapper -->\n\n<ion-item [hidden]="question.visibility == \'hidden\'" [formGroup]="form" [ngSwitch]="question.controlType">\n\n    <!-- Label -->\n\n    <ion-label class="question-label question-label-sm" stacked [attr.for]="question.key">{{question.label}}</ion-label>\n\n\n\n    <!-- Input text field -->\n\n    <ion-input class="question-input" *ngSwitchCase="\'textbox\'" [formControlName]="question.key" [id]="question.key" [type]="question.type"></ion-input>\n\n\n\n    <!-- Input text area -->\n\n    <ion-textarea rows="8" class="question-input" *ngSwitchCase="\'textarea\'" [formControlName]="question.key" [id]="question.key" [type]="question.type"></ion-textarea>\n\n\n\n    <!-- Input combobox area -->\n\n    <ion-select [id]="question.key" *ngSwitchCase="\'dropdown\'" [formControlName]="question.key">\n\n        <ion-option *ngFor="let opt of question.options" [value]="opt.key">{{opt.value}}</ion-option>\n\n    </ion-select>\n\n\n\n    <!-- Input true/false toggle area -->\n\n    <ion-toggle (ionChange)="onChangeAnswer($event, question)" *ngSwitchCase="\'toggle\'" [formControlName]="question.key" [id]="question.key" [(ngModel)]="question.value"></ion-toggle>\n\n\n\n</ion-item>\n\n<!-- Required label -->\n\n<!-- <div class="errorMessage" *ngIf="!isValid">{{question.label}} is required</div> -->\n\n<div class="errorMessage" *ngIf="!isValid">Required</div>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\home\formbuilder\questions-template\dynamic-form-question.component.html"*/,
         styles: ['./dynamic-form-question.component.css']
     }),
     __metadata("design:paramtypes", [])

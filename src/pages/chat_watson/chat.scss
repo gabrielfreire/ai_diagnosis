@@ -1,11 +1,81 @@
 app-chat {
     .chat-baloon {
-        width: 50%;
+        width: 100%;
     }
     .chat-input {
-        background-color: white;
+        // background-color: white;
     }
     .scroll-content {
         height: 80%;
+    }
+    ion-footer {
+        height: 255px;
+    }
+    .line-breaker {
+        white-space: pre-line;
+    }
+    .input-wrap {
+        padding: 3px;
+        display: flex;
+        textarea {
+            flex: 1;
+            border: 0;
+            border-bottom: 1px #5ad0c5;
+            border-style: solid;
+        }
+    }
+    .message-wrap {
+        padding: 0 6px;
+        .message {
+            // position: relative;
+            padding: 4px 0;
+            .message-detail {
+                width: 100%;
+                display: inline-block;
+                .message-info {
+                    p {
+                        font-size: .8em;
+                        color: #888;
+                    }
+                }
+                .message-content {
+                    margin-top: 5px;
+                    border-radius: 5px;
+                    padding: 5px;
+                    border: 1px solid #ddd;
+                    color: #fff;
+                    width: auto;
+                    max-width: 80%;
+                }
+            }
+        }
+    }
+    .message.left {
+        .message-detail {
+            .message.info {
+                text-align: left;
+            }
+            .message-content {
+                font-size: 13px;
+                background-color: #6594ff;
+                color: white;
+                float: left;
+                text-align: left;
+            }
+        }
+    }
+    .message.right {
+        .message-detail {
+            .message-info {
+                text-align: right;
+            }
+            .message-content {
+                font-size: 13px;
+                background-color: white;
+                color: black;
+                float: right;
+                text-align: right;
+            }
+        }
     }
 }

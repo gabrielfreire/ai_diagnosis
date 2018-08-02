@@ -6,32 +6,28 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content #content class="scroll-content" padding class="home">
-
-    <ion-list #list padding no-lines>
-        <span *ngFor="let message of messages">
-                <ion-item *ngIf="message.indexOf('Dr. Watson:') !== -1">
-                    <ion-card class="chat-baloon" color="white" item-left>
-                        <ion-card-content>
-                            <h2 [style.color]="'black'" [innerHTML]="message"></h2>
-                        </ion-card-content>
-                    </ion-card>
-                </ion-item>
-                <ion-item *ngIf="message.indexOf('Dr. Watson:') == -1">
-                    <ion-card class="chat-baloon" color="white" item-right>
-                        <ion-card-content>
-                            <h2 [style.color]="'gray'" [innerHTML]="message"></h2>
-                        </ion-card-content>
-                    </ion-card>
-                </ion-item>
-            </span>
-    </ion-list>
-
+<ion-content #content class="scroll-content" class="home">
+    <div class="message-wrap">
+        <div class="message" #list *ngFor="let message of chatRoom.messages" 
+        [class.left]=" message.user == 'bot'" 
+        [class.right]="message.user == 'user'">
+            <div class="message-detail">
+                <div class="message-info">
+                    <p>{{ message.user == 'bot' ? "Dr. Watson" : "You"}}</p>
+                </div>
+                <div class="message-content">
+                    <p class="line-breaker" [innerHTML]="message.message"></p>
+                </div>
+            </div>
+        </div>
+    </div>
 </ion-content>
-<ion-footer>
-    <ion-item-group>
-        <ion-input item-left class="chat-input" type="text" [(ngModel)]="chatBox" placeholder="Your message...">
-        </ion-input>
-        <button block item-right ion-button (click)="send(chatBox)">Send</button>
-    </ion-item-group>
+<ion-footer no-border style='height: 55px;'>
+    <div class="input-wrap">
+        <textarea #chat_input class="chat-input" type="text" [(ngModel)]="chatBox" (focusin)="onFocus()" (keyup.enter)="send($event)" placeholder="Type something...">
+        </textarea>
+        <button item-right icon-only ion-button (click)="send($event)">
+            <ion-icon name='ios-send' ios='ios-send' md='md-send'></ion-icon>
+        </button>
+    </div>
 </ion-footer>
