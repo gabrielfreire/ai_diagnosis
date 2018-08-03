@@ -9,11 +9,11 @@
 <ion-content #content class="scroll-content" class="home">
     <div class="message-wrap">
         <div class="message" #list *ngFor="let message of chatRoom.messages" 
-        [class.left]=" message.user == 'bot'" 
-        [class.right]="message.user == 'user'">
+        [class.left]=" message.userName == 'bot'" 
+        [class.right]="message.userName == 'user'">
             <div class="message-detail">
                 <div class="message-info">
-                    <p>{{ message.user == 'bot' ? "Dr. Watson" : "You"}}</p>
+                    <p>{{ message.userName == 'bot' ? "Watson" : "You"}} - {{message.time | date}} at {{message.time.getHours()}}:{{message.time.getMinutes()}}</p>
                 </div>
                 <div class="message-content">
                     <p class="line-breaker" [innerHTML]="message.message"></p>
@@ -24,9 +24,9 @@
 </ion-content>
 <ion-footer no-border style='height: 55px;'>
     <div class="input-wrap">
-        <textarea #chat_input class="chat-input" type="text" [(ngModel)]="chatBox" (focusin)="onFocus()" (keyup.enter)="send($event)" placeholder="Type something...">
+        <textarea #chat_input class="chat-input" type="text" [(ngModel)]="chatBox" (focusin)="onFocus()" (keyup.enter)="send()" placeholder="Type something...">
         </textarea>
-        <button item-right icon-only ion-button (click)="send($event)">
+        <button item-right icon-only ion-button (click)="send()">
             <ion-icon name='ios-send' ios='ios-send' md='md-send'></ion-icon>
         </button>
     </div>

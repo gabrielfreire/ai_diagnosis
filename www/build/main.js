@@ -406,7 +406,7 @@ TabsPage = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AboutPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(30);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -775,7 +775,7 @@ AboutPage = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ContactPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(30);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -809,7 +809,7 @@ ContactPage = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__chat_watson_chat__ = __webpack_require__(301);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__formbuilder_form_template_formBuilder__ = __webpack_require__(318);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_camera__ = __webpack_require__(162);
@@ -861,7 +861,7 @@ let HomePage = class HomePage {
 };
 HomePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-home',template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\home\home.html"*/'<ion-header>\n    <ion-navbar>\n        <ion-title>IMS Diagnosis</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <h3>Select a Diagnosis</h3>\n    <button full ion-button color="calm" (click)="goToForm(\'flu\')">Flu Diagnosis</button>\n    <button full ion-button color="calm" (click)="goToForm(\'hd\')">Heart Disease Diagnosis</button>\n    <button full ion-button color="calm" (click)="goToForm(\'mh\')">Patient Health Questionnaire (PHQ-9)</button>\n    <h3>Watson Services</h3>\n    <button full ion-button color="calm" (click)="goToForm(\'watson\')">Ask Watson Discovery</button>\n    <button full ion-button color="calm" (click)="goToChat()">Ask Watson in a Conversation</button>\n    <h3>MS Azure Services</h3>\n    <button full ion-button color="calm" (click)="goToPictureAnalisys()">Analyze a picture</button>\n</ion-content>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\home\home.html"*/
+        selector: 'page-home',template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\home\home.html"*/'<ion-header>\n    <ion-navbar>\n        <ion-title>IMS Diagnosis</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <h3>Select a Diagnosis</h3>\n    <button full ion-button color="calm" (click)="goToForm(\'flu\')">Flu Diagnosis</button>\n    <button full ion-button color="calm" (click)="goToForm(\'hd\')">Heart Disease Diagnosis</button>\n    <button full ion-button color="calm" (click)="goToForm(\'mh\')">Patient Health Questionnaire (PHQ-9)</button>\n    <h3>Watson Services</h3>\n    <button full ion-button color="calm" (click)="goToForm(\'watson\')">Ask Watson Discovery</button>\n    <button full ion-button color="calm" (click)="goToChat()">Watson ChatBot</button>\n    <h3>MS Azure Services</h3>\n    <button full ion-button color="calm" (click)="goToPictureAnalisys()">Analyze a picture</button>\n</ion-content>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\home\home.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_4__ionic_native_camera__["a" /* Camera */],
         __WEBPACK_IMPORTED_MODULE_6__app_app_service__["a" /* AppService */]])
@@ -877,7 +877,7 @@ HomePage = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng_socket_io__ = __webpack_require__(302);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_ng_socket_io__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ChatUser__ = __webpack_require__(526);
@@ -897,8 +897,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 let ChatPage = class ChatPage {
-    constructor(socket) {
+    constructor(socket, navController) {
         this.socket = socket;
+        this.navController = navController;
         this.chatRoom = new __WEBPACK_IMPORTED_MODULE_4__ChatRoom__["a" /* ChatRoom */]();
     }
     ngOnInit() {
@@ -911,6 +912,7 @@ let ChatPage = class ChatPage {
         this.socket.on("chat_message", (msg) => {
             this.zone.run(() => {
                 this.chatRoom.addMessage('bot', `${msg}`);
+                this.focus();
                 setTimeout(() => {
                     if (this.content._scroll) {
                         this.content.scrollToBottom();
@@ -921,24 +923,26 @@ let ChatPage = class ChatPage {
         this.socket.on('disconnect', () => {
             // TODO SOMETHING
             console.warn('Disconnected from socket');
+            setTimeout(() => this.navController.pop(), 1300);
         });
     }
     ionViewDidLeave() {
         this.socket.disconnect();
     }
-    send(message) {
-        // if(message && message != "") {
+    send() {
+        if (this.chatBox == '')
+            return;
+        let message = this.chatBox.trim();
         this.zone.run(() => {
-            this.chatRoom.addMessage('user', `${this.chatBox}`);
+            this.chatRoom.addMessage('user', `${message}`);
             setTimeout(() => {
                 if (this.content._scroll) {
                     this.content.scrollToBottom();
                 }
             }, 300);
         });
-        this.socket.emit("chat_message", this.chatBox);
+        this.socket.emit("chat_message", message);
         this.chatBox = "";
-        this.focus();
     }
     onFocus() {
         this.content.resize();
@@ -960,13 +964,13 @@ __decorate([
 ], ChatPage.prototype, "messageInput", void 0);
 ChatPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'app-chat',template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\chat_watson\chat.html"*/'<ion-header>\n\n    <ion-navbar>\n\n        <ion-title>\n\n            Ask Dr. Watson\n\n        </ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content #content class="scroll-content" class="home">\n\n    <div class="message-wrap">\n\n        <div class="message" #list *ngFor="let message of chatRoom.messages" \n\n        [class.left]=" message.user == \'bot\'" \n\n        [class.right]="message.user == \'user\'">\n\n            <div class="message-detail">\n\n                <div class="message-info">\n\n                    <p>{{ message.user == \'bot\' ? "Dr. Watson" : "You"}}</p>\n\n                </div>\n\n                <div class="message-content">\n\n                    <p class="line-breaker" [innerHTML]="message.message"></p>\n\n                </div>\n\n            </div>\n\n        </div>\n\n    </div>\n\n</ion-content>\n\n<ion-footer no-border style=\'height: 55px;\'>\n\n    <div class="input-wrap">\n\n        <textarea #chat_input class="chat-input" type="text" [(ngModel)]="chatBox" (focusin)="onFocus()" (keyup.enter)="send($event)" placeholder="Type something...">\n\n        </textarea>\n\n        <button item-right icon-only ion-button (click)="send($event)">\n\n            <ion-icon name=\'ios-send\' ios=\'ios-send\' md=\'md-send\'></ion-icon>\n\n        </button>\n\n    </div>\n\n</ion-footer>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\chat_watson\chat.html"*/,
+        selector: 'app-chat',template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\chat_watson\chat.html"*/'<ion-header>\n\n    <ion-navbar>\n\n        <ion-title>\n\n            Ask Dr. Watson\n\n        </ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content #content class="scroll-content" class="home">\n\n    <div class="message-wrap">\n\n        <div class="message" #list *ngFor="let message of chatRoom.messages" \n\n        [class.left]=" message.userName == \'bot\'" \n\n        [class.right]="message.userName == \'user\'">\n\n            <div class="message-detail">\n\n                <div class="message-info">\n\n                    <p>{{ message.userName == \'bot\' ? "Watson" : "You"}} - {{message.time | date}} at {{message.time.getHours()}}:{{message.time.getMinutes()}}</p>\n\n                </div>\n\n                <div class="message-content">\n\n                    <p class="line-breaker" [innerHTML]="message.message"></p>\n\n                </div>\n\n            </div>\n\n        </div>\n\n    </div>\n\n</ion-content>\n\n<ion-footer no-border style=\'height: 55px;\'>\n\n    <div class="input-wrap">\n\n        <textarea #chat_input class="chat-input" type="text" [(ngModel)]="chatBox" (focusin)="onFocus()" (keyup.enter)="send()" placeholder="Type something...">\n\n        </textarea>\n\n        <button item-right icon-only ion-button (click)="send()">\n\n            <ion-icon name=\'ios-send\' ios=\'ios-send\' md=\'md-send\'></ion-icon>\n\n        </button>\n\n    </div>\n\n</ion-footer>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\chat_watson\chat.html"*/,
         styles: ['./chat.scss']
     }),
-    __metadata("design:paramtypes", [typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2_ng_socket_io__["Socket"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ng_socket_io__["Socket"]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2_ng_socket_io__["Socket"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ng_socket_io__["Socket"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _d || Object])
 ], ChatPage);
 
-var _a, _b, _c;
+var _a, _b, _c, _d;
 //# sourceMappingURL=chat.js.map
 
 /***/ }),
@@ -980,7 +984,7 @@ var _a, _b, _c;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__questions_question_service__ = __webpack_require__(319);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__questions_question_control_service__ = __webpack_require__(321);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_diagnostics_diagnostic_service__ = __webpack_require__(322);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__loaders_loaders__ = __webpack_require__(531);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__mappers_event_mapper_service__ = __webpack_require__(323);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1517,7 +1521,7 @@ QuestionEventMapper = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PictureAnalisysPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_camera_camera_provider__ = __webpack_require__(325);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_native_storage__ = __webpack_require__(326);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_cognitive_services_cognitive_service__ = __webpack_require__(163);
@@ -1691,7 +1695,7 @@ CameraProvider = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models__ = __webpack_require__(429);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__recorder__ = __webpack_require__(430);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5____ = __webpack_require__(183);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ionic_angular__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ionic_angular__ = __webpack_require__(30);
 // Copyright (c) 2017 Tracktunes Inc
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1900,7 +1904,7 @@ WavRecorder = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__(95);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2____ = __webpack_require__(183);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(30);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2376,7 +2380,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(82);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_platform_browser__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__(498);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_about_about__ = __webpack_require__(298);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_contact_contact__ = __webpack_require__(299);
@@ -2511,7 +2515,7 @@ AppModule = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(292);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(296);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_tabs_tabs__ = __webpack_require__(297);
@@ -2696,8 +2700,10 @@ class ChatRoom {
         this.users[user.name] = user;
     }
     addMessage(userName, message) {
+        if (!this.users[userName])
+            throw "Invalid User";
         this.users[userName].messages.push(message);
-        this.messages.push({ user: userName, message: message });
+        this.messages.push({ userName: userName, message: message, time: new Date() });
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = ChatRoom;

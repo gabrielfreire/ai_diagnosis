@@ -1,5 +1,5 @@
 import { ViewChild, NgZone, Component, OnInit, ElementRef } from "@angular/core";
-import { Content } from 'ionic-angular';
+import { Content, NavController } from 'ionic-angular';
 import { Socket } from 'ng-socket-io';
 import { ChatUser } from './ChatUser';
 import { ChatRoom } from './ChatRoom';
@@ -14,7 +14,7 @@ export class ChatPage implements OnInit{
     chatRoom: ChatRoom = new ChatRoom();
     zone: NgZone;
     chatBox: string;
-    constructor(private socket: Socket) { }
+    constructor(private socket: Socket, private navController:NavController) { }
 
     ngOnInit(){
         //start watson chat
@@ -26,6 +26,7 @@ export class ChatPage implements OnInit{
         this.socket.on("chat_message", (msg) => {
             this.zone.run(() => {
                 this.chatRoom.addMessage('bot', `${msg}`);
+                this.focus();
                 setTimeout(() => {
                     if(this.content._scroll){
                         this.content.scrollToBottom();
@@ -36,33 +37,34 @@ export class ChatPage implements OnInit{
         this.socket.on('disconnect', () => {
             // TODO SOMETHING
             console.warn('Disconnected from socket');
+            setTimeout(() => this.navController.pop(), 1300);
         });
     }
 
-    ionViewDidLeave(){
+    ionViewDidLeave(): void {
         this.socket.disconnect();
     }
     
-    send(message) {
-        // if(message && message != "") {
+    send(): void {
+        if(this.chatBox == '') return;
+        let message = this.chatBox.trim();
         this.zone.run(() => {
-            this.chatRoom.addMessage('user', `${this.chatBox}`);
+            this.chatRoom.addMessage('user', `${message}`);
             setTimeout(() => {
                 if(this.content._scroll){
                     this.content.scrollToBottom();
                 }
             },300);
         });
-        this.socket.emit("chat_message", this.chatBox);
+        this.socket.emit("chat_message", message);
         
         this.chatBox = "";
-        this.focus();
     }
-    onFocus() {
+    onFocus(): void {
         this.content.resize();
         this.content.scrollToBottom();
     }
-    private focus() {
+    private focus(): void {
         if (this.messageInput && this.messageInput.nativeElement) {
             this.messageInput.nativeElement.focus();
         }
