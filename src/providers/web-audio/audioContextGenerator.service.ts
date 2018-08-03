@@ -13,6 +13,7 @@ export class AudioContextGenerator {
         try {
             // context = new AudioContext({ latencyHint: 'playback' });
             context = new AudioContext();
+            this.setAudioContext(context);
         }
         catch (err) {
             console.error('Web Audio API is not supported in this browser');

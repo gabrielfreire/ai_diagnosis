@@ -40,7 +40,6 @@ export class WavRecorder extends WebAudioRecorder {
             // THIS CALLBACK IS CALLED MULTIPLE TIMES WHILE THE AUDIO IS BEING RECORDED
             // TODO remove saveWavFileChunk from this callback and maybe replace for a debugging log to see activeBuffer change
             this.saveWav(this.setter.activeBuffer).subscribe(null, (err: any) => {
-                // alert('Error in RecordWav.setter(): ' + err);
                 console.error('Error in RecordWav.setter(): ' + err);
             });
             // console.log('Recording: ' + this.setter.bufferIndex);

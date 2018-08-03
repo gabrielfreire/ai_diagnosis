@@ -321,7 +321,6 @@ export abstract class WebAudioRecorder {
         console.log('createNodes()');
         this.audioContext = this.audioContextGenerator.createAudioContext();
         if(this.audioContext) {
-            this.audioContextGenerator.setAudioContext(this.audioContext);
             this.sampleRate = this.audioContext.sampleRate;
             // create the gainNode
             this.audioGainNode = this.audioContext.createGain();
@@ -345,7 +344,6 @@ export abstract class WebAudioRecorder {
      */
     private connectNodes(stream?: MediaStream): void {
         console.log('connectNodes()');
-        const self = this;
         if(this.isMobileAudioInput) {
             audioinput.start({ bufferSize: PROCESSING_BUFFER_LENGTH, streamToWebAudio: false });
             audioinput.connect(this.audioContext.destination);
@@ -377,22 +375,6 @@ export abstract class WebAudioRecorder {
     ///////////////////////////////////////////////////////////////////////////
 
     /**
-     * Ensures change detection every GRAPHICS_REFRESH_INTERVAL
-     * @returns void
-     */
-    public startMonitoring(): void {
-        console.log('startMonitoring()');
-    }
-
-    /**
-     * Stops monitoring (stops change detection)
-     * @returns void
-     */
-    public stopMonitoring(): void {
-        console.log('stopMonitoring()');
-    }
-
-    /**
      * Reset all peak stats as if we've just started playing audio at
      * time 0. Call this when you want to compute stats from now.
      * @returns void
@@ -407,18 +389,6 @@ export abstract class WebAudioRecorder {
         this.nPeaksAtMax = 1;
         // we start from zero again
         this.nClipped = 0;
-    }
-
-    /**
-     * Set the multiplier on input volume (gain) effectively changing volume
-     * @param {number} factor fraction of volume, where 1.0 is no change
-     * @returns void
-     */
-    public setGainFactor(factor: number): void {
-        if (this.status === RecordStatus.READY_STATE) {
-            this.audioGainNode.gain.value = factor;
-        }
-        this.resetPeaks();
     }
 
     /**
