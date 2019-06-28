@@ -1,37 +1,62 @@
 webpackJsonp([0],{
 
-/***/ 161:
+/***/ 159:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-const server = {
-    // url: 'http://localhost:3000/api'
-    url: 'https://imsdiag.herokuapp.com/api',
-    vision_url: 'https://westeurope.api.cognitive.microsoft.com/vision/v1.0/analyze?visualFeatures=Categories%2CDescription%2CColor&details=&language=en'
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-/* harmony export (immutable) */ __webpack_exports__["a"] = server;
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 
-//# sourceMappingURL=server.connection.js.map
+
+let AppService = class AppService {
+    constructor() {
+        // Observable string sources
+        this.emitChangeSource = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__["Subject"]();
+        // Observable string streams
+        this.listenMessage = this.emitChangeSource.asObservable();
+    }
+    // Service message commands
+    emitMessage(change) {
+        this.emitChangeSource.next(change);
+    }
+};
+AppService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [])
+], AppService);
+
+//# sourceMappingURL=app.service.js.map
 
 /***/ }),
 
-/***/ 163:
+/***/ 160:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CognitiveService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(82);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_server_connection__ = __webpack_require__(161);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_server_connection__ = __webpack_require__(321);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(161);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_Subject__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_Subject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_Subject__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_Observable__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_Observable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__ = __webpack_require__(532);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__ = __webpack_require__(531);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_speech_recognition__ = __webpack_require__(336);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_speech_recognition__ = __webpack_require__(313);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -71,53 +96,6 @@ let CognitiveService = class CognitiveService {
     speak() {
         this.recognizer = this._RecognizerSetup(__WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__, "Dictation", "en-US", "Simple", "803f5c8476884b0baf897ed24e28fbf7");
         console.log('Loaded SDK');
-        console.log(__WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__);
-        const self = this;
-        // this.speechRecognition.isRecognitionAvailable().then((available: boolean) => {
-        //     console.log('available ?', available);
-        //     this.speechRecognition.hasPermission().then((has) => {
-        //         console.log('Permission', has);
-        //         if(has) {
-        //             let res = {};
-        //             self.speechRecognition.startListening({language: 'en-US', matches:5, showPartial: true}).subscribe((matches) => {
-        //                 console.log('Listening');
-        //                 res['DisplayText'] = matches[0];
-        //                 res['RecognitionStatus'] = 'Success';
-        //                 console.log(res);
-        //                 self.emitMessage(res);
-        //             }, (error) => {
-        //                 console.log('error->', error);
-        //                 self.emitMessage(error)
-        //             });
-        //             // self._recognizerStart(SDK, self.recognizer);
-        //         } else {
-        //             self.emitMessage("No permission!");
-        //             console.log('Permission', has);
-        //             self.speechRecognition.requestPermission().then(()=>{
-        //                 console.log('Permitted');
-        //                 self.emitMessage("Permitted!");
-        //                 let res = {};
-        //                 self.speechRecognition.startListening({language: 'en-US', matches:5, showPartial: true}).subscribe((matches) => {
-        //                     console.log('Listening');
-        //                     res['DisplayText'] = matches[0];
-        //                     res['RecognitionStatus'] = 'Success';
-        //                     console.log(res);
-        //                     self.emitMessage(res);
-        //                 }, (error) => {
-        //                     console.log('error->', error);
-        //                     self.emitMessage(error)
-        //                 });
-        //                 // self._recognizerStart(SDK, self.recognizer);
-        //             }, (error) => {
-        //                 console.log('error->', error);
-        //                 self.emitMessage(error)
-        //             });
-        //         }
-        //     }, (error) => self.emitMessage(error));
-        // }, (error) => {
-        //     console.log('Error ocurred ->', error);
-        //     self.emitMessage('Error ' + JSON.stringify(error));
-        // });
         this._recognizerStart(__WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__, this.recognizer);
     }
     stopSpeaking() {
@@ -261,61 +239,21 @@ CognitiveService = __decorate([
 
 /***/ }),
 
-/***/ 168:
+/***/ 180:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-let AppService = class AppService {
-    constructor() {
-        // Observable string sources
-        this.emitChangeSource = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__["Subject"]();
-        // Observable string streams
-        this.listenMessage = this.emitChangeSource.asObservable();
-    }
-    // Service message commands
-    emitMessage(change) {
-        this.emitChangeSource.next(change);
-    }
-};
-AppService = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [])
-], AppService);
-
-//# sourceMappingURL=app.service.js.map
-
-/***/ }),
-
-/***/ 183:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__web_audio_audioContextGenerator_service__ = __webpack_require__(840);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__web_audio_audioContextGenerator_service__ = __webpack_require__(839);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__web_audio_audioContextGenerator_service__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__web_audio_recorder__ = __webpack_require__(430);
 /* unused harmony namespace reexport */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__web_audio_wav_recorder__ = __webpack_require__(337);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_2__web_audio_wav_recorder__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__diagnostics_diagnostic_service__ = __webpack_require__(322);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__diagnostics_diagnostic_service__ = __webpack_require__(335);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_3__diagnostics_diagnostic_service__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__cognitive_services_cognitive_service__ = __webpack_require__(163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__cognitive_services_cognitive_service__ = __webpack_require__(160);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_4__cognitive_services_cognitive_service__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__camera_camera_provider__ = __webpack_require__(325);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__camera_camera_provider__ = __webpack_require__(320);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_5__camera_camera_provider__["a"]; });
 
 
@@ -327,7 +265,7 @@ AppService = __decorate([
 
 /***/ }),
 
-/***/ 196:
+/***/ 193:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -340,11 +278,11 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 196;
+webpackEmptyAsyncContext.id = 193;
 
 /***/ }),
 
-/***/ 253:
+/***/ 251:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -357,19 +295,19 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 253;
+webpackEmptyAsyncContext.id = 251;
 
 /***/ }),
 
-/***/ 297:
+/***/ 314:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TabsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__about_about__ = __webpack_require__(298);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__contact_contact__ = __webpack_require__(299);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(300);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__about_about__ = __webpack_require__(315);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__contact_contact__ = __webpack_require__(316);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(317);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -391,7 +329,7 @@ let TabsPage = class TabsPage {
     }
 };
 TabsPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\tabs\tabs.html"*/'<ion-tabs>\n    <ion-tab [root]="tab1Root" tabTitle="Home" tabIcon="home"></ion-tab>\n    <ion-tab [root]="tab2Root" tabTitle="About" tabIcon="information-circle"></ion-tab>\n    <ion-tab [root]="tab3Root" tabTitle="Contact" tabIcon="contacts"></ion-tab>\n</ion-tabs>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\tabs\tabs.html"*/
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\ai_diagnosis\src\pages\tabs\tabs.html"*/'<ion-tabs>\n\n    <ion-tab [root]="tab1Root" tabTitle="Home" tabIcon="home"></ion-tab>\n\n    <ion-tab [root]="tab2Root" tabTitle="About" tabIcon="information-circle"></ion-tab>\n\n    <ion-tab [root]="tab3Root" tabTitle="Contact" tabIcon="contacts"></ion-tab>\n\n</ion-tabs>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\ai_diagnosis\src\pages\tabs\tabs.html"*/
     }),
     __metadata("design:paramtypes", [])
 ], TabsPage);
@@ -400,7 +338,7 @@ TabsPage = __decorate([
 
 /***/ }),
 
-/***/ 298:
+/***/ 315:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -760,7 +698,7 @@ let AboutPage = class AboutPage {
 };
 AboutPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-about',template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\about\about.html"*/'<ion-header>\n    <ion-navbar>\n        <ion-title>\n            About\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <ion-card color="dark">\n        <ion-card-header>Question data format</ion-card-header>\n        <ion-card-content>\n            <pre>{{dataie}}</pre>\n        </ion-card-content>\n    </ion-card>\n    <ion-card color="dark">\n        <ion-card-header>Rule data format</ion-card-header>\n        <ion-card-content>\n            <pre>{{ruleie}}</pre>\n        </ion-card-content>\n    </ion-card>\n    <ion-card color="dark">\n        <ion-card-header>Heart Disease Data</ion-card-header>\n        <ion-card-content>\n            <img src="assets/imgs/age_patients.png">\n            <img src="assets/imgs/hd_patients.png">\n        </ion-card-content>\n    </ion-card>\n    <ion-card color="dark">\n        <ion-card-header>Heart Disease Neural Network Model</ion-card-header>\n        <ion-card-content>\n            <img src="assets/imgs/nn_graph.png">\n            <img src="assets/imgs/accuracy_cost.png">\n        </ion-card-content>\n    </ion-card>\n    <ion-card color="dark">\n        <ion-card-header>New Heart Disease Neural Network Model</ion-card-header>\n        <ion-card-content>\n            <img src="assets/imgs/nn_graph_97.png">\n            <img src="assets/imgs/accuracy_cost_2.png">\n        </ion-card-content>\n    </ion-card>\n</ion-content>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\about\about.html"*/
+        selector: 'page-about',template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\ai_diagnosis\src\pages\about\about.html"*/'<ion-header>\n\n    <ion-navbar>\n\n        <ion-title>\n\n            About\n\n        </ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n    <h1 text-center>Questionnaire and Neural Network details</h1>\n\n    <ion-card color="dark">\n\n        <ion-card-header>Question data format</ion-card-header>\n\n        <ion-card-content>\n\n            <pre>{{dataie}}</pre>\n\n        </ion-card-content>\n\n    </ion-card>\n\n    <ion-card color="dark">\n\n        <ion-card-header>Rule data format</ion-card-header>\n\n        <ion-card-content>\n\n            <pre>{{ruleie}}</pre>\n\n        </ion-card-content>\n\n    </ion-card>\n\n    <ion-card color="dark">\n\n        <ion-card-header>Heart Disease Data</ion-card-header>\n\n        <ion-card-content>\n\n            <img src="assets/imgs/age_patients.png">\n\n            <img src="assets/imgs/hd_patients.png">\n\n        </ion-card-content>\n\n    </ion-card>\n\n    <ion-card color="dark">\n\n        <ion-card-header>Heart Disease Neural Network Model</ion-card-header>\n\n        <ion-card-content>\n\n            <img src="assets/imgs/nn_graph.png">\n\n            <img src="assets/imgs/accuracy_cost.png">\n\n        </ion-card-content>\n\n    </ion-card>\n\n    <ion-card color="dark">\n\n        <ion-card-header>New Heart Disease Neural Network Model</ion-card-header>\n\n        <ion-card-content>\n\n            <img src="assets/imgs/nn_graph_97.png">\n\n            <img src="assets/imgs/accuracy_cost_2.png">\n\n        </ion-card-content>\n\n    </ion-card>\n\n</ion-content>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\ai_diagnosis\src\pages\about\about.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]])
 ], AboutPage);
@@ -769,7 +707,7 @@ AboutPage = __decorate([
 
 /***/ }),
 
-/***/ 299:
+/***/ 316:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -794,7 +732,7 @@ let ContactPage = class ContactPage {
 };
 ContactPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-contact',template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\contact\contact.html"*/'<ion-header>\n    <ion-navbar>\n        <ion-title>\n            Contact\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <ion-list>\n        <ion-list-header>Follow IMS on LinkedIn</ion-list-header>\n        <ion-item>\n            <ion-icon name="ionic" item-start></ion-icon>\n            <a href="https://www.linkedin.com/company/1308682/" style="font-size:11px">https://www.linkedin.com/company/1308682/</a>\n        </ion-item>\n    </ion-list>\n</ion-content>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\contact\contact.html"*/
+        selector: 'page-contact',template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\ai_diagnosis\src\pages\contact\contact.html"*/'<ion-header>\n\n    <ion-navbar>\n\n        <ion-title>\n\n            Contact\n\n        </ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n    <ion-list>\n\n        <ion-list-header>Follow IMS on LinkedIn</ion-list-header>\n\n        <ion-item>\n\n            <ion-icon name="ionic" item-start></ion-icon>\n\n            <a href="https://www.linkedin.com/company/1308682/" style="font-size:11px">https://www.linkedin.com/company/1308682/</a>\n\n        </ion-item>\n\n    </ion-list>\n\n</ion-content>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\ai_diagnosis\src\pages\contact\contact.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]])
 ], ContactPage);
@@ -803,18 +741,18 @@ ContactPage = __decorate([
 
 /***/ }),
 
-/***/ 300:
+/***/ 317:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__chat_watson_chat__ = __webpack_require__(301);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__formbuilder_form_template_formBuilder__ = __webpack_require__(318);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_camera__ = __webpack_require__(162);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__picture_analisys_picture_analisys__ = __webpack_require__(324);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_service__ = __webpack_require__(168);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__chat_watson_chat__ = __webpack_require__(318);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_camera__ = __webpack_require__(158);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__picture_analisys_picture_analisys__ = __webpack_require__(319);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(159);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_formbuilder_Form_FormBuilder_component__ = __webpack_require__(331);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -853,35 +791,35 @@ let HomePage = class HomePage {
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__chat_watson_chat__["a" /* ChatPage */]);
     }
     goToPictureAnalisys() {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__picture_analisys_picture_analisys__["a" /* PictureAnalisysPage */]);
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__picture_analisys_picture_analisys__["a" /* PictureAnalisysPage */]);
     }
     goToForm(value) {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__formbuilder_form_template_formBuilder__["a" /* FormBuilderCustom */], { form: value });
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_6__components_formbuilder_Form_FormBuilder_component__["a" /* FormBuilder */], { form: value });
     }
 };
 HomePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-home',template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\home\home.html"*/'<ion-header>\n    <ion-navbar>\n        <ion-title>IMS Diagnosis</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <h3>Select a Diagnosis</h3>\n    <button full ion-button color="calm" (click)="goToForm(\'flu\')">Flu Diagnosis</button>\n    <button full ion-button color="calm" (click)="goToForm(\'hd\')">Heart Disease Diagnosis</button>\n    <button full ion-button color="calm" (click)="goToForm(\'mh\')">Patient Health Questionnaire (PHQ-9)</button>\n    <h3>Watson Services</h3>\n    <button full ion-button color="calm" (click)="goToForm(\'watson\')">Ask Watson Discovery</button>\n    <button full ion-button color="calm" (click)="goToChat()">Watson ChatBot</button>\n    <h3>MS Azure Services</h3>\n    <button full ion-button color="calm" (click)="goToPictureAnalisys()">Analyze a picture</button>\n</ion-content>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\home\home.html"*/
+        selector: 'page-home',template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\ai_diagnosis\src\pages\home\home.html"*/'<ion-header>\n\n    <ion-navbar>\n\n        <ion-title>IMS Diagnosis</ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n    <h4 text-center>Diagnosis</h4>\n\n    <button full ion-button color="light" (click)="goToForm(\'flu\')"><span>Flu Diagnosis</span></button>\n\n    <button full ion-button color="light" (click)="goToForm(\'hd\')"><span>Heart Disease Diagnosis</span></button>\n\n    <button full ion-button color="light" (click)="goToForm(\'mh\')"><span>Patient Health Questionnaire (PHQ-9)</span></button>\n\n    \n\n    <br/>\n\n    <hr style="width:80%; height: 1px; z-index: 9999;"/>\n\n    <br/>\n\n    \n\n    <h4 text-center>Chatbot and Discovery</h4>\n\n    <button full ion-button color="light" (click)="goToForm(\'watson\')"><span>Ask Watson Discovery</span></button>\n\n    <button full ion-button color="light" (click)="goToChat()"><span>Watson ChatBot</span></button>\n\n    \n\n    <br/>\n\n    <hr style="width:80%; height: 1px; z-index: 9999;"/>\n\n    <br/>\n\n    \n\n    <h4 text-center>Photo analyser</h4>\n\n    <button full ion-button color="light" (click)="goToPictureAnalisys()"><span>Analyze a picture</span></button>\n\n</ion-content>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\ai_diagnosis\src\pages\home\home.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_4__ionic_native_camera__["a" /* Camera */],
-        __WEBPACK_IMPORTED_MODULE_6__app_app_service__["a" /* AppService */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_camera__["a" /* Camera */],
+        __WEBPACK_IMPORTED_MODULE_5__app_app_service__["a" /* AppService */]])
 ], HomePage);
 
 //# sourceMappingURL=home.js.map
 
 /***/ }),
 
-/***/ 301:
+/***/ 318:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng_socket_io__ = __webpack_require__(302);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng_socket_io__ = __webpack_require__(296);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_ng_socket_io__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ChatUser__ = __webpack_require__(526);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ChatRoom__ = __webpack_require__(527);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ChatUser__ = __webpack_require__(529);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ChatRoom__ = __webpack_require__(530);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -956,37 +894,218 @@ let ChatPage = class ChatPage {
 };
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('content'),
-    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* Content */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* Content */]) === "function" && _a || Object)
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* Content */])
 ], ChatPage.prototype, "content", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('chat_input'),
-    __metadata("design:type", typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === "function" && _b || Object)
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"])
 ], ChatPage.prototype, "messageInput", void 0);
 ChatPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'app-chat',template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\chat_watson\chat.html"*/'<ion-header>\n\n    <ion-navbar>\n\n        <ion-title>\n\n            Ask Dr. Watson\n\n        </ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content #content class="scroll-content" class="home">\n\n    <div class="message-wrap">\n\n        <div class="message" #list *ngFor="let message of chatRoom.messages" \n\n        [class.left]=" message.userName == \'bot\'" \n\n        [class.right]="message.userName == \'user\'">\n\n            <div class="message-detail">\n\n                <div class="message-info">\n\n                    <p>{{ message.userName == \'bot\' ? "Watson" : "You"}} - {{message.time | date}} at {{message.time.getHours()}}:{{message.time.getMinutes()}}</p>\n\n                </div>\n\n                <div class="message-content">\n\n                    <p class="line-breaker" [innerHTML]="message.message"></p>\n\n                </div>\n\n            </div>\n\n        </div>\n\n    </div>\n\n</ion-content>\n\n<ion-footer no-border style=\'height: 55px;\'>\n\n    <div class="input-wrap">\n\n        <textarea #chat_input class="chat-input" type="text" [(ngModel)]="chatBox" (focusin)="onFocus()" (keyup.enter)="send()" placeholder="Type something...">\n\n        </textarea>\n\n        <button item-right icon-only ion-button (click)="send()">\n\n            <ion-icon name=\'ios-send\' ios=\'ios-send\' md=\'md-send\'></ion-icon>\n\n        </button>\n\n    </div>\n\n</ion-footer>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\chat_watson\chat.html"*/,
+        selector: 'app-chat',template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\ai_diagnosis\src\pages\chat_watson\chat.html"*/'<ion-header>\n\n    <ion-navbar>\n\n        <ion-title>\n\n            Ask Dr. Watson\n\n        </ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content #content class="scroll-content" class="home">\n\n    <div class="message-wrap">\n\n        <div class="message" #list *ngFor="let message of chatRoom.messages" \n\n        [class.left]=" message.userName == \'bot\'" \n\n        [class.right]="message.userName == \'user\'">\n\n            <div class="message-detail">\n\n                <div class="message-info">\n\n                    <p>{{ message.userName == \'bot\' ? "Watson" : "You"}} - {{message.time | date}} at {{message.time.getHours()}}:{{message.time.getMinutes()}}</p>\n\n                </div>\n\n                <div class="message-content">\n\n                    <p class="line-breaker" [innerHTML]="message.message"></p>\n\n                </div>\n\n            </div>\n\n        </div>\n\n    </div>\n\n</ion-content>\n\n<ion-footer no-border style=\'height: 55px;\'>\n\n    <div class="input-wrap">\n\n        <textarea #chat_input class="chat-input" type="text" [(ngModel)]="chatBox" (focusin)="onFocus()" (keyup.enter)="send()" placeholder="Type something...">\n\n        </textarea>\n\n        <button item-right icon-only ion-button (click)="send()">\n\n            <ion-icon name=\'ios-send\' ios=\'ios-send\' md=\'md-send\'></ion-icon>\n\n        </button>\n\n    </div>\n\n</ion-footer>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\ai_diagnosis\src\pages\chat_watson\chat.html"*/,
         styles: ['./chat.scss']
     }),
-    __metadata("design:paramtypes", [typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2_ng_socket_io__["Socket"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ng_socket_io__["Socket"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ng_socket_io__["Socket"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]])
 ], ChatPage);
 
-var _a, _b, _c, _d;
 //# sourceMappingURL=chat.js.map
 
 /***/ }),
 
-/***/ 318:
+/***/ 319:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FormBuilderCustom; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PictureAnalisysPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__questions_question_service__ = __webpack_require__(319);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__questions_question_control_service__ = __webpack_require__(321);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_diagnostics_diagnostic_service__ = __webpack_require__(322);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__loaders_loaders__ = __webpack_require__(531);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__mappers_event_mapper_service__ = __webpack_require__(323);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_camera_camera_provider__ = __webpack_require__(320);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_native_storage__ = __webpack_require__(312);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_cognitive_services_cognitive_service__ = __webpack_require__(160);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+
+
+
+
+
+/**
+ * Generated class for the PictureAnalisysPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+let PictureAnalisysPage = class PictureAnalisysPage {
+    constructor(navCtrl, navParams, cameraProvider, cognitiveService, loadingCtrl, nativeStorage) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.cameraProvider = cameraProvider;
+        this.cognitiveService = cognitiveService;
+        this.loadingCtrl = loadingCtrl;
+        this.nativeStorage = nativeStorage;
+        this.isMute = false;
+        this.loading = 'Loading';
+        this.picture = false;
+        this.imageDescription = '';
+        this.isSpeak = false;
+        this.error = false;
+    }
+    ionViewCanEnter() {
+        // this.nativeStorage.getItem('isMute').then(data => this.isMute = data);
+    }
+    ionViewDidLoad() {
+        console.log('ionViewDidLoad PictureAnalisysPage');
+        return this.takePicture();
+    }
+    takePicture() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const loading = this.loadingCtrl.create({
+                content: `${this.loading} ...`
+            });
+            let descriptionAnalyzedImage;
+            loading.present();
+            this.isSpeak = false;
+            this.imageDescription = '';
+            try {
+                let picture = yield this.cameraProvider.getPictureFromCamera();
+                if (picture) {
+                    this.setPicture(picture); // picture is the temporary path
+                    this.cognitiveService.analyzeImage(picture).subscribe((data) => {
+                        loading.dismiss();
+                        descriptionAnalyzedImage = data.description.captions[0].text;
+                        this.imageDescription = descriptionAnalyzedImage;
+                    }, (error) => {
+                        loading.dismiss();
+                        this.error = `Error: ${JSON.stringify(error)}`;
+                    });
+                }
+            }
+            catch (error) {
+                loading.dismiss();
+                this.error = `Error: ${JSON.stringify(error)}`;
+                console.error(this.error);
+            }
+        });
+    }
+    getBase64(file, cb) {
+        const self = this;
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            cb(reader.result);
+        };
+        reader.onerror = function (error) {
+            console.log('Error: ', error);
+            self.error = `${JSON.stringify(error)}`;
+        };
+    }
+    setPicture(picture) {
+        this.picture = "data:image/jpeg;base64," + picture;
+    }
+};
+PictureAnalisysPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-picture-analisys',template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\ai_diagnosis\src\pages\picture-analisys\picture-analisys.html"*/'<!--\n\n  Generated template for the PictureAnalisysPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n    <ion-navbar>\n\n        <ion-title>pictureAnalisys</ion-title>\n\n    </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n    <img *ngIf="picture" [src]="picture" />\n\n    <div class="container-description" (click)="takePicture()">\n\n        <!-- Image description -->\n\n        <p class="image-description">{{imageDescription}}</p>\n\n        <p *ngIf="error" class="error">{{error}}</p>\n\n    </div>\n\n</ion-content>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\ai_diagnosis\src\pages\picture-analisys\picture-analisys.html"*/,
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_2__providers_camera_camera_provider__["a" /* CameraProvider */],
+        __WEBPACK_IMPORTED_MODULE_4__providers_cognitive_services_cognitive_service__["a" /* CognitiveService */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */],
+        __WEBPACK_IMPORTED_MODULE_3__ionic_native_native_storage__["a" /* NativeStorage */]])
+], PictureAnalisysPage);
+
+//# sourceMappingURL=picture-analisys.js.map
+
+/***/ }),
+
+/***/ 320:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CameraProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_native_camera__ = __webpack_require__(158);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+let CameraProvider = class CameraProvider {
+    constructor(camera) {
+        this.camera = camera;
+    }
+    getPictureFromCamera() {
+        return this.getImage(this.camera.PictureSourceType.CAMERA);
+    }
+    getImage(pictureSourceType, quality = 50, saveToPhotoAlbum = false) {
+        const options = {
+            quality,
+            saveToPhotoAlbum,
+            sourceType: pictureSourceType,
+            destinationType: this.camera.DestinationType.DATA_URL,
+            encodingType: this.camera.EncodingType.JPEG
+        };
+        return this.camera.getPicture(options);
+    }
+};
+CameraProvider = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ionic_native_camera__["a" /* Camera */]])
+], CameraProvider);
+
+//# sourceMappingURL=camera.provider.js.map
+
+/***/ }),
+
+/***/ 321:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+const server = {
+    // url: 'http://localhost:3000/api'
+    url: 'https://imsdiag.herokuapp.com/api',
+    vision_url: 'https://westeurope.api.cognitive.microsoft.com/vision/v1.0/analyze?visualFeatures=Categories%2CDescription%2CColor&details=&language=en'
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = server;
+
+//# sourceMappingURL=server.connection.js.map
+
+/***/ }),
+
+/***/ 331:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FormBuilder; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_form_question_service__ = __webpack_require__(332);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_form_question_control_service__ = __webpack_require__(334);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_diagnostics_diagnostic_service__ = __webpack_require__(335);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__loaders_loaders__ = __webpack_require__(844);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__mappers_event_mapper_service__ = __webpack_require__(336);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1008,7 +1127,7 @@ const UNTITLED_QUESTIONNAIRE = 'Untitled Questionnaire';
 /**
  * FORM COMPONENT
  */
-let FormBuilderCustom = class FormBuilderCustom {
+let FormBuilder = class FormBuilder {
     constructor(questionControlService, questionService, diagnosticsService, loadingCtrl, eventMapper, viewCtrl) {
         this.questionControlService = questionControlService;
         this.questionService = questionService;
@@ -1123,26 +1242,22 @@ let FormBuilderCustom = class FormBuilderCustom {
 };
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"])
-], FormBuilderCustom.prototype, "changeEvent", void 0);
-FormBuilderCustom = __decorate([
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]) === "function" && _a || Object)
+], FormBuilder.prototype, "changeEvent", void 0);
+FormBuilder = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'app-form',template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\home\formbuilder\form-template\formBuilder.html"*/'<ion-header>\n\n    <ion-navbar>\n\n        <ion-title>{{title}}</ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n    <div *ngIf="form">\n\n        <!-- <h4 *ngIf="questions && questions.length">{{title}}</h4> -->\n\n        <form (ngSubmit)="onSubmit()" [formGroup]="form">\n\n            <div *ngFor="let question of questions" class="form-row">\n\n                <df-question [changeEvent]="changeEvent" [question]="question" [form]="form"></df-question>\n\n            </div>\n\n\n\n            <div *ngIf="hasSubmit" class="form-row">\n\n\n\n                <button full ion-button color="calm" type="submit" [disabled]="!form.valid">Get Diagnostic</button>\n\n\n\n            </div>\n\n        </form>\n\n\n\n\n\n        <!-- ASK WATSON DISCOVERY -->\n\n        <div *ngIf="payLoad && !payLoad.data.prediction && payLoad.data.usage" class="form-row">\n\n            <pre>{{ payLoad.data | json }}</pre>\n\n        </div>\n\n        <div *ngIf="payLoad && !payLoad.data.prediction && !payLoad.data.usage && payLoad.data.results" class="form-row">\n\n            <ion-card>\n\n                <ion-card-header>\n\n                    <h1 ion-text>WATSON</h1>\n\n                </ion-card-header>\n\n                <ion-card-content>\n\n                    <h1 *ngIf="payLoad.data.results.length == 0">No results were found</h1>\n\n                    <!-- <h1 *ngIf="payLoad.data.results.length">{{payLoad.data.results.length}} results...</h1> -->\n\n                    <h1 *ngIf="payLoad.data.results.length">Categories:</h1>\n\n                    <ion-item-group *ngFor="let res of payLoad.data.results">\n\n                        <ion-item-divider color="light"><strong>Result score: {{res.result_metadata.score}}</strong></ion-item-divider>\n\n                        <ion-item *ngFor="let cat of res.enriched_text.categories">\n\n\n\n                            <p class="label-result-watson-discovery"><strong>Category label:</strong> <span>{{cat.label}}</span></p>\n\n                            <p class="label-result-watson-discovery"><strong>Category score:</strong> <span>{{cat.score}}</span></p>\n\n\n\n                        </ion-item>\n\n                        <ion-item-divider color="light"><strong>Concepts</strong></ion-item-divider>\n\n                        <ion-item *ngFor="let concpt of res.enriched_text.concepts">\n\n\n\n                            <p class="label-result-watson-discovery"><strong>Concept: </strong><span>{{concpt.text}}</span></p>\n\n                            <p class="label-result-watson-discovery"><strong>Concept relevance: </strong><span>{{concpt.relevance}}</span></p>\n\n\n\n                            <strong>Concept source: </strong>\n\n                            <a class="label-result-watson-discovery" [href]="concpt.dbpedia_resource" target="_blank"><span>{{concpt.dbpedia_resource}}</span></a>\n\n                        </ion-item>\n\n                    </ion-item-group>\n\n                    <h1 *ngIf="payLoad.data.results.length">Passages:</h1>\n\n                    <ion-item-group *ngFor="let passage of payLoad.data.passages">\n\n                        <ion-item-divider color="light"><strong>Relevance score: {{passage.passage_score.toFixed(2)}}</strong></ion-item-divider>\n\n                        <ion-item>\n\n                            <p class="label-result-watson-discovery" [innerHTML]="passage.passage_text"></p>\n\n                        </ion-item>\n\n                    </ion-item-group>\n\n                </ion-card-content>\n\n            </ion-card>\n\n\n\n        </div>\n\n\n\n\n\n        <!-- FLU DIAGNOSIS -->\n\n        <div *ngIf="payLoad && !payLoad.data.score && !payLoad.data.prediction && !payLoad.data.usage && !payLoad.data.results" class="form-row">\n\n\n\n            <ion-card [style.backgroundColor]="payLoad.data.message ? \'#ffdada\' : \'#e6ffe6\'">\n\n\n\n                <ion-card-header>\n\n                    <!-- <h1>Diagnosis:</h1> -->\n\n                </ion-card-header>\n\n\n\n                <ion-card-content>\n\n                    <!-- Add card content here! -->\n\n                    <h1 ion-text [style.color]="payLoad.data.message ? \'red\' : \'green\'">\n\n                        <ion-icon name="{{payLoad.data.message ? \'alert\' : \'checkmark\'}}"></ion-icon> {{payLoad.data.message ? payLoad.data.message : \'This patient does not seem to have the flu\'}}</h1>\n\n                    <span *ngIf="payLoad.data.recommendations && payLoad.data.recommendations.length">\n\n                        <ion-item-group>\n\n                            <ion-item-divider color="light"><strong>Recommendations:</strong></ion-item-divider>\n\n                            <ion-item *ngFor="let rec of payLoad.data.recommendations">\n\n                                    <ion-icon name="alert"></ion-icon> {{rec}}\n\n                            </ion-item>\n\n                        </ion-item-group>\n\n                    </span>\n\n                </ion-card-content>\n\n\n\n            </ion-card>\n\n        </div>\n\n\n\n        <!-- MENTAL HEALTH DIAGNOSIS -->\n\n        <div *ngIf="payLoad && payLoad.data.score && !payLoad.data.prediction && !payLoad.data.usage && !payLoad.data.results" class="form-row">\n\n\n\n            <ion-card [style.backgroundColor]="payLoad.data.score >= 15 ? \'#ffdada\' : \'#e6ffe6\'">\n\n\n\n                <ion-card-header>\n\n                    <!-- <h1>Diagnosis:</h1> -->\n\n                </ion-card-header>\n\n\n\n                <ion-card-content>\n\n                    <!-- Add card content here! -->\n\n                    <h1 ion-text [style.color]="payLoad.data.score >= 15 ? \'red\' : \'green\'">\n\n                        <!-- <ion-icon name="{{payLoad.data.message ? \'alert\' : \'checkmark\'}}"></ion-icon> {{payLoad.data.message ? payLoad.data.message : \'This patient does not seem to have the flu\'}}</h1> -->\n\n                        <ion-icon name="{{payLoad.data.score >= 15 ? \'alert\' : \'checkmark\'}}"></ion-icon> {{\'Score: \' + payLoad.data.score}}</h1>\n\n                    <h2 ion-text [style.color]="payLoad.data.score >= 15 ? \'red\' : \'green\'">\n\n                        <ion-icon name="{{payLoad.data.score >= 15 ? \'alert\' : \'checkmark\'}}"></ion-icon> Hi, {{payLoad.data.event.params.message}}</h2>\n\n                    <span *ngIf="payLoad.data.recommendations && payLoad.data.recommendations.length">\n\n                        <ion-item-group>\n\n                            <ion-item-divider color="light"><strong>Recommendations:</strong></ion-item-divider>\n\n                            <ion-item *ngFor="let rec of payLoad.data.recommendations">\n\n                                    <ion-icon name="alert"></ion-icon> {{rec}}\n\n                            </ion-item>\n\n                        </ion-item-group>\n\n                    </span>\n\n                </ion-card-content>\n\n\n\n            </ion-card>\n\n        </div>\n\n\n\n\n\n        <!-- PRESENCE OF HEART DISEASE AI NEURAL NETWORK -->\n\n        <div *ngIf="payLoad && payLoad.data.prediction && !payLoad.data.usage && !payLoad.data.results" class="form-row">\n\n\n\n            <ion-card [style.backgroundColor]="payLoad.data.prediction[0] > 5 ? \'#ffdada\' : \'#e6ffe6\'">\n\n\n\n                <ion-card-header>\n\n                    <h1 ion-text>AI Predicted:</h1>\n\n                </ion-card-header>\n\n\n\n                <ion-card-content>\n\n                    <span *ngIf="payLoad.data.prediction && payLoad.data.prediction.length">\n\n                            <ion-item-group>\n\n                                <ion-item>\n\n                                    <p style="font-size:1.2em; text-align:center; justify-content:center; margin: 0 auto; color:rgb(19, 19, 38)"><strong>Presence of Heart Disease score from 0 to 10 where 0 means no presence and 10 means <br>absolute presence of some Heart Disease:</strong></p><br>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p style="font-size:2em; text-align:center; justify-content:center; margin: 0 auto; color:rgb(19, 19, 38)"><strong>Score: {{payLoad.data.prediction[0].toFixed(2)}}</strong></p>\n\n                                <br>\n\n                                    <p style="font-size:1.4em; text-align:center; justify-content:center; margin: 0 auto;" [style.color]=\'payLoad.data.prediction[0] > 5 ? "red" : "green"\'>\n\n                                        <ion-icon name="{{payLoad.data.prediction[0] > 5 ? \'alert\' : \'checkmark\'}}"></ion-icon> Hi, {{payLoad.data.event?.params?.message}}\n\n                                    </p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <strong>Accuracy:</strong>\n\n                                    {{payLoad.data.accuracy.toFixed(2)}}%\n\n                                </ion-item>\n\n                            </ion-item-group>\n\n                        </span>\n\n                </ion-card-content>\n\n\n\n            </ion-card>\n\n            <ion-card *ngIf="payLoad.data.prediction[0] > 5" [style.backgroundColor]="payLoad.data.prediction[0] > 5 ? \'#ffdada\' : \'#e6ffe6\'">\n\n\n\n                <ion-card-header>\n\n                    <h1>Suggestions for treatment:</h1>\n\n                </ion-card-header>\n\n\n\n                <ion-card-content>\n\n                    <span *ngIf="payLoad.data.prediction && payLoad.data.prediction.length">\n\n                            <ion-item-group>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Excess weight causes your heart to work harder and increases the risk for heart disease,<br> \n\n                                        high blood pressure, diabetes and high cholesterol. Exercising regularly and eating smaller \n\n                                        portions of nutrient-rich foods may help you maintain a healthy weight.<br> \n\n                                        Learn the warning signs of a heart attack and stroke.</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Don’t smoke or expose yourself to second-hand smoke.</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Maintain a healthy blood pressure.</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Monitor your cholesterol (blood lipids).</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Make exercise a daily habit.</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Reduce stress.</strong></p>\n\n                                </ion-item>\n\n                            </ion-item-group>\n\n                        </span>\n\n                </ion-card-content>\n\n\n\n            </ion-card>\n\n        </div>\n\n    </div>\n\n</ion-content>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\home\formbuilder\form-template\formBuilder.html"*/,
-        styles: ['./formBuilder.scss']
+        selector: 'app-form',template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\ai_diagnosis\src\components\formbuilder\Form\FormBuilder.component.html"*/'<ion-header>\n\n    <ion-navbar>\n\n        <ion-title>{{title}}</ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n    <div *ngIf="form">\n\n        <!-- <h4 *ngIf="questions && questions.length">{{title}}</h4> -->\n\n        <!-- Form -->\n\n        <form (ngSubmit)="onSubmit()" [formGroup]="form">\n\n            <div *ngFor="let question of questions" class="form-row">\n\n                <df-question [changeEvent]="changeEvent" [question]="question" [form]="form"></df-question>\n\n            </div>\n\n\n\n            <div *ngIf="hasSubmit" class="form-row">\n\n\n\n                <button full ion-button color="calm" type="submit" [disabled]="!form.valid">Get Diagnostic</button>\n\n\n\n            </div>\n\n        </form>\n\n        <!-- END FORM -->\n\n\n\n\n\n        <!-- RESULT PAGES -->\n\n\n\n        <!-- ASK WATSON DISCOVERY -->\n\n        <div *ngIf="payLoad && !payLoad.data.prediction && payLoad.data.usage" class="form-row">\n\n            <pre>{{ payLoad.data | json }}</pre>\n\n        </div>\n\n        <div *ngIf="payLoad && !payLoad.data.prediction && !payLoad.data.usage && payLoad.data.results" class="form-row">\n\n            <ion-card>\n\n                <ion-card-header>\n\n                    <h1 ion-text>WATSON</h1>\n\n                </ion-card-header>\n\n                <ion-card-content>\n\n                    <h1 *ngIf="payLoad.data.results.length == 0">No results were found</h1>\n\n                    <!-- <h1 *ngIf="payLoad.data.results.length">{{payLoad.data.results.length}} results...</h1> -->\n\n                    <h1 *ngIf="payLoad.data.results.length">Categories:</h1>\n\n                    <ion-item-group *ngFor="let res of payLoad.data.results">\n\n                        <ion-item-divider color="light"><strong>Result score: {{res.result_metadata.score}}</strong></ion-item-divider>\n\n                        <ion-item *ngFor="let cat of res.enriched_text.categories">\n\n\n\n                            <p class="label-result-watson-discovery"><strong>Category label:</strong> <span>{{cat.label}}</span></p>\n\n                            <p class="label-result-watson-discovery"><strong>Category score:</strong> <span>{{cat.score}}</span></p>\n\n\n\n                        </ion-item>\n\n                        <ion-item-divider color="light"><strong>Concepts</strong></ion-item-divider>\n\n                        <ion-item *ngFor="let concpt of res.enriched_text.concepts">\n\n\n\n                            <p class="label-result-watson-discovery"><strong>Concept: </strong><span>{{concpt.text}}</span></p>\n\n                            <p class="label-result-watson-discovery"><strong>Concept relevance: </strong><span>{{concpt.relevance}}</span></p>\n\n\n\n                            <strong>Concept source: </strong>\n\n                            <a class="label-result-watson-discovery" [href]="concpt.dbpedia_resource" target="_blank"><span>{{concpt.dbpedia_resource}}</span></a>\n\n                        </ion-item>\n\n                    </ion-item-group>\n\n                    <h1 *ngIf="payLoad.data.results.length">Passages:</h1>\n\n                    <ion-item-group *ngFor="let passage of payLoad.data.passages">\n\n                        <ion-item-divider color="light"><strong>Relevance score: {{passage.passage_score.toFixed(2)}}</strong></ion-item-divider>\n\n                        <ion-item>\n\n                            <p class="label-result-watson-discovery" [innerHTML]="passage.passage_text"></p>\n\n                        </ion-item>\n\n                    </ion-item-group>\n\n                </ion-card-content>\n\n            </ion-card>\n\n\n\n        </div>\n\n\n\n\n\n        <!-- FLU DIAGNOSIS -->\n\n        <div *ngIf="payLoad && !payLoad.data.score && !payLoad.data.prediction && !payLoad.data.usage && !payLoad.data.results" class="form-row">\n\n\n\n            <ion-card [style.backgroundColor]="payLoad.data.message ? \'#ffdada\' : \'#e6ffe6\'">\n\n\n\n                <ion-card-header>\n\n                    <!-- <h1>Diagnosis:</h1> -->\n\n                </ion-card-header>\n\n\n\n                <ion-card-content>\n\n                    <!-- Add card content here! -->\n\n                    <h1 ion-text [style.color]="payLoad.data.message ? \'red\' : \'green\'">\n\n                        <ion-icon name="{{payLoad.data.message ? \'alert\' : \'checkmark\'}}"></ion-icon> {{payLoad.data.message ? payLoad.data.message : \'This patient does not seem to have the flu\'}}</h1>\n\n                    <span *ngIf="payLoad.data.recommendations && payLoad.data.recommendations.length">\n\n                        <ion-item-group>\n\n                            <ion-item-divider color="light"><strong>Recommendations:</strong></ion-item-divider>\n\n                            <ion-item *ngFor="let rec of payLoad.data.recommendations">\n\n                                    <ion-icon name="alert"></ion-icon> {{rec}}\n\n                            </ion-item>\n\n                        </ion-item-group>\n\n                    </span>\n\n                </ion-card-content>\n\n\n\n            </ion-card>\n\n        </div>\n\n\n\n        <!-- MENTAL HEALTH DIAGNOSIS -->\n\n        <div *ngIf="payLoad && payLoad.data.score && !payLoad.data.prediction && !payLoad.data.usage && !payLoad.data.results" class="form-row">\n\n\n\n            <ion-card [style.backgroundColor]="payLoad.data.score >= 15 ? \'#ffdada\' : \'#e6ffe6\'">\n\n\n\n                <ion-card-header>\n\n                    <!-- <h1>Diagnosis:</h1> -->\n\n                </ion-card-header>\n\n\n\n                <ion-card-content>\n\n                    <!-- Add card content here! -->\n\n                    <h1 ion-text [style.color]="payLoad.data.score >= 15 ? \'red\' : \'green\'">\n\n                        <!-- <ion-icon name="{{payLoad.data.message ? \'alert\' : \'checkmark\'}}"></ion-icon> {{payLoad.data.message ? payLoad.data.message : \'This patient does not seem to have the flu\'}}</h1> -->\n\n                        <ion-icon name="{{payLoad.data.score >= 15 ? \'alert\' : \'checkmark\'}}"></ion-icon> {{\'Score: \' + payLoad.data.score}}</h1>\n\n                    <h2 ion-text [style.color]="payLoad.data.score >= 15 ? \'red\' : \'green\'">\n\n                        <ion-icon name="{{payLoad.data.score >= 15 ? \'alert\' : \'checkmark\'}}"></ion-icon> Hi, {{payLoad.data.event.params.message}}</h2>\n\n                    <span *ngIf="payLoad.data.recommendations && payLoad.data.recommendations.length">\n\n                        <ion-item-group>\n\n                            <ion-item-divider color="light"><strong>Recommendations:</strong></ion-item-divider>\n\n                            <ion-item *ngFor="let rec of payLoad.data.recommendations">\n\n                                    <ion-icon name="alert"></ion-icon> {{rec}}\n\n                            </ion-item>\n\n                        </ion-item-group>\n\n                    </span>\n\n                </ion-card-content>\n\n\n\n            </ion-card>\n\n        </div>\n\n\n\n\n\n        <!-- PRESENCE OF HEART DISEASE AI NEURAL NETWORK -->\n\n        <div *ngIf="payLoad && payLoad.data.prediction && !payLoad.data.usage && !payLoad.data.results" class="form-row">\n\n\n\n            <ion-card [style.backgroundColor]="payLoad.data.prediction[0] > 5 ? \'#ffdada\' : \'#e6ffe6\'">\n\n\n\n                <ion-card-header>\n\n                    <h1 ion-text>AI Predicted:</h1>\n\n                </ion-card-header>\n\n\n\n                <ion-card-content>\n\n                    <span *ngIf="payLoad.data.prediction && payLoad.data.prediction.length">\n\n                            <ion-item-group>\n\n                                <ion-item>\n\n                                    <p style="font-size:1.2em; text-align:center; justify-content:center; margin: 0 auto; color:rgb(19, 19, 38)"><strong>Presence of Heart Disease score from 0 to 10 where 0 means no presence and 10 means <br>absolute presence of some Heart Disease:</strong></p><br>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p style="font-size:2em; text-align:center; justify-content:center; margin: 0 auto; color:rgb(19, 19, 38)"><strong>Score: {{payLoad.data.prediction[0].toFixed(2)}}</strong></p>\n\n                                <br>\n\n                                    <p style="font-size:1.4em; text-align:center; justify-content:center; margin: 0 auto;" [style.color]=\'payLoad.data.prediction[0] > 5 ? "red" : "green"\'>\n\n                                        <ion-icon name="{{payLoad.data.prediction[0] > 5 ? \'alert\' : \'checkmark\'}}"></ion-icon> Hi, {{payLoad.data.event?.params?.message}}\n\n                                    </p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <strong>Accuracy:</strong>\n\n                                    {{payLoad.data.accuracy.toFixed(2)}}%\n\n                                </ion-item>\n\n                            </ion-item-group>\n\n                        </span>\n\n                </ion-card-content>\n\n\n\n            </ion-card>\n\n            <ion-card *ngIf="payLoad.data.prediction[0] > 5" [style.backgroundColor]="payLoad.data.prediction[0] > 5 ? \'#ffdada\' : \'#e6ffe6\'">\n\n\n\n                <ion-card-header>\n\n                    <h1>Suggestions for treatment:</h1>\n\n                </ion-card-header>\n\n\n\n                <ion-card-content>\n\n                    <span *ngIf="payLoad.data.prediction && payLoad.data.prediction.length">\n\n                            <ion-item-group>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Excess weight causes your heart to work harder and increases the risk for heart disease,<br> \n\n                                        high blood pressure, diabetes and high cholesterol. Exercising regularly and eating smaller \n\n                                        portions of nutrient-rich foods may help you maintain a healthy weight.<br> \n\n                                        Learn the warning signs of a heart attack and stroke.</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Don’t smoke or expose yourself to second-hand smoke.</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Maintain a healthy blood pressure.</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Monitor your cholesterol (blood lipids).</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Make exercise a daily habit.</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Reduce stress.</strong></p>\n\n                                </ion-item>\n\n                            </ion-item-group>\n\n                        </span>\n\n                </ion-card-content>\n\n\n\n            </ion-card>\n\n        </div>\n\n        <!-- END RESULT PAGES -->\n\n    </div>\n\n</ion-content>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\ai_diagnosis\src\components\formbuilder\Form\FormBuilder.component.html"*/,
+        styles: ['./FormBuilder.component.scss']
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__questions_question_control_service__["a" /* QuestionControlService */],
-        __WEBPACK_IMPORTED_MODULE_1__questions_question_service__["a" /* QuestionService */],
-        __WEBPACK_IMPORTED_MODULE_3__providers_diagnostics_diagnostic_service__["a" /* DiagnosticsService */],
-        __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["e" /* LoadingController */],
-        __WEBPACK_IMPORTED_MODULE_6__mappers_event_mapper_service__["a" /* QuestionEventMapper */],
-        __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["i" /* ViewController */]])
-], FormBuilderCustom);
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__providers_form_question_control_service__["a" /* QuestionControlService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_form_question_control_service__["a" /* QuestionControlService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__providers_form_question_service__["a" /* QuestionService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_form_question_service__["a" /* QuestionService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__providers_diagnostics_diagnostic_service__["a" /* DiagnosticsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_diagnostics_diagnostic_service__["a" /* DiagnosticsService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_6__mappers_event_mapper_service__["a" /* QuestionEventMapper */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__mappers_event_mapper_service__["a" /* QuestionEventMapper */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ViewController */]) === "function" && _g || Object])
+], FormBuilder);
 
-//# sourceMappingURL=formBuilder.js.map
+var _a, _b, _c, _d, _e, _f, _g;
+//# sourceMappingURL=FormBuilder.component.js.map
 
 /***/ }),
 
-/***/ 319:
+/***/ 332:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1150,11 +1265,11 @@ FormBuilderCustom = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_webdnn__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_webdnn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_webdnn__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(82);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(161);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mappers_question_mapper_service__ = __webpack_require__(320);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_server_connection__ = __webpack_require__(161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mappers_question_mapper_service__ = __webpack_require__(333);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_server_connection__ = __webpack_require__(321);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1248,23 +1363,24 @@ let QuestionService = class QuestionService {
 };
 QuestionService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_4__mappers_question_mapper_service__["a" /* QuestionMapper */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__mappers_question_mapper_service__["a" /* QuestionMapper */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__mappers_question_mapper_service__["a" /* QuestionMapper */]) === "function" && _b || Object])
 ], QuestionService);
 
+var _a, _b;
 //# sourceMappingURL=question.service.js.map
 
 /***/ }),
 
-/***/ 320:
+/***/ 333:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return QuestionMapper; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_home_formbuilder_questions_question_model__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_home_formbuilder_questions_question_dropdown_model__ = __webpack_require__(528);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_home_formbuilder_questions_question_toggle_model__ = __webpack_require__(529);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_formbuilder_questions_question_textbox_model__ = __webpack_require__(530);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_form_questions_question_model__ = __webpack_require__(840);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_form_questions_question_dropdown_model__ = __webpack_require__(841);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_form_questions_question_toggle_model__ = __webpack_require__(842);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_form_questions_question_textbox_model__ = __webpack_require__(843);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1316,23 +1432,23 @@ let QuestionMapper = class QuestionMapper {
         let cQuestion = null;
         switch (controlType) {
             case 'textbox':
-                let textBox = new __WEBPACK_IMPORTED_MODULE_4__pages_home_formbuilder_questions_question_textbox_model__["a" /* TextboxQuestion */](question);
+                let textBox = new __WEBPACK_IMPORTED_MODULE_4__models_form_questions_question_textbox_model__["a" /* TextboxQuestion */](question);
                 cQuestion = textBox;
                 break;
             case 'textarea':
-                let textArea = new __WEBPACK_IMPORTED_MODULE_4__pages_home_formbuilder_questions_question_textbox_model__["a" /* TextboxQuestion */](question);
+                let textArea = new __WEBPACK_IMPORTED_MODULE_4__models_form_questions_question_textbox_model__["a" /* TextboxQuestion */](question);
                 cQuestion = textArea;
                 break;
             case 'dropdown':
-                let dropdownField = new __WEBPACK_IMPORTED_MODULE_2__pages_home_formbuilder_questions_question_dropdown_model__["a" /* DropdownQuestion */](question);
+                let dropdownField = new __WEBPACK_IMPORTED_MODULE_2__models_form_questions_question_dropdown_model__["a" /* DropdownQuestion */](question);
                 cQuestion = dropdownField;
                 break;
             case 'toggle':
-                let toggle = new __WEBPACK_IMPORTED_MODULE_3__pages_home_formbuilder_questions_question_toggle_model__["a" /* ToggleQuestion */](question);
+                let toggle = new __WEBPACK_IMPORTED_MODULE_3__models_form_questions_question_toggle_model__["a" /* ToggleQuestion */](question);
                 cQuestion = toggle;
                 break;
             default:
-                cQuestion = new __WEBPACK_IMPORTED_MODULE_1__pages_home_formbuilder_questions_question_model__["a" /* Question */](question);
+                cQuestion = new __WEBPACK_IMPORTED_MODULE_1__models_form_questions_question_model__["a" /* Question */](question);
                 break;
         }
         return cQuestion;
@@ -1347,7 +1463,7 @@ QuestionMapper = __decorate([
 
 /***/ }),
 
-/***/ 321:
+/***/ 334:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1400,14 +1516,14 @@ QuestionControlService = __decorate([
 
 /***/ }),
 
-/***/ 322:
+/***/ 335:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DiagnosticsService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(82);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_server_connection__ = __webpack_require__(161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_server_connection__ = __webpack_require__(321);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1451,7 +1567,7 @@ DiagnosticsService = __decorate([
 
 /***/ }),
 
-/***/ 323:
+/***/ 336:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1515,173 +1631,6 @@ QuestionEventMapper = __decorate([
 
 /***/ }),
 
-/***/ 324:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PictureAnalisysPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_camera_camera_provider__ = __webpack_require__(325);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_native_storage__ = __webpack_require__(326);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_cognitive_services_cognitive_service__ = __webpack_require__(163);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-
-
-
-
-
-/**
- * Generated class for the PictureAnalisysPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-let PictureAnalisysPage = class PictureAnalisysPage {
-    constructor(navCtrl, navParams, cameraProvider, cognitiveService, loadingCtrl, nativeStorage) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.cameraProvider = cameraProvider;
-        this.cognitiveService = cognitiveService;
-        this.loadingCtrl = loadingCtrl;
-        this.nativeStorage = nativeStorage;
-        this.isMute = false;
-        this.loading = 'Loading';
-        this.picture = false;
-        this.imageDescription = '';
-        this.isSpeak = false;
-        this.error = false;
-    }
-    ionViewCanEnter() {
-        // this.nativeStorage.getItem('isMute').then(data => this.isMute = data);
-    }
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad PictureAnalisysPage');
-        return this.takePicture();
-    }
-    takePicture() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const loading = this.loadingCtrl.create({
-                content: `${this.loading} ...`
-            });
-            let descriptionAnalyzedImage;
-            loading.present();
-            this.isSpeak = false;
-            this.imageDescription = '';
-            try {
-                let picture = yield this.cameraProvider.getPictureFromCamera();
-                if (picture) {
-                    this.setPicture(picture); // picture is the temporary path
-                    this.cognitiveService.analyzeImage(picture).subscribe((data) => {
-                        loading.dismiss();
-                        descriptionAnalyzedImage = data.description.captions[0].text;
-                        this.imageDescription = descriptionAnalyzedImage;
-                    }, (error) => {
-                        loading.dismiss();
-                        this.error = `Error: ${JSON.stringify(error)}`;
-                    });
-                }
-            }
-            catch (error) {
-                loading.dismiss();
-                this.error = `Error: ${JSON.stringify(error)}`;
-                console.error(this.error);
-            }
-        });
-    }
-    getBase64(file, cb) {
-        const self = this;
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = function () {
-            cb(reader.result);
-        };
-        reader.onerror = function (error) {
-            console.log('Error: ', error);
-            self.error = `${JSON.stringify(error)}`;
-        };
-    }
-    setPicture(picture) {
-        this.picture = "data:image/jpeg;base64," + picture;
-    }
-};
-PictureAnalisysPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-picture-analisys',template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\picture-analisys\picture-analisys.html"*/'<!--\n  Generated template for the PictureAnalisysPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n    <ion-navbar>\n        <ion-title>pictureAnalisys</ion-title>\n    </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n    <img *ngIf="picture" [src]="picture" />\n    <div class="container-description" (click)="takePicture()">\n        <!-- Image description -->\n        <p class="image-description">{{imageDescription}}</p>\n        <p *ngIf="error" class="error">{{error}}</p>\n    </div>\n</ion-content>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\picture-analisys\picture-analisys.html"*/,
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_2__providers_camera_camera_provider__["a" /* CameraProvider */],
-        __WEBPACK_IMPORTED_MODULE_4__providers_cognitive_services_cognitive_service__["a" /* CognitiveService */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */],
-        __WEBPACK_IMPORTED_MODULE_3__ionic_native_native_storage__["a" /* NativeStorage */]])
-], PictureAnalisysPage);
-
-//# sourceMappingURL=picture-analisys.js.map
-
-/***/ }),
-
-/***/ 325:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CameraProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_native_camera__ = __webpack_require__(162);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-let CameraProvider = class CameraProvider {
-    constructor(camera) {
-        this.camera = camera;
-    }
-    getPictureFromCamera() {
-        return this.getImage(this.camera.PictureSourceType.CAMERA);
-    }
-    getImage(pictureSourceType, quality = 50, saveToPhotoAlbum = false) {
-        const options = {
-            quality,
-            saveToPhotoAlbum,
-            sourceType: pictureSourceType,
-            destinationType: this.camera.DestinationType.DATA_URL,
-            encodingType: this.camera.EncodingType.JPEG
-        };
-        return this.camera.getPicture(options);
-    }
-};
-CameraProvider = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ionic_native_camera__["a" /* Camera */]])
-], CameraProvider);
-
-//# sourceMappingURL=camera.provider.js.map
-
-/***/ }),
-
 /***/ 337:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1689,12 +1638,12 @@ CameraProvider = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WavRecorder; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Subject__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Subject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_rxjs_Subject__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__(94);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models__ = __webpack_require__(429);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__recorder__ = __webpack_require__(430);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5____ = __webpack_require__(183);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5____ = __webpack_require__(180);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ionic_angular__ = __webpack_require__(30);
 // Copyright (c) 2017 Tracktunes Inc
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1742,7 +1691,6 @@ let WavRecorder = class WavRecorder extends __WEBPACK_IMPORTED_MODULE_4__recorde
             // THIS CALLBACK IS CALLED MULTIPLE TIMES WHILE THE AUDIO IS BEING RECORDED
             // TODO remove saveWavFileChunk from this callback and maybe replace for a debugging log to see activeBuffer change
             this.saveWav(this.setter.activeBuffer).subscribe(null, (err) => {
-                // alert('Error in RecordWav.setter(): ' + err);
                 console.error('Error in RecordWav.setter(): ' + err);
             });
             // console.log('Recording: ' + this.setter.bufferIndex);
@@ -1875,13 +1823,13 @@ WavRecorder = __decorate([
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__wav_file_wav_file__ = __webpack_require__(836);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__wav_file_wav_file__ = __webpack_require__(835);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__wav_file_wav_file__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__double_buffer_double_buffer__ = __webpack_require__(837);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__double_buffer_double_buffer__ = __webpack_require__(836);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_1__double_buffer_double_buffer__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__filesystem_filesystem__ = __webpack_require__(838);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__filesystem_filesystem__ = __webpack_require__(837);
 /* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__misc_utils_misc_utils__ = __webpack_require__(839);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__misc_utils_misc_utils__ = __webpack_require__(838);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_3__misc_utils_misc_utils__["a"]; });
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_3__misc_utils_misc_utils__["b"]; });
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_3__misc_utils_misc_utils__["c"]; });
@@ -1901,9 +1849,9 @@ WavRecorder = __decorate([
 /* unused harmony export RecordStatus */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WebAudioRecorder; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__(94);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2____ = __webpack_require__(183);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2____ = __webpack_require__(180);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(30);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2185,7 +2133,6 @@ let WebAudioRecorder = class WebAudioRecorder {
         console.log('createNodes()');
         this.audioContext = this.audioContextGenerator.createAudioContext();
         if (this.audioContext) {
-            this.audioContextGenerator.setAudioContext(this.audioContext);
             this.sampleRate = this.audioContext.sampleRate;
             // create the gainNode
             this.audioGainNode = this.audioContext.createGain();
@@ -2207,7 +2154,6 @@ let WebAudioRecorder = class WebAudioRecorder {
      */
     connectNodes(stream) {
         console.log('connectNodes()');
-        const self = this;
         if (this.isMobileAudioInput) {
             audioinput.start({ bufferSize: PROCESSING_BUFFER_LENGTH, streamToWebAudio: false });
             audioinput.connect(this.audioContext.destination);
@@ -2237,20 +2183,6 @@ let WebAudioRecorder = class WebAudioRecorder {
     // PUBLIC API METHODS
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * Ensures change detection every GRAPHICS_REFRESH_INTERVAL
-     * @returns void
-     */
-    startMonitoring() {
-        console.log('startMonitoring()');
-    }
-    /**
-     * Stops monitoring (stops change detection)
-     * @returns void
-     */
-    stopMonitoring() {
-        console.log('stopMonitoring()');
-    }
-    /**
      * Reset all peak stats as if we've just started playing audio at
      * time 0. Call this when you want to compute stats from now.
      * @returns void
@@ -2265,17 +2197,6 @@ let WebAudioRecorder = class WebAudioRecorder {
         this.nPeaksAtMax = 1;
         // we start from zero again
         this.nClipped = 0;
-    }
-    /**
-     * Set the multiplier on input volume (gain) effectively changing volume
-     * @param {number} factor fraction of volume, where 1.0 is no change
-     * @returns void
-     */
-    setGainFactor(factor) {
-        if (this.status === RecordStatus.READY_STATE) {
-            this.audioGainNode.gain.value = factor;
-        }
-        this.resetPeaks();
     }
     /**
      * Start recording
@@ -2352,15 +2273,15 @@ WebAudioRecorder = __decorate([
 
 /***/ }),
 
-/***/ 432:
+/***/ 431:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(433);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_web_animations_js_web_animations_min__ = __webpack_require__(437);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(432);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_web_animations_js_web_animations_min__ = __webpack_require__(436);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_web_animations_js_web_animations_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_web_animations_js_web_animations_min__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_module__ = __webpack_require__(438);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_module__ = __webpack_require__(437);
 
 
 
@@ -2369,7 +2290,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 438:
+/***/ 437:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2377,35 +2298,35 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_webdnn__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_webdnn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_webdnn__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(81);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_platform_browser__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__(498);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_about_about__ = __webpack_require__(298);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_contact_contact__ = __webpack_require__(299);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_home_home__ = __webpack_require__(300);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_chat_watson_chat__ = __webpack_require__(301);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_picture_analisys_picture_analisys__ = __webpack_require__(324);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_home_formbuilder_form_template_formBuilder__ = __webpack_require__(318);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_home_formbuilder_questions_template_dynamic_form_question_component__ = __webpack_require__(841);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_home_formbuilder_questions_question_control_service__ = __webpack_require__(321);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_home_formbuilder_questions_question_service__ = __webpack_require__(319);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__mappers_question_mapper_service__ = __webpack_require__(320);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__mappers_event_mapper_service__ = __webpack_require__(323);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__angular_platform_browser_animations__ = __webpack_require__(842);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_tabs_tabs__ = __webpack_require__(297);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ionic_native_status_bar__ = __webpack_require__(292);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ionic_native_splash_screen__ = __webpack_require__(296);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22_ng_socket_io__ = __webpack_require__(302);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_22_ng_socket_io__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__ionic_native_camera__ = __webpack_require__(162);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__ionic_native_file_transfer__ = __webpack_require__(844);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__ionic_native_text_to_speech__ = __webpack_require__(845);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__ionic_native_native_storage__ = __webpack_require__(326);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__app_service__ = __webpack_require__(168);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__ionic_native_speech_recognition__ = __webpack_require__(336);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__providers__ = __webpack_require__(183);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser_animations__ = __webpack_require__(462);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ionic_angular__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_status_bar__ = __webpack_require__(291);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_splash_screen__ = __webpack_require__(295);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_ng_socket_io__ = __webpack_require__(296);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_ng_socket_io__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_camera__ = __webpack_require__(158);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_file_transfer__ = __webpack_require__(526);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_text_to_speech__ = __webpack_require__(527);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_native_storage__ = __webpack_require__(312);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__app_service__ = __webpack_require__(159);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ionic_native_speech_recognition__ = __webpack_require__(313);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__app_component__ = __webpack_require__(528);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_about_about__ = __webpack_require__(315);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_contact_contact__ = __webpack_require__(316);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_home_home__ = __webpack_require__(317);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_chat_watson_chat__ = __webpack_require__(318);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_picture_analisys_picture_analisys__ = __webpack_require__(319);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_tabs_tabs__ = __webpack_require__(314);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_formbuilder_Form_FormBuilder_component__ = __webpack_require__(331);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_formbuilder_Question_DynamicQuestion_component__ = __webpack_require__(845);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__providers_form_question_control_service__ = __webpack_require__(334);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__providers_form_question_service__ = __webpack_require__(332);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__providers__ = __webpack_require__(180);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__mappers_question_mapper_service__ = __webpack_require__(333);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__mappers_event_mapper_service__ = __webpack_require__(336);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2449,58 +2370,58 @@ let AppModule = class AppModule {
 AppModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["NgModule"])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* MyApp */],
-            __WEBPACK_IMPORTED_MODULE_7__pages_about_about__["a" /* AboutPage */],
-            __WEBPACK_IMPORTED_MODULE_8__pages_contact_contact__["a" /* ContactPage */],
-            __WEBPACK_IMPORTED_MODULE_9__pages_home_home__["a" /* HomePage */],
-            __WEBPACK_IMPORTED_MODULE_19__pages_tabs_tabs__["a" /* TabsPage */],
-            __WEBPACK_IMPORTED_MODULE_10__pages_chat_watson_chat__["a" /* ChatPage */],
-            __WEBPACK_IMPORTED_MODULE_12__pages_home_formbuilder_form_template_formBuilder__["a" /* FormBuilderCustom */],
-            __WEBPACK_IMPORTED_MODULE_11__pages_picture_analisys_picture_analisys__["a" /* PictureAnalisysPage */],
-            __WEBPACK_IMPORTED_MODULE_13__pages_home_formbuilder_questions_template_dynamic_form_question_component__["a" /* DynamicFormQuestionComponent */]
+            __WEBPACK_IMPORTED_MODULE_16__app_component__["a" /* MyApp */],
+            __WEBPACK_IMPORTED_MODULE_17__pages_about_about__["a" /* AboutPage */],
+            __WEBPACK_IMPORTED_MODULE_18__pages_contact_contact__["a" /* ContactPage */],
+            __WEBPACK_IMPORTED_MODULE_19__pages_home_home__["a" /* HomePage */],
+            __WEBPACK_IMPORTED_MODULE_22__pages_tabs_tabs__["a" /* TabsPage */],
+            __WEBPACK_IMPORTED_MODULE_20__pages_chat_watson_chat__["a" /* ChatPage */],
+            __WEBPACK_IMPORTED_MODULE_23__components_formbuilder_Form_FormBuilder_component__["a" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_21__pages_picture_analisys_picture_analisys__["a" /* PictureAnalisysPage */],
+            __WEBPACK_IMPORTED_MODULE_24__components_formbuilder_Question_DynamicQuestion_component__["a" /* DynamicQuestionComponent */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_3__angular_platform_browser__["a" /* BrowserModule */],
             __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* ReactiveFormsModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_http__["c" /* HttpModule */],
-            __WEBPACK_IMPORTED_MODULE_18__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
-            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["d" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* MyApp */], {}, {
+            __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
+            __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["d" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_16__app_component__["a" /* MyApp */], {}, {
                 links: []
             }),
-            __WEBPACK_IMPORTED_MODULE_22_ng_socket_io__["SocketIoModule"].forRoot(config)
+            __WEBPACK_IMPORTED_MODULE_9_ng_socket_io__["SocketIoModule"].forRoot(config)
         ],
-        bootstrap: [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["b" /* IonicApp */]],
+        bootstrap: [__WEBPACK_IMPORTED_MODULE_6_ionic_angular__["b" /* IonicApp */]],
         entryComponents: [
-            __WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* MyApp */],
-            __WEBPACK_IMPORTED_MODULE_10__pages_chat_watson_chat__["a" /* ChatPage */],
-            __WEBPACK_IMPORTED_MODULE_7__pages_about_about__["a" /* AboutPage */],
-            __WEBPACK_IMPORTED_MODULE_8__pages_contact_contact__["a" /* ContactPage */],
-            __WEBPACK_IMPORTED_MODULE_9__pages_home_home__["a" /* HomePage */],
-            __WEBPACK_IMPORTED_MODULE_19__pages_tabs_tabs__["a" /* TabsPage */],
-            __WEBPACK_IMPORTED_MODULE_12__pages_home_formbuilder_form_template_formBuilder__["a" /* FormBuilderCustom */],
-            __WEBPACK_IMPORTED_MODULE_11__pages_picture_analisys_picture_analisys__["a" /* PictureAnalisysPage */],
-            __WEBPACK_IMPORTED_MODULE_13__pages_home_formbuilder_questions_template_dynamic_form_question_component__["a" /* DynamicFormQuestionComponent */]
+            __WEBPACK_IMPORTED_MODULE_16__app_component__["a" /* MyApp */],
+            __WEBPACK_IMPORTED_MODULE_20__pages_chat_watson_chat__["a" /* ChatPage */],
+            __WEBPACK_IMPORTED_MODULE_17__pages_about_about__["a" /* AboutPage */],
+            __WEBPACK_IMPORTED_MODULE_18__pages_contact_contact__["a" /* ContactPage */],
+            __WEBPACK_IMPORTED_MODULE_19__pages_home_home__["a" /* HomePage */],
+            __WEBPACK_IMPORTED_MODULE_22__pages_tabs_tabs__["a" /* TabsPage */],
+            __WEBPACK_IMPORTED_MODULE_23__components_formbuilder_Form_FormBuilder_component__["a" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_21__pages_picture_analisys_picture_analisys__["a" /* PictureAnalisysPage */],
+            __WEBPACK_IMPORTED_MODULE_24__components_formbuilder_Question_DynamicQuestion_component__["a" /* DynamicQuestionComponent */]
         ],
         providers: [
-            __WEBPACK_IMPORTED_MODULE_20__ionic_native_status_bar__["a" /* StatusBar */],
-            __WEBPACK_IMPORTED_MODULE_21__ionic_native_splash_screen__["a" /* SplashScreen */],
-            __WEBPACK_IMPORTED_MODULE_24__ionic_native_file_transfer__["a" /* FileTransfer */],
-            __WEBPACK_IMPORTED_MODULE_28__ionic_native_speech_recognition__["a" /* SpeechRecognition */],
-            __WEBPACK_IMPORTED_MODULE_24__ionic_native_file_transfer__["b" /* FileTransferObject */],
-            __WEBPACK_IMPORTED_MODULE_26__ionic_native_native_storage__["a" /* NativeStorage */],
-            __WEBPACK_IMPORTED_MODULE_25__ionic_native_text_to_speech__["a" /* TextToSpeech */],
-            __WEBPACK_IMPORTED_MODULE_23__ionic_native_camera__["a" /* Camera */],
-            __WEBPACK_IMPORTED_MODULE_14__pages_home_formbuilder_questions_question_control_service__["a" /* QuestionControlService */],
-            __WEBPACK_IMPORTED_MODULE_15__pages_home_formbuilder_questions_question_service__["a" /* QuestionService */],
-            __WEBPACK_IMPORTED_MODULE_16__mappers_question_mapper_service__["a" /* QuestionMapper */],
-            __WEBPACK_IMPORTED_MODULE_17__mappers_event_mapper_service__["a" /* QuestionEventMapper */],
-            __WEBPACK_IMPORTED_MODULE_29__providers__["d" /* DiagnosticsService */],
-            __WEBPACK_IMPORTED_MODULE_29__providers__["c" /* CognitiveService */],
-            __WEBPACK_IMPORTED_MODULE_29__providers__["b" /* CameraProvider */],
-            __WEBPACK_IMPORTED_MODULE_27__app_service__["a" /* AppService */],
-            __WEBPACK_IMPORTED_MODULE_29__providers__["e" /* WavRecorder */],
-            __WEBPACK_IMPORTED_MODULE_29__providers__["a" /* AudioContextGenerator */],
-            { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["ErrorHandler"], useClass: __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["c" /* IonicErrorHandler */] }
+            __WEBPACK_IMPORTED_MODULE_7__ionic_native_status_bar__["a" /* StatusBar */],
+            __WEBPACK_IMPORTED_MODULE_8__ionic_native_splash_screen__["a" /* SplashScreen */],
+            __WEBPACK_IMPORTED_MODULE_11__ionic_native_file_transfer__["a" /* FileTransfer */],
+            __WEBPACK_IMPORTED_MODULE_15__ionic_native_speech_recognition__["a" /* SpeechRecognition */],
+            __WEBPACK_IMPORTED_MODULE_11__ionic_native_file_transfer__["b" /* FileTransferObject */],
+            __WEBPACK_IMPORTED_MODULE_13__ionic_native_native_storage__["a" /* NativeStorage */],
+            __WEBPACK_IMPORTED_MODULE_12__ionic_native_text_to_speech__["a" /* TextToSpeech */],
+            __WEBPACK_IMPORTED_MODULE_10__ionic_native_camera__["a" /* Camera */],
+            __WEBPACK_IMPORTED_MODULE_25__providers_form_question_control_service__["a" /* QuestionControlService */],
+            __WEBPACK_IMPORTED_MODULE_26__providers_form_question_service__["a" /* QuestionService */],
+            __WEBPACK_IMPORTED_MODULE_28__mappers_question_mapper_service__["a" /* QuestionMapper */],
+            __WEBPACK_IMPORTED_MODULE_29__mappers_event_mapper_service__["a" /* QuestionEventMapper */],
+            __WEBPACK_IMPORTED_MODULE_27__providers__["d" /* DiagnosticsService */],
+            __WEBPACK_IMPORTED_MODULE_27__providers__["c" /* CognitiveService */],
+            __WEBPACK_IMPORTED_MODULE_27__providers__["b" /* CameraProvider */],
+            __WEBPACK_IMPORTED_MODULE_14__app_service__["a" /* AppService */],
+            __WEBPACK_IMPORTED_MODULE_27__providers__["e" /* WavRecorder */],
+            __WEBPACK_IMPORTED_MODULE_27__providers__["a" /* AudioContextGenerator */],
+            { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["ErrorHandler"], useClass: __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["c" /* IonicErrorHandler */] }
         ]
     })
 ], AppModule);
@@ -2509,19 +2430,26 @@ AppModule = __decorate([
 
 /***/ }),
 
-/***/ 498:
+/***/ 523:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 528:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(292);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(296);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_tabs_tabs__ = __webpack_require__(297);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_cognitive_services_cognitive_service__ = __webpack_require__(163);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_service__ = __webpack_require__(168);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_web_audio_wav_recorder__ = __webpack_require__(337);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(291);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(295);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_tabs_tabs__ = __webpack_require__(314);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_cognitive_services_cognitive_service__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_web_audio_wav_recorder__ = __webpack_require__(337);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_service__ = __webpack_require__(159);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2591,48 +2519,75 @@ let MyApp = class MyApp {
     // ********************************************
     //                MOBILE
     // ********************************************
+    // speakStop() {
+    //   const self = this;
+    //   this.debug = '';
+    //   if(!this.speaking) {
+    //     this.speaking = true;
+    //     this.spokenMessage = '';
+    //     const loading = this.loadingCtrl.create({
+    //       spinner: 'bubbles',
+    //       content: `
+    //           <div class="custom-spinner-container">
+    //               <div class="custom-spinner-box">
+    //                   Analyzing, please wait...
+    //               </div>
+    //           </div>`,
+    //       duration: 100000
+    //     });
+    //     loading.present();
+    //     this.recorder.start().then(() => {
+    //       // READY
+    //       this.debug += 'READY TO SPEAK';
+    //       console.log('READY TO SPEAK');
+    //       loading.dismiss()
+    //       this.recorder.listenBlobs.subscribe((blob: Blob) => {
+    //         console.log('Listening to BLOBS...');
+    //         self.cognitiveService.analyseSound(blob).subscribe((data) => {
+    //           console.log('**************** analyseSound() @ SUCCESS *****************');
+    //           self.debug = '';
+    //           self.debug += blob.size + ' -> ';
+    //           self.debug += 'Success!!';
+    //           console.log(`DATA  ${JSON.stringify(data)}`);
+    //           self.cognitiveService.emitMessage(data);
+    //           //subs.unsubscribe();
+    //         }, (error) => {
+    //           self.debug = '';
+    //           self.debug += `An Error ocurred: ${JSON.stringify(error)}`;
+    //           console.log(error);
+    //         });
+    //       });
+    //     });
+    //   } else {
+    //     this.stop(false);
+    //   }
+    // }
+    // stop(erase: boolean) {
+    //   const self = this;
+    //   this.spokenMessage = erase ? '' : this.spokenMessage;
+    //   this.speaking = false;
+    //   this.debug = '';
+    //   let subs = this.recorder.stop().subscribe((file: File | Blob) => {
+    //     console.log('FINAL FILE SIZE ->', file.size);
+    //     self.debug += 'Stoped! File created';
+    //     // TODO send to Azure Bing Speech API by POST
+    //     self.debug = '';
+    //   }, (err: any) => {
+    //     console.log(`ERROR -> , ${JSON.stringify(err)}`);
+    //   });
+    // }
+    // ********************************************
+    //                WEB
+    // ********************************************
     speakStop() {
-        const self = this;
         this.debug = '';
         if (!this.speaking) {
             this.speaking = true;
             this.spokenMessage = '';
-            const loading = this.loadingCtrl.create({
-                spinner: 'bubbles',
-                content: `
-            <div class="custom-spinner-container">
-                <div class="custom-spinner-box">
-                    Analyzing, please wait...
-                </div>
-            </div>`,
-                duration: 100000
-            });
-            loading.present();
-            this.recorder.start().then(() => {
-                // READY
-                this.debug += 'READY TO SPEAK';
-                console.log('READY TO SPEAK');
-                loading.dismiss();
-                this.recorder.listenBlobs.subscribe((blob) => {
-                    console.log('Listening to BLOBS...');
-                    self.cognitiveService.analyseSound(blob).subscribe((data) => {
-                        console.log('**************** analyseSound() @ SUCCESS *****************');
-                        self.debug = '';
-                        self.debug += blob.size + ' -> ';
-                        self.debug += 'Success!!';
-                        console.log(`DATA  ${JSON.stringify(data)}`);
-                        self.cognitiveService.emitMessage(data);
-                        //subs.unsubscribe();
-                    }, (error) => {
-                        self.debug = '';
-                        self.debug += `An Error ocurred: ${JSON.stringify(error)}`;
-                        console.log(error);
-                    });
-                });
-            });
+            this.cognitiveService.speak();
         }
         else {
-            this.stop(false);
+            this.stop(true);
         }
     }
     stop(erase) {
@@ -2640,38 +2595,24 @@ let MyApp = class MyApp {
         this.spokenMessage = erase ? '' : this.spokenMessage;
         this.speaking = false;
         this.debug = '';
-        let subs = this.recorder.stop().subscribe((file) => {
-            console.log('FINAL FILE SIZE ->', file.size);
-            self.debug += 'Stoped! File created';
-            // TODO send to Azure Bing Speech API by POST
-            self.debug = '';
-        }, (err) => {
-            console.log(`ERROR -> , ${JSON.stringify(err)}`);
-        });
+        this.cognitiveService.stopSpeaking();
     }
 };
 MyApp = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\app\app.html"*/'<ion-nav [root]="rootPage">\n\n</ion-nav>\n\n<div class="speakerContainer">\n\n    <h4 id="debug">DEBUG LOG: {{debug}}</h4>\n\n    <h4 id="answer">Output: {{spokenMessage}}</h4>\n\n    <button (click)="speakStop()" [ngClass]="{\'active\': speaking}" class="floating" color="calm">\n\n        <ion-icon name="mic"></ion-icon>\n\n    </button>\n\n</div>\n\n'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\app\app.html"*/
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\ai_diagnosis\src\app\app.html"*/'<ion-nav [root]="rootPage">\n\n</ion-nav>\n\n<!-- <div class="speakerContainer">\n\n    <h4 id="debug">DEBUG LOG: {{debug}}</h4>\n\n    <h4 id="answer">Output: {{spokenMessage}}</h4>\n\n    <button (click)="speakStop()" [ngClass]="{\'active\': speaking}" class="floating" color="calm">\n\n        <ion-icon name="mic"></ion-icon>\n\n    </button>\n\n</div> -->\n\n'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\ai_diagnosis\src\app\app.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
         __WEBPACK_IMPORTED_MODULE_5__providers_cognitive_services_cognitive_service__["a" /* CognitiveService */],
-        __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */],
+        __WEBPACK_IMPORTED_MODULE_7__app_service__["a" /* AppService */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */],
-        __WEBPACK_IMPORTED_MODULE_7__providers_web_audio_wav_recorder__["a" /* WavRecorder */]])
+        __WEBPACK_IMPORTED_MODULE_6__providers_web_audio_wav_recorder__["a" /* WavRecorder */]])
 ], MyApp);
 
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
 
-/***/ 523:
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 526:
+/***/ 529:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2687,7 +2628,7 @@ class ChatUser {
 
 /***/ }),
 
-/***/ 527:
+/***/ 530:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2698,6 +2639,14 @@ class ChatRoom {
     }
     addUser(user) {
         this.users[user.name] = user;
+    }
+    getUserByName(userName) {
+        for (var key in this.users) {
+            if (this.users[key] && this.users[key].name == userName) {
+                return this.users[key];
+            }
+        }
+        return null;
     }
     addMessage(userName, message) {
         if (!this.users[userName])
@@ -2712,121 +2661,11 @@ class ChatRoom {
 
 /***/ }),
 
-/***/ 528:
+/***/ 835:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__question_model__ = __webpack_require__(63);
-
-class DropdownQuestion extends __WEBPACK_IMPORTED_MODULE_0__question_model__["a" /* Question */] {
-    constructor(question) {
-        super(question);
-        this.controlType = 'dropdown';
-        this.options = [];
-        this.options = question['options'] || [];
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = DropdownQuestion;
-
-//# sourceMappingURL=question-dropdown.model.js.map
-
-/***/ }),
-
-/***/ 529:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__question_model__ = __webpack_require__(63);
-
-class ToggleQuestion extends __WEBPACK_IMPORTED_MODULE_0__question_model__["a" /* Question */] {
-    constructor(options) {
-        super(options);
-        this.controlType = 'toggle';
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = ToggleQuestion;
-
-//# sourceMappingURL=question-toggle.model.js.map
-
-/***/ }),
-
-/***/ 530:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__question_model__ = __webpack_require__(63);
-
-class TextboxQuestion extends __WEBPACK_IMPORTED_MODULE_0__question_model__["a" /* Question */] {
-    constructor(options = {}) {
-        super(options);
-        this.type = options['type'] !== "" ? options['type'] : 'text';
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = TextboxQuestion;
-
-//# sourceMappingURL=question-textbox.model.js.map
-
-/***/ }),
-
-/***/ 531:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-const LoaderConfigs = {
-    submit: {
-        spinner: 'bubbles',
-        content: `
-            <div class="custom-spinner-container">
-                <div class="custom-spinner-box">
-                    Analyzing, please wait...
-                </div>
-            </div>`,
-        duration: 100000
-    },
-    loading: {
-        spinner: 'bubbles',
-        content: `
-            <div class="custom-spinner-container">
-                <div class="custom-spinner-box">
-                    Loading...
-                </div>
-            </div>`,
-        duration: 100000
-    }
-};
-/* harmony export (immutable) */ __webpack_exports__["a"] = LoaderConfigs;
-
-//# sourceMappingURL=loaders.js.map
-
-/***/ }),
-
-/***/ 63:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-class Question {
-    constructor(options) {
-        this.value = options.value || "";
-        this.key = options.key || '';
-        this.label = options.label || '';
-        this.required = !!options.required || false;
-        this.order = options.order === undefined ? 1 : options.order;
-        this.visibility = options.visibility || "visible";
-        this.event = options.event || null;
-        this.controlType = options.controlType || '';
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Question;
-
-//# sourceMappingURL=question.model.js.map
-
-/***/ }),
-
-/***/ 836:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__ = __webpack_require__(94);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__);
 
 /** @const {string} Mime type of wav file */
@@ -2976,7 +2815,7 @@ class WavFile {
 
 /***/ }),
 
-/***/ 837:
+/***/ 836:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3069,11 +2908,11 @@ class DoubleBufferSetter extends DoubleBuffer {
 
 /***/ }),
 
-/***/ 838:
+/***/ 837:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__ = __webpack_require__(94);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models__ = __webpack_require__(429);
 // Copyright (c) 2017 Tracktunes Inc
@@ -3568,7 +3407,7 @@ class Filesystem {
 
 /***/ }),
 
-/***/ 839:
+/***/ 838:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3895,7 +3734,7 @@ function simulateClick(element) {
 
 /***/ }),
 
-/***/ 840:
+/***/ 839:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3920,6 +3759,7 @@ let AudioContextGenerator = class AudioContextGenerator {
         try {
             // context = new AudioContext({ latencyHint: 'playback' });
             context = new AudioContext();
+            this.setAudioContext(context);
         }
         catch (err) {
             console.error('Web Audio API is not supported in this browser');
@@ -3945,14 +3785,124 @@ AudioContextGenerator = __decorate([
 
 /***/ }),
 
+/***/ 840:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class Question {
+    constructor(options) {
+        this.value = options.value || "";
+        this.key = options.key || '';
+        this.label = options.label || '';
+        this.required = !!options.required || false;
+        this.order = options.order === undefined ? 1 : options.order;
+        this.visibility = options.visibility || "visible";
+        this.event = options.event || null;
+        this.controlType = options.controlType || '';
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Question;
+
+//# sourceMappingURL=question.model.js.map
+
+/***/ }),
+
 /***/ 841:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DynamicFormQuestionComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__question_model__ = __webpack_require__(840);
+
+class DropdownQuestion extends __WEBPACK_IMPORTED_MODULE_0__question_model__["a" /* Question */] {
+    constructor(question) {
+        super(question);
+        this.controlType = 'dropdown';
+        this.options = [];
+        this.options = question['options'] || [];
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = DropdownQuestion;
+
+//# sourceMappingURL=question-dropdown.model.js.map
+
+/***/ }),
+
+/***/ 842:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__question_model__ = __webpack_require__(840);
+
+class ToggleQuestion extends __WEBPACK_IMPORTED_MODULE_0__question_model__["a" /* Question */] {
+    constructor(options) {
+        super(options);
+        this.controlType = 'toggle';
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = ToggleQuestion;
+
+//# sourceMappingURL=question-toggle.model.js.map
+
+/***/ }),
+
+/***/ 843:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__question_model__ = __webpack_require__(840);
+
+class TextboxQuestion extends __WEBPACK_IMPORTED_MODULE_0__question_model__["a" /* Question */] {
+    constructor(options = {}) {
+        super(options);
+        this.type = options['type'] !== "" ? options['type'] : 'text';
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = TextboxQuestion;
+
+//# sourceMappingURL=question-textbox.model.js.map
+
+/***/ }),
+
+/***/ 844:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+const LoaderConfigs = {
+    submit: {
+        spinner: 'bubbles',
+        content: `
+            <div class="custom-spinner-container">
+                <div class="custom-spinner-box">
+                    Analyzing, please wait...
+                </div>
+            </div>`,
+        duration: 100000
+    },
+    loading: {
+        spinner: 'bubbles',
+        content: `
+            <div class="custom-spinner-container">
+                <div class="custom-spinner-box">
+                    Loading...
+                </div>
+            </div>`,
+        duration: 100000
+    }
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = LoaderConfigs;
+
+//# sourceMappingURL=loaders.js.map
+
+/***/ }),
+
+/***/ 845:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DynamicQuestionComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__questions_question_model__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_form_questions_question_model__ = __webpack_require__(840);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3965,7 +3915,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-let DynamicFormQuestionComponent = class DynamicFormQuestionComponent {
+let DynamicQuestionComponent = class DynamicQuestionComponent {
     constructor() { }
     /**
      * Verify if is valid input field
@@ -3988,27 +3938,27 @@ let DynamicFormQuestionComponent = class DynamicFormQuestionComponent {
 };
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_2__questions_question_model__["a" /* Question */])
-], DynamicFormQuestionComponent.prototype, "question", void 0);
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_2__models_form_questions_question_model__["a" /* Question */])
+], DynamicQuestionComponent.prototype, "question", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* FormGroup */])
-], DynamicFormQuestionComponent.prototype, "form", void 0);
+], DynamicQuestionComponent.prototype, "form", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"])
-], DynamicFormQuestionComponent.prototype, "changeEvent", void 0);
-DynamicFormQuestionComponent = __decorate([
+], DynamicQuestionComponent.prototype, "changeEvent", void 0);
+DynamicQuestionComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'df-question',template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\home\formbuilder\questions-template\dynamic-form-question.component.html"*/'<!-- Item wrapper -->\n\n<ion-item [hidden]="question.visibility == \'hidden\'" [formGroup]="form" [ngSwitch]="question.controlType">\n\n    <!-- Label -->\n\n    <ion-label class="question-label question-label-sm" stacked [attr.for]="question.key">{{question.label}}</ion-label>\n\n\n\n    <!-- Input text field -->\n\n    <ion-input class="question-input" *ngSwitchCase="\'textbox\'" [formControlName]="question.key" [id]="question.key" [type]="question.type"></ion-input>\n\n\n\n    <!-- Input text area -->\n\n    <ion-textarea rows="8" class="question-input" *ngSwitchCase="\'textarea\'" [formControlName]="question.key" [id]="question.key" [type]="question.type"></ion-textarea>\n\n\n\n    <!-- Input combobox area -->\n\n    <ion-select [id]="question.key" *ngSwitchCase="\'dropdown\'" [formControlName]="question.key">\n\n        <ion-option *ngFor="let opt of question.options" [value]="opt.key">{{opt.value}}</ion-option>\n\n    </ion-select>\n\n\n\n    <!-- Input true/false toggle area -->\n\n    <ion-toggle (ionChange)="onChangeAnswer($event, question)" *ngSwitchCase="\'toggle\'" [formControlName]="question.key" [id]="question.key" [(ngModel)]="question.value"></ion-toggle>\n\n\n\n</ion-item>\n\n<!-- Required label -->\n\n<!-- <div class="errorMessage" *ngIf="!isValid">{{question.label}} is required</div> -->\n\n<div class="errorMessage" *ngIf="!isValid">Required</div>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\expert_system\src\pages\home\formbuilder\questions-template\dynamic-form-question.component.html"*/,
-        styles: ['./dynamic-form-question.component.css']
+        selector: 'df-question',template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\ai_diagnosis\src\components\formbuilder\Question\DynamicQuestion.component.html"*/'<!-- Item wrapper -->\n\n<ion-item [hidden]="question.visibility == \'hidden\'" [formGroup]="form" [ngSwitch]="question.controlType">\n\n    <!-- Label -->\n\n    <ion-label class="question-label question-label-sm" stacked [attr.for]="question.key">{{question.label}}</ion-label>\n\n\n\n    <!-- Input text field -->\n\n    <ion-input class="question-input" *ngSwitchCase="\'textbox\'" [formControlName]="question.key" [id]="question.key" [type]="question.type"></ion-input>\n\n\n\n    <!-- Input text area -->\n\n    <ion-textarea rows="8" class="question-input" *ngSwitchCase="\'textarea\'" [formControlName]="question.key" [id]="question.key" [type]="question.type"></ion-textarea>\n\n\n\n    <!-- Input combobox area -->\n\n    <ion-select [id]="question.key" *ngSwitchCase="\'dropdown\'" [formControlName]="question.key">\n\n        <ion-option *ngFor="let opt of question.options" [value]="opt.key">{{opt.value}}</ion-option>\n\n    </ion-select>\n\n\n\n    <!-- Input true/false toggle area -->\n\n    <ion-toggle (ionChange)="onChangeAnswer($event, question)" *ngSwitchCase="\'toggle\'" [formControlName]="question.key" [id]="question.key" [(ngModel)]="question.value"></ion-toggle>\n\n\n\n</ion-item>\n\n<!-- Required label -->\n\n<!-- <div class="errorMessage" *ngIf="!isValid">{{question.label}} is required</div> -->\n\n<div class="errorMessage" *ngIf="!isValid">Required</div>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\ai_diagnosis\src\components\formbuilder\Question\DynamicQuestion.component.html"*/,
+        styles: ['./DynamicQuestion.component.css']
     }),
     __metadata("design:paramtypes", [])
-], DynamicFormQuestionComponent);
+], DynamicQuestionComponent);
 
-//# sourceMappingURL=dynamic-form-question.component.js.map
+//# sourceMappingURL=DynamicQuestion.component.js.map
 
 /***/ })
 
-},[432]);
+},[431]);
 //# sourceMappingURL=main.js.map

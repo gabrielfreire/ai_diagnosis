@@ -1,14 +1,14 @@
 import { Component, Input, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Question } from '../questions/question.model';
-import { EventBody } from './../../../../models/eventbody.model';
+import { Question } from '../../../models/form/questions/question.model';
+import { EventBody } from '../../../models/eventbody.model';
  
 @Component({
   selector: 'df-question',
-  templateUrl: './dynamic-form-question.component.html',
-  styles:['./dynamic-form-question.component.css']
+  templateUrl: './DynamicQuestion.component.html',
+  styles:['./DynamicQuestion.component.css']
 })
-export class DynamicFormQuestionComponent {
+export class DynamicQuestionComponent {
   //questions
   @Input() question: Question;
   //FormGroup where to put the questions

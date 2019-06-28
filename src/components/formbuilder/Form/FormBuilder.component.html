@@ -8,6 +8,7 @@
 
     <div *ngIf="form">
         <!-- <h4 *ngIf="questions && questions.length">{{title}}</h4> -->
+        <!-- Form -->
         <form (ngSubmit)="onSubmit()" [formGroup]="form">
             <div *ngFor="let question of questions" class="form-row">
                 <df-question [changeEvent]="changeEvent" [question]="question" [form]="form"></df-question>
@@ -19,7 +20,10 @@
 
             </div>
         </form>
+        <!-- END FORM -->
 
+
+        <!-- RESULT PAGES -->
 
         <!-- ASK WATSON DISCOVERY -->
         <div *ngIf="payLoad && !payLoad.data.prediction && payLoad.data.usage" class="form-row">
@@ -188,5 +192,6 @@
 
             </ion-card>
         </div>
+        <!-- END RESULT PAGES -->
     </div>
 </ion-content>

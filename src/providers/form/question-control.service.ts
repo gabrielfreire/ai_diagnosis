@@ -1,7 +1,7 @@
 import { Injectable }   from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { Question } from './question.model';
+import { Question } from './../../models/form/questions/question.model';
 
 /**
  * Convert metadata to FormGroup object

@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { ChatPage } from '../chat_watson/chat'
-import { FormBuilderCustom } from './formbuilder/form-template/formBuilder';
+import { ChatPage } from '../chat_watson/chat';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { PictureAnalisysPage } from './../picture-analisys/picture-analisys';
-import { CognitiveService } from './../../providers/cognitive-services/cognitive.service';
-import { Subscription } from 'rxjs/Subscription';
 import { AppService } from './../../app/app.service';
-import { Subject } from 'rxjs/Subject';
+import { FormBuilder } from '../../components/formbuilder/Form/FormBuilder.component';
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -39,7 +37,7 @@ export class HomePage implements OnInit{
     this.navCtrl.push(PictureAnalisysPage);
   }
   goToForm(value){
-    this.navCtrl.push(FormBuilderCustom, { form: value });
+    this.navCtrl.push(FormBuilder, { form: value });
   }
   
 }

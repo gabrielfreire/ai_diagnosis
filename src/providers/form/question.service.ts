@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import { QuestionMapper } from './../../../../mappers/question-mapper.service';
-import { server } from './../../../../app/server.connection';
-import { QuestionBody } from './../../../../models/questionbody.model';
+import { QuestionMapper } from './../../mappers/question-mapper.service';
+import { server } from './../../app/server.connection';
+import { QuestionBody } from './../../models/form/questions/questionbody.model';
 
 const SERVER_URL = server.url;
 /**

@@ -2,12 +2,15 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { Platform, LoadingController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Subscription } from 'rxjs/Subscription';
 
 import { TabsPage } from '../pages/tabs/tabs';
-import { Subscription } from 'rxjs/Subscription';
+
 import { CognitiveService } from './../providers/cognitive-services/cognitive.service';
+import { WavRecorder } from './../providers/web-audio/wav-recorder';
+
 import { AppService } from './app.service';
-import { WavRecorder } from '../providers/web-audio/wav-recorder';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -72,63 +75,63 @@ export class MyApp implements OnInit{
   // ********************************************
   //                MOBILE
   // ********************************************
-  speakStop() {
-    const self = this;
-    this.debug = '';
-    if(!this.speaking) {
-      this.speaking = true;
-      this.spokenMessage = '';
-      const loading = this.loadingCtrl.create({
-        spinner: 'bubbles',
-        content: `
-            <div class="custom-spinner-container">
-                <div class="custom-spinner-box">
-                    Analyzing, please wait...
-                </div>
-            </div>`,
-        duration: 100000
-      });
-      loading.present();
-      this.recorder.start().then(() => {
-        // READY
-        this.debug += 'READY TO SPEAK';
-        console.log('READY TO SPEAK');
-        loading.dismiss()
-        this.recorder.listenBlobs.subscribe((blob: Blob) => {
-          console.log('Listening to BLOBS...');
-          self.cognitiveService.analyseSound(blob).subscribe((data) => {
-            console.log('**************** analyseSound() @ SUCCESS *****************');
-            self.debug = '';
-            self.debug += blob.size + ' -> ';
-            self.debug += 'Success!!';
-            console.log(`DATA  ${JSON.stringify(data)}`);
-            self.cognitiveService.emitMessage(data);
-            //subs.unsubscribe();
-          }, (error) => {
-            self.debug = '';
-            self.debug += `An Error ocurred: ${JSON.stringify(error)}`;
-            console.log(error);
-          });
-        });
-      });
-    } else {
-      this.stop(false);
-    }
-  }
-  stop(erase: boolean) {
-    const self = this;
-    this.spokenMessage = erase ? '' : this.spokenMessage;
-    this.speaking = false;
-    this.debug = '';
-    let subs = this.recorder.stop().subscribe((file: File | Blob) => {
-      console.log('FINAL FILE SIZE ->', file.size);
-      self.debug += 'Stoped! File created';
-      // TODO send to Azure Bing Speech API by POST
-      self.debug = '';
-    }, (err: any) => {
-      console.log(`ERROR -> , ${JSON.stringify(err)}`);
-    });
-  }
+  // speakStop() {
+  //   const self = this;
+  //   this.debug = '';
+  //   if(!this.speaking) {
+  //     this.speaking = true;
+  //     this.spokenMessage = '';
+  //     const loading = this.loadingCtrl.create({
+  //       spinner: 'bubbles',
+  //       content: `
+  //           <div class="custom-spinner-container">
+  //               <div class="custom-spinner-box">
+  //                   Analyzing, please wait...
+  //               </div>
+  //           </div>`,
+  //       duration: 100000
+  //     });
+  //     loading.present();
+  //     this.recorder.start().then(() => {
+  //       // READY
+  //       this.debug += 'READY TO SPEAK';
+  //       console.log('READY TO SPEAK');
+  //       loading.dismiss()
+  //       this.recorder.listenBlobs.subscribe((blob: Blob) => {
+  //         console.log('Listening to BLOBS...');
+  //         self.cognitiveService.analyseSound(blob).subscribe((data) => {
+  //           console.log('**************** analyseSound() @ SUCCESS *****************');
+  //           self.debug = '';
+  //           self.debug += blob.size + ' -> ';
+  //           self.debug += 'Success!!';
+  //           console.log(`DATA  ${JSON.stringify(data)}`);
+  //           self.cognitiveService.emitMessage(data);
+  //           //subs.unsubscribe();
+  //         }, (error) => {
+  //           self.debug = '';
+  //           self.debug += `An Error ocurred: ${JSON.stringify(error)}`;
+  //           console.log(error);
+  //         });
+  //       });
+  //     });
+  //   } else {
+  //     this.stop(false);
+  //   }
+  // }
+  // stop(erase: boolean) {
+  //   const self = this;
+  //   this.spokenMessage = erase ? '' : this.spokenMessage;
+  //   this.speaking = false;
+  //   this.debug = '';
+  //   let subs = this.recorder.stop().subscribe((file: File | Blob) => {
+  //     console.log('FINAL FILE SIZE ->', file.size);
+  //     self.debug += 'Stoped! File created';
+  //     // TODO send to Azure Bing Speech API by POST
+  //     self.debug = '';
+  //   }, (err: any) => {
+  //     console.log(`ERROR -> , ${JSON.stringify(err)}`);
+  //   });
+  // }
 
 
 
@@ -137,23 +140,23 @@ export class MyApp implements OnInit{
   // ********************************************
   //                WEB
   // ********************************************
-  // speakStop() {
-  //   this.debug = '';
-  //   if(!this.speaking) {
-  //     this.speaking = true;
-  //     this.spokenMessage = '';
-  //     this.cognitiveService.speak();
-  //   } else {
-  //     this.stop(true);
-  //   }
+  speakStop() {
+    this.debug = '';
+    if(!this.speaking) {
+      this.speaking = true;
+      this.spokenMessage = '';
+      this.cognitiveService.speak();
+    } else {
+      this.stop(true);
+    }
 
-  // }
+  }
 
-  // stop(erase: boolean) {
-  //   const self = this;
-  //   this.spokenMessage = erase ? '' : this.spokenMessage;
-  //   this.speaking = false;
-  //   this.debug = '';
-  //   this.cognitiveService.stopSpeaking();
-  // }
+  stop(erase: boolean) {
+    const self = this;
+    this.spokenMessage = erase ? '' : this.spokenMessage;
+    this.speaking = false;
+    this.debug = '';
+    this.cognitiveService.stopSpeaking();
+  }
 }

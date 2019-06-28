@@ -1,15 +1,19 @@
 import { Component, OnInit, Output, EventEmitter }  from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { QuestionService } from '../questions/question.service';
-import { Question } from '../questions/question.model';
-import { QuestionControlService } from '../questions/question-control.service';
-import { DiagnosticsService } from '../../../../providers/diagnostics/diagnostic.service';
 import { LoadingController, ViewController } from 'ionic-angular';
-import { LoaderConfigs } from './loaders/loaders';
-import { QuestionEventMapper } from './../../../../mappers/event-mapper.service';
-import { EventBody } from './../../../../models/eventbody.model';
-import { QuestionBody } from './../../../../models/questionbody.model';
-import { ActionOptions } from './../../../../models/actionoptions.model';
+
+import { QuestionService } from '../../../providers/form/question.service'
+
+import { Question } from '../../../models/form/questions/question.model'
+import { EventBody } from '../../../models/eventbody.model';
+import { QuestionBody } from '../../../models/form/questions/questionbody.model'
+import { ActionOptions } from '../../../models/actionoptions.model'
+
+import { QuestionControlService } from '../../../providers/form/question-control.service'
+import { DiagnosticsService } from '../../../providers/diagnostics/diagnostic.service'
+
+import { LoaderConfigs } from './../../loaders/loaders';
+import { QuestionEventMapper } from '../../../mappers/event-mapper.service'
 
 const ERROR_NO_EVENT_TO_TRIGGER = "No event was passed to the trigger";
 const UNTITLED_QUESTIONNAIRE = 'Untitled Questionnaire';
@@ -18,10 +22,10 @@ const UNTITLED_QUESTIONNAIRE = 'Untitled Questionnaire';
  */
 @Component({
     selector: 'app-form',
-    templateUrl: 'formBuilder.html',
-    styles: ['./formBuilder.scss']
+    templateUrl: 'FormBuilder.component.html',
+    styles: ['./FormBuilder.component.scss']
   })
-export class FormBuilderCustom implements OnInit{
+export class FormBuilder implements OnInit{
     @Output() changeEvent: EventEmitter<any> = new EventEmitter();
     questions: Question[] = [];    
     form: FormGroup;

@@ -30,54 +30,6 @@ export class CognitiveService {
     speak() {
         this.recognizer = this._RecognizerSetup(SDK, "Dictation", "en-US", "Simple", "803f5c8476884b0baf897ed24e28fbf7");
         console.log('Loaded SDK');
-        console.log(SDK);
-        const self = this;
-        // this.speechRecognition.isRecognitionAvailable().then((available: boolean) => {
-        //     console.log('available ?', available);
-        //     this.speechRecognition.hasPermission().then((has) => {
-        //         console.log('Permission', has);
-        //         if(has) {
-        //             let res = {};
-        //             self.speechRecognition.startListening({language: 'en-US', matches:5, showPartial: true}).subscribe((matches) => {
-        //                 console.log('Listening');
-        //                 res['DisplayText'] = matches[0];
-        //                 res['RecognitionStatus'] = 'Success';
-        //                 console.log(res);
-        //                 self.emitMessage(res);
-        //             }, (error) => {
-        //                 console.log('error->', error);
-        //                 self.emitMessage(error)
-        //             });
-        //             // self._recognizerStart(SDK, self.recognizer);
-        //         } else {
-        //             self.emitMessage("No permission!");
-        //             console.log('Permission', has);
-        //             self.speechRecognition.requestPermission().then(()=>{
-        //                 console.log('Permitted');
-        //                 self.emitMessage("Permitted!");
-        //                 let res = {};
-        //                 self.speechRecognition.startListening({language: 'en-US', matches:5, showPartial: true}).subscribe((matches) => {
-        //                     console.log('Listening');
-        //                     res['DisplayText'] = matches[0];
-        //                     res['RecognitionStatus'] = 'Success';
-        //                     console.log(res);
-        //                     self.emitMessage(res);
-        //                 }, (error) => {
-        //                     console.log('error->', error);
-        //                     self.emitMessage(error)
-        //                 });
-        //                 // self._recognizerStart(SDK, self.recognizer);
-    
-        //             }, (error) => {
-        //                 console.log('error->', error);
-        //                 self.emitMessage(error)
-        //             });
-        //         }
-        //     }, (error) => self.emitMessage(error));
-        // }, (error) => {
-        //     console.log('Error ocurred ->', error);
-        //     self.emitMessage('Error ' + JSON.stringify(error));
-        // });
         this._recognizerStart(SDK, this.recognizer);
     }
 
