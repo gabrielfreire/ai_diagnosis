@@ -114,6 +114,7 @@ export class WavRecorder extends WebAudioRecorder {
      * Start recording
      */
     public start(): Promise<void> {
+        // TODO: request websocket connection to server and send audio Binary ArrayBuffer data instead of Blob
         return new Promise((resolve, reject) => {
             super.start().then(() => {
                 const dateCreated: number = Date.now();
@@ -136,6 +137,7 @@ export class WavRecorder extends WebAudioRecorder {
      * @return {Observable<void>}
      */
     public stop(): Observable<File | Blob> {
+        // TODO: Close websocket connection to server
         console.log('WavRecorder:stop() @ ' + this.setter.bufferIndex + ', len: ' + this.setter.activeBuffer.subarray(0, this.setter.bufferIndex).length);
         this.reset();
         let src: Observable<File | Blob> = Observable.create((observer) => {

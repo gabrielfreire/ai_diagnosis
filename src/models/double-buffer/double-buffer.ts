@@ -74,23 +74,4 @@ export class DoubleBufferSetter extends DoubleBuffer {
         this.cumulativeIndex++;
         this.bufferIndex++;
     }
-
-    private _downSample(data, oldSampleRate, newSampleRate) {
-        let fitCount = Math.round(data.length * ( newSampleRate / oldSampleRate ));
-        let newData = [];
-        let springFactor = (data.length - 1) / (fitCount - 1);
-        newData[0] = data[0]; // for new allocation
-        for ( var i = 1; i < fitCount - 1; i++) {
-            let tmp = i * springFactor;
-            let before = new Number(Math.floor(tmp)).toFixed();
-            let after = new Number(Math.ceil(tmp)).toFixed();
-            let atPoint = tmp - parseFloat(before);
-            newData[i] = this._linearInterpolate(data[before], data[after], atPoint);
-        }
-        newData[fitCount - 1] = data[data.length - 1]; // for new allocation
-        return newData;
-    }
-    private _linearInterpolate(before, after, atPoint) {
-        return before + (after - before) * atPoint;
-    }
 }
