@@ -1,3 +1,5 @@
+declare var SpeechSDK;
+
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import keys from '../../utils/keys';
@@ -5,13 +7,15 @@ import { server } from '../../app/server.connection';
 import 'rxjs/add/operator/map';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-import * as SDK from 'microsoft-speech-browser-sdk';
+// import * as SDK from 'microsoft-speech-browser-sdk';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
 import {  NgZone } from '@angular/core';
+
 @Injectable()
 export class CognitiveService {
     private recognizer;
     private soundAnalysisHeader: Headers;
+    private authorizationToken: string = "a695cace0bbe42e7902d7f8aae1e8a6a";
     // Observable string sources
     private emitChangeSource = new Subject<any>();
     // Observable string streams
@@ -19,8 +23,6 @@ export class CognitiveService {
     constructor(private http: Http, public speechRecognition: SpeechRecognition, public zone: NgZone) {
         // this.recognizer = this._RecognizerSetup(SDK, "Dictation", "en-US", "Simple", "17328acb588e413eaf4f56c885b3511f");
         this.soundAnalysisHeader = new Headers();
-        this.soundAnalysisHeader.append('Ocp-Apim-Subscription-Key','803f5c8476884b0baf897ed24e28fbf7');
-        this.soundAnalysisHeader.append('Content-Type','audio/wav; codec="audio/pcm"; samplerate=16000');
         
     }
     // Service message commands
@@ -28,14 +30,58 @@ export class CognitiveService {
         this.emitChangeSource.next(change);
     }
     speak() {
-        this.recognizer = this._RecognizerSetup(SDK, "Dictation", "en-US", "Simple", "803f5c8476884b0baf897ed24e28fbf7");
+        var self = this;
+        var audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
+        var speechConfig;
+        if (this.authorizationToken) {
+            this.soundAnalysisHeader.append('Ocp-Apim-Subscription-Key',this.authorizationToken);
+            this.soundAnalysisHeader.append('Content-Type','audio/wav; codec="audio/pcm"; samplerate=16000');
+            speechConfig = SpeechSDK.SpeechConfig.fromSubscription(this.authorizationToken, "westus");
+        } else {
+            alert("Please enter your key");
+            return;
+        }
+        
+        if (speechConfig) {
+            speechConfig.speechRecognitionLanguage = "en-US";
+        }
         console.log('Loaded SDK');
-        this._recognizerStart(SDK, this.recognizer);
+        this.recognizer = new SpeechSDK.SpeechRecognizer(speechConfig, audioConfig);
+        this.recognizer.sessionStarted = function (s, e) {
+            console.log(e);
+            console.log("Session started");
+        }
+        this.recognizer.recognized = function (s, e) {
+            console.log(e);
+            console.log("Recognized");
+            self.emitMessage(e.result.text);
+        }
+        this.recognizer.canceled = function (s, e) {
+            console.log(e);
+            console.log("Canceled");
+            if (e.reason === SpeechSDK.CancellationReason.Error) {
+                console.log(e.errorDetails);
+            }
+        }
+
+        // Starts recognition
+        this.recognizer.startContinuousRecognitionAsync();
+        // this._recognizerStart(SpeechSDK, this.recognizer);
     }
 
     stopSpeaking() {
         const self = this;
-        this._RecognizerStop(SDK, this.recognizer);
+        // this._RecognizerStop(SpeechSDK, this.recognizer);
+        this.recognizer.stopContinuousRecognitionAsync(
+            function () {
+                self.recognizer.close();
+                self.recognizer = undefined;
+            },
+            function (err) {
+                self.recognizer.close();
+                self.recognizer = undefined;
+            });
+
         console.log('Stopped');
         // if(this.speechRecognition.stopListening) this.speechRecognition.stopListening().then(() => console.log('stoped'), (error) => self.emitMessage(error));
     }

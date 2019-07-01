@@ -42,28 +42,27 @@ export class MyApp implements OnInit{
 
   ngOnInit() {
     this.messageSubscription = this.cognitiveService.listenMessage.subscribe((message) => {
-      if(message.RecognitionStatus == 'Success'){
-        this.zone.run(() => {
-          if(message.DisplayText.length > this.spokenMessage.length) {
-            this.spokenMessage = message.DisplayText;
+      this.zone.run(() => {
+        // if(message.length > this.spokenMessage.length) {
+        // }
+        this.spokenMessage += message;
+        console.log(`Spoken -----------> ${this.spokenMessage}` );
+        const lowerMsg = this.spokenMessage.toLowerCase();
+        if(lowerMsg.indexOf('go to') != -1 && lowerMsg.indexOf('heart disease') != -1) {
+          // this.goToForm('hd');
+          this.appService.emitMessage('hd');
+          if(!this.isMobile){
+            this.stop(false); // Dont need to stop here when using DEVICE AUDIOINPUT, only need with native SpeechRecognition
           }
-          console.log(`Spoken -----------> ${this.spokenMessage}` );
-          const lowerMsg = this.spokenMessage.toLowerCase();
-          if(lowerMsg.indexOf('go to') != -1 && lowerMsg.indexOf('heart disease') != -1) {
-            // this.goToForm('hd');
-            this.appService.emitMessage('hd');
-            if(!this.isMobile){
-              this.stop(false); // Dont need to stop here when using DEVICE AUDIOINPUT, only need with native SpeechRecognition
-            }
+        }
+        if(lowerMsg.indexOf('go to') != -1 && lowerMsg.indexOf('flu') != -1) {
+          this.appService.emitMessage('flu');
+          if(!this.isMobile){
+            this.stop(false);
           }
-          if(lowerMsg.indexOf('go to') != -1 && lowerMsg.indexOf('flu') != -1) {
-            this.appService.emitMessage('flu');
-            if(!this.isMobile){
-              this.stop(false);
-            }
-          }
-        });
-      }
+        }
+      });
+      
       if(typeof message == 'string'){
         this.debug = '';
         this.debug += message;
@@ -147,7 +146,7 @@ export class MyApp implements OnInit{
       this.spokenMessage = '';
       this.cognitiveService.speak();
     } else {
-      this.stop(true);
+      this.stop(false);
     }
 
   }
