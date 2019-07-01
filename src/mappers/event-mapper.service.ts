@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ActionOptions } from './../models/actionoptions.model';
-import { Question } from './../models/form/questions/question.model';
+import { Question, ActionOptions } from './../models';
 // errors
 const ERROR_NO_PARAMETER = "Event parameter or type is missing";
 const ERROR_NO_MATCH_ACTION = "This action does not match any possible action";

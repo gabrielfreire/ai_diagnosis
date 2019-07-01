@@ -4,10 +4,7 @@ import { LoadingController, ViewController } from 'ionic-angular';
 
 import { QuestionService } from '../../../providers/form/question.service'
 
-import { Question } from '../../../models/form/questions/question.model'
-import { EventBody } from '../../../models/eventbody.model';
-import { QuestionBody } from '../../../models/form/questions/questionbody.model'
-import { ActionOptions } from '../../../models/actionoptions.model'
+import { Question, EventBody, QuestionBody,ActionOptions } from '../../../models'
 
 import { QuestionControlService } from '../../../providers/form/question-control.service'
 import { DiagnosticsService } from '../../../providers/diagnostics/diagnostic.service'

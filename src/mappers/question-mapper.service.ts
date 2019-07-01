@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Question } from './../models/form/questions/question.model';
-import { DropdownQuestion } from './../models/form/questions/question-dropdown.model';
-import { ToggleQuestion } from './../models/form/questions/question-toggle.model';
-import { TextboxQuestion } from './../models/form/questions/question-textbox.model';
-import { QuestionBody } from './../models/form/questions/questionbody.model';
+import { DropdownQuestion, ToggleQuestion, TextboxQuestion, QuestionBody, Question } from './../models';
 
 @Injectable()
 export class QuestionMapper {

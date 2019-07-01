@@ -1,6 +1,28 @@
 webpackJsonp([0],{
 
-/***/ 159:
+/***/ 104:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class Question {
+    constructor(options) {
+        this.value = options.value || "";
+        this.key = options.key || '';
+        this.label = options.label || '';
+        this.required = !!options.required || false;
+        this.order = options.order === undefined ? 1 : options.order;
+        this.visibility = options.visibility || "visible";
+        this.event = options.event || null;
+        this.controlType = options.controlType || '';
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Question;
+
+//# sourceMappingURL=question.model.js.map
+
+/***/ }),
+
+/***/ 161:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -40,23 +62,23 @@ AppService = __decorate([
 
 /***/ }),
 
-/***/ 160:
+/***/ 162:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CognitiveService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(81);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_server_connection__ = __webpack_require__(321);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_server_connection__ = __webpack_require__(163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(164);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_Subject__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_Subject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_Subject__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_Observable__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_Observable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__ = __webpack_require__(531);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__ = __webpack_require__(532);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_microsoft_speech_browser_sdk__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_speech_recognition__ = __webpack_require__(313);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_speech_recognition__ = __webpack_require__(316);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -239,21 +261,36 @@ CognitiveService = __decorate([
 
 /***/ }),
 
-/***/ 180:
+/***/ 163:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__web_audio_audioContextGenerator_service__ = __webpack_require__(839);
+const server = {
+    // url: 'http://localhost:3000/api'
+    url: 'https://imsdiag.herokuapp.com/api',
+    vision_url: 'https://westeurope.api.cognitive.microsoft.com/vision/v1.0/analyze?visualFeatures=Categories%2CDescription%2CColor&details=&language=en'
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = server;
+
+//# sourceMappingURL=server.connection.js.map
+
+/***/ }),
+
+/***/ 183:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__web_audio_audioContextGenerator_service__ = __webpack_require__(844);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__web_audio_audioContextGenerator_service__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__web_audio_recorder__ = __webpack_require__(430);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__web_audio_recorder__ = __webpack_require__(431);
 /* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__web_audio_wav_recorder__ = __webpack_require__(337);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__web_audio_wav_recorder__ = __webpack_require__(430);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_2__web_audio_wav_recorder__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__diagnostics_diagnostic_service__ = __webpack_require__(335);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__diagnostics_diagnostic_service__ = __webpack_require__(428);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_3__diagnostics_diagnostic_service__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__cognitive_services_cognitive_service__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__cognitive_services_cognitive_service__ = __webpack_require__(162);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_4__cognitive_services_cognitive_service__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__camera_camera_provider__ = __webpack_require__(320);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__camera_camera_provider__ = __webpack_require__(323);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_5__camera_camera_provider__["a"]; });
 
 
@@ -265,7 +302,7 @@ CognitiveService = __decorate([
 
 /***/ }),
 
-/***/ 193:
+/***/ 196:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -278,11 +315,11 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 193;
+webpackEmptyAsyncContext.id = 196;
 
 /***/ }),
 
-/***/ 251:
+/***/ 254:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -295,19 +332,19 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 251;
+webpackEmptyAsyncContext.id = 254;
 
 /***/ }),
 
-/***/ 314:
+/***/ 317:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TabsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__about_about__ = __webpack_require__(315);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__contact_contact__ = __webpack_require__(316);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(317);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__about_about__ = __webpack_require__(318);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__contact_contact__ = __webpack_require__(319);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(320);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -338,7 +375,7 @@ TabsPage = __decorate([
 
 /***/ }),
 
-/***/ 315:
+/***/ 318:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -707,7 +744,7 @@ AboutPage = __decorate([
 
 /***/ }),
 
-/***/ 316:
+/***/ 319:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -741,18 +778,18 @@ ContactPage = __decorate([
 
 /***/ }),
 
-/***/ 317:
+/***/ 320:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__chat_watson_chat__ = __webpack_require__(318);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_camera__ = __webpack_require__(158);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__picture_analisys_picture_analisys__ = __webpack_require__(319);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(159);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_formbuilder_Form_FormBuilder_component__ = __webpack_require__(331);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__chat_watson_chat__ = __webpack_require__(321);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_camera__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__picture_analisys_picture_analisys__ = __webpack_require__(322);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_formbuilder_Form_FormBuilder_component__ = __webpack_require__(333);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -809,17 +846,17 @@ HomePage = __decorate([
 
 /***/ }),
 
-/***/ 318:
+/***/ 321:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng_socket_io__ = __webpack_require__(296);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng_socket_io__ = __webpack_require__(299);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_ng_socket_io__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ChatUser__ = __webpack_require__(529);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ChatRoom__ = __webpack_require__(530);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ChatUser__ = __webpack_require__(530);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ChatRoom__ = __webpack_require__(531);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -912,16 +949,16 @@ ChatPage = __decorate([
 
 /***/ }),
 
-/***/ 319:
+/***/ 322:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PictureAnalisysPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_camera_camera_provider__ = __webpack_require__(320);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_native_storage__ = __webpack_require__(312);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_cognitive_services_cognitive_service__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_camera_camera_provider__ = __webpack_require__(323);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_native_storage__ = __webpack_require__(315);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_cognitive_services_cognitive_service__ = __webpack_require__(162);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1034,13 +1071,13 @@ PictureAnalisysPage = __decorate([
 
 /***/ }),
 
-/***/ 320:
+/***/ 323:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CameraProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_native_camera__ = __webpack_require__(158);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_native_camera__ = __webpack_require__(160);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1079,33 +1116,18 @@ CameraProvider = __decorate([
 
 /***/ }),
 
-/***/ 321:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-const server = {
-    // url: 'http://localhost:3000/api'
-    url: 'https://imsdiag.herokuapp.com/api',
-    vision_url: 'https://westeurope.api.cognitive.microsoft.com/vision/v1.0/analyze?visualFeatures=Categories%2CDescription%2CColor&details=&language=en'
-};
-/* harmony export (immutable) */ __webpack_exports__["a"] = server;
-
-//# sourceMappingURL=server.connection.js.map
-
-/***/ }),
-
-/***/ 331:
+/***/ 333:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FormBuilder; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_form_question_service__ = __webpack_require__(332);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_form_question_control_service__ = __webpack_require__(334);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_diagnostics_diagnostic_service__ = __webpack_require__(335);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__loaders_loaders__ = __webpack_require__(844);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__mappers_event_mapper_service__ = __webpack_require__(336);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_form_question_service__ = __webpack_require__(334);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_form_question_control_service__ = __webpack_require__(427);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_diagnostics_diagnostic_service__ = __webpack_require__(428);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__loaders_loaders__ = __webpack_require__(843);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__mappers_event_mapper_service__ = __webpack_require__(429);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1242,22 +1264,26 @@ let FormBuilder = class FormBuilder {
 };
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
-    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]) === "function" && _a || Object)
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"])
 ], FormBuilder.prototype, "changeEvent", void 0);
 FormBuilder = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-form',template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\ai_diagnosis\src\components\formbuilder\Form\FormBuilder.component.html"*/'<ion-header>\n\n    <ion-navbar>\n\n        <ion-title>{{title}}</ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n    <div *ngIf="form">\n\n        <!-- <h4 *ngIf="questions && questions.length">{{title}}</h4> -->\n\n        <!-- Form -->\n\n        <form (ngSubmit)="onSubmit()" [formGroup]="form">\n\n            <div *ngFor="let question of questions" class="form-row">\n\n                <df-question [changeEvent]="changeEvent" [question]="question" [form]="form"></df-question>\n\n            </div>\n\n\n\n            <div *ngIf="hasSubmit" class="form-row">\n\n\n\n                <button full ion-button color="calm" type="submit" [disabled]="!form.valid">Get Diagnostic</button>\n\n\n\n            </div>\n\n        </form>\n\n        <!-- END FORM -->\n\n\n\n\n\n        <!-- RESULT PAGES -->\n\n\n\n        <!-- ASK WATSON DISCOVERY -->\n\n        <div *ngIf="payLoad && !payLoad.data.prediction && payLoad.data.usage" class="form-row">\n\n            <pre>{{ payLoad.data | json }}</pre>\n\n        </div>\n\n        <div *ngIf="payLoad && !payLoad.data.prediction && !payLoad.data.usage && payLoad.data.results" class="form-row">\n\n            <ion-card>\n\n                <ion-card-header>\n\n                    <h1 ion-text>WATSON</h1>\n\n                </ion-card-header>\n\n                <ion-card-content>\n\n                    <h1 *ngIf="payLoad.data.results.length == 0">No results were found</h1>\n\n                    <!-- <h1 *ngIf="payLoad.data.results.length">{{payLoad.data.results.length}} results...</h1> -->\n\n                    <h1 *ngIf="payLoad.data.results.length">Categories:</h1>\n\n                    <ion-item-group *ngFor="let res of payLoad.data.results">\n\n                        <ion-item-divider color="light"><strong>Result score: {{res.result_metadata.score}}</strong></ion-item-divider>\n\n                        <ion-item *ngFor="let cat of res.enriched_text.categories">\n\n\n\n                            <p class="label-result-watson-discovery"><strong>Category label:</strong> <span>{{cat.label}}</span></p>\n\n                            <p class="label-result-watson-discovery"><strong>Category score:</strong> <span>{{cat.score}}</span></p>\n\n\n\n                        </ion-item>\n\n                        <ion-item-divider color="light"><strong>Concepts</strong></ion-item-divider>\n\n                        <ion-item *ngFor="let concpt of res.enriched_text.concepts">\n\n\n\n                            <p class="label-result-watson-discovery"><strong>Concept: </strong><span>{{concpt.text}}</span></p>\n\n                            <p class="label-result-watson-discovery"><strong>Concept relevance: </strong><span>{{concpt.relevance}}</span></p>\n\n\n\n                            <strong>Concept source: </strong>\n\n                            <a class="label-result-watson-discovery" [href]="concpt.dbpedia_resource" target="_blank"><span>{{concpt.dbpedia_resource}}</span></a>\n\n                        </ion-item>\n\n                    </ion-item-group>\n\n                    <h1 *ngIf="payLoad.data.results.length">Passages:</h1>\n\n                    <ion-item-group *ngFor="let passage of payLoad.data.passages">\n\n                        <ion-item-divider color="light"><strong>Relevance score: {{passage.passage_score.toFixed(2)}}</strong></ion-item-divider>\n\n                        <ion-item>\n\n                            <p class="label-result-watson-discovery" [innerHTML]="passage.passage_text"></p>\n\n                        </ion-item>\n\n                    </ion-item-group>\n\n                </ion-card-content>\n\n            </ion-card>\n\n\n\n        </div>\n\n\n\n\n\n        <!-- FLU DIAGNOSIS -->\n\n        <div *ngIf="payLoad && !payLoad.data.score && !payLoad.data.prediction && !payLoad.data.usage && !payLoad.data.results" class="form-row">\n\n\n\n            <ion-card [style.backgroundColor]="payLoad.data.message ? \'#ffdada\' : \'#e6ffe6\'">\n\n\n\n                <ion-card-header>\n\n                    <!-- <h1>Diagnosis:</h1> -->\n\n                </ion-card-header>\n\n\n\n                <ion-card-content>\n\n                    <!-- Add card content here! -->\n\n                    <h1 ion-text [style.color]="payLoad.data.message ? \'red\' : \'green\'">\n\n                        <ion-icon name="{{payLoad.data.message ? \'alert\' : \'checkmark\'}}"></ion-icon> {{payLoad.data.message ? payLoad.data.message : \'This patient does not seem to have the flu\'}}</h1>\n\n                    <span *ngIf="payLoad.data.recommendations && payLoad.data.recommendations.length">\n\n                        <ion-item-group>\n\n                            <ion-item-divider color="light"><strong>Recommendations:</strong></ion-item-divider>\n\n                            <ion-item *ngFor="let rec of payLoad.data.recommendations">\n\n                                    <ion-icon name="alert"></ion-icon> {{rec}}\n\n                            </ion-item>\n\n                        </ion-item-group>\n\n                    </span>\n\n                </ion-card-content>\n\n\n\n            </ion-card>\n\n        </div>\n\n\n\n        <!-- MENTAL HEALTH DIAGNOSIS -->\n\n        <div *ngIf="payLoad && payLoad.data.score && !payLoad.data.prediction && !payLoad.data.usage && !payLoad.data.results" class="form-row">\n\n\n\n            <ion-card [style.backgroundColor]="payLoad.data.score >= 15 ? \'#ffdada\' : \'#e6ffe6\'">\n\n\n\n                <ion-card-header>\n\n                    <!-- <h1>Diagnosis:</h1> -->\n\n                </ion-card-header>\n\n\n\n                <ion-card-content>\n\n                    <!-- Add card content here! -->\n\n                    <h1 ion-text [style.color]="payLoad.data.score >= 15 ? \'red\' : \'green\'">\n\n                        <!-- <ion-icon name="{{payLoad.data.message ? \'alert\' : \'checkmark\'}}"></ion-icon> {{payLoad.data.message ? payLoad.data.message : \'This patient does not seem to have the flu\'}}</h1> -->\n\n                        <ion-icon name="{{payLoad.data.score >= 15 ? \'alert\' : \'checkmark\'}}"></ion-icon> {{\'Score: \' + payLoad.data.score}}</h1>\n\n                    <h2 ion-text [style.color]="payLoad.data.score >= 15 ? \'red\' : \'green\'">\n\n                        <ion-icon name="{{payLoad.data.score >= 15 ? \'alert\' : \'checkmark\'}}"></ion-icon> Hi, {{payLoad.data.event.params.message}}</h2>\n\n                    <span *ngIf="payLoad.data.recommendations && payLoad.data.recommendations.length">\n\n                        <ion-item-group>\n\n                            <ion-item-divider color="light"><strong>Recommendations:</strong></ion-item-divider>\n\n                            <ion-item *ngFor="let rec of payLoad.data.recommendations">\n\n                                    <ion-icon name="alert"></ion-icon> {{rec}}\n\n                            </ion-item>\n\n                        </ion-item-group>\n\n                    </span>\n\n                </ion-card-content>\n\n\n\n            </ion-card>\n\n        </div>\n\n\n\n\n\n        <!-- PRESENCE OF HEART DISEASE AI NEURAL NETWORK -->\n\n        <div *ngIf="payLoad && payLoad.data.prediction && !payLoad.data.usage && !payLoad.data.results" class="form-row">\n\n\n\n            <ion-card [style.backgroundColor]="payLoad.data.prediction[0] > 5 ? \'#ffdada\' : \'#e6ffe6\'">\n\n\n\n                <ion-card-header>\n\n                    <h1 ion-text>AI Predicted:</h1>\n\n                </ion-card-header>\n\n\n\n                <ion-card-content>\n\n                    <span *ngIf="payLoad.data.prediction && payLoad.data.prediction.length">\n\n                            <ion-item-group>\n\n                                <ion-item>\n\n                                    <p style="font-size:1.2em; text-align:center; justify-content:center; margin: 0 auto; color:rgb(19, 19, 38)"><strong>Presence of Heart Disease score from 0 to 10 where 0 means no presence and 10 means <br>absolute presence of some Heart Disease:</strong></p><br>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p style="font-size:2em; text-align:center; justify-content:center; margin: 0 auto; color:rgb(19, 19, 38)"><strong>Score: {{payLoad.data.prediction[0].toFixed(2)}}</strong></p>\n\n                                <br>\n\n                                    <p style="font-size:1.4em; text-align:center; justify-content:center; margin: 0 auto;" [style.color]=\'payLoad.data.prediction[0] > 5 ? "red" : "green"\'>\n\n                                        <ion-icon name="{{payLoad.data.prediction[0] > 5 ? \'alert\' : \'checkmark\'}}"></ion-icon> Hi, {{payLoad.data.event?.params?.message}}\n\n                                    </p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <strong>Accuracy:</strong>\n\n                                    {{payLoad.data.accuracy.toFixed(2)}}%\n\n                                </ion-item>\n\n                            </ion-item-group>\n\n                        </span>\n\n                </ion-card-content>\n\n\n\n            </ion-card>\n\n            <ion-card *ngIf="payLoad.data.prediction[0] > 5" [style.backgroundColor]="payLoad.data.prediction[0] > 5 ? \'#ffdada\' : \'#e6ffe6\'">\n\n\n\n                <ion-card-header>\n\n                    <h1>Suggestions for treatment:</h1>\n\n                </ion-card-header>\n\n\n\n                <ion-card-content>\n\n                    <span *ngIf="payLoad.data.prediction && payLoad.data.prediction.length">\n\n                            <ion-item-group>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Excess weight causes your heart to work harder and increases the risk for heart disease,<br> \n\n                                        high blood pressure, diabetes and high cholesterol. Exercising regularly and eating smaller \n\n                                        portions of nutrient-rich foods may help you maintain a healthy weight.<br> \n\n                                        Learn the warning signs of a heart attack and stroke.</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Don’t smoke or expose yourself to second-hand smoke.</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Maintain a healthy blood pressure.</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Monitor your cholesterol (blood lipids).</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Make exercise a daily habit.</strong></p>\n\n                                </ion-item>\n\n                                <ion-item>\n\n                                    <p><ion-icon name="alert"></ion-icon> <strong>Reduce stress.</strong></p>\n\n                                </ion-item>\n\n                            </ion-item-group>\n\n                        </span>\n\n                </ion-card-content>\n\n\n\n            </ion-card>\n\n        </div>\n\n        <!-- END RESULT PAGES -->\n\n    </div>\n\n</ion-content>'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\ai_diagnosis\src\components\formbuilder\Form\FormBuilder.component.html"*/,
         styles: ['./FormBuilder.component.scss']
     }),
-    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__providers_form_question_control_service__["a" /* QuestionControlService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_form_question_control_service__["a" /* QuestionControlService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__providers_form_question_service__["a" /* QuestionService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_form_question_service__["a" /* QuestionService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__providers_diagnostics_diagnostic_service__["a" /* DiagnosticsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_diagnostics_diagnostic_service__["a" /* DiagnosticsService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_6__mappers_event_mapper_service__["a" /* QuestionEventMapper */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__mappers_event_mapper_service__["a" /* QuestionEventMapper */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ViewController */]) === "function" && _g || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__providers_form_question_control_service__["a" /* QuestionControlService */],
+        __WEBPACK_IMPORTED_MODULE_2__providers_form_question_service__["a" /* QuestionService */],
+        __WEBPACK_IMPORTED_MODULE_4__providers_diagnostics_diagnostic_service__["a" /* DiagnosticsService */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */],
+        __WEBPACK_IMPORTED_MODULE_6__mappers_event_mapper_service__["a" /* QuestionEventMapper */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ViewController */]])
 ], FormBuilder);
 
-var _a, _b, _c, _d, _e, _f, _g;
 //# sourceMappingURL=FormBuilder.component.js.map
 
 /***/ }),
 
-/***/ 332:
+/***/ 334:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1266,10 +1292,10 @@ var _a, _b, _c, _d, _e, _f, _g;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_webdnn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_webdnn__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(81);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(164);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mappers_question_mapper_service__ = __webpack_require__(333);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_server_connection__ = __webpack_require__(321);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mappers_question_mapper_service__ = __webpack_require__(335);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_server_connection__ = __webpack_require__(163);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1363,24 +1389,20 @@ let QuestionService = class QuestionService {
 };
 QuestionService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__mappers_question_mapper_service__["a" /* QuestionMapper */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__mappers_question_mapper_service__["a" /* QuestionMapper */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_4__mappers_question_mapper_service__["a" /* QuestionMapper */]])
 ], QuestionService);
 
-var _a, _b;
 //# sourceMappingURL=question.service.js.map
 
 /***/ }),
 
-/***/ 333:
+/***/ 335:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return QuestionMapper; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_form_questions_question_model__ = __webpack_require__(840);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_form_questions_question_dropdown_model__ = __webpack_require__(841);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_form_questions_question_toggle_model__ = __webpack_require__(842);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_form_questions_question_textbox_model__ = __webpack_require__(843);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models__ = __webpack_require__(94);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1390,9 +1412,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
 
 
 let QuestionMapper = class QuestionMapper {
@@ -1432,23 +1451,23 @@ let QuestionMapper = class QuestionMapper {
         let cQuestion = null;
         switch (controlType) {
             case 'textbox':
-                let textBox = new __WEBPACK_IMPORTED_MODULE_4__models_form_questions_question_textbox_model__["a" /* TextboxQuestion */](question);
+                let textBox = new __WEBPACK_IMPORTED_MODULE_1__models__["d" /* TextboxQuestion */](question);
                 cQuestion = textBox;
                 break;
             case 'textarea':
-                let textArea = new __WEBPACK_IMPORTED_MODULE_4__models_form_questions_question_textbox_model__["a" /* TextboxQuestion */](question);
+                let textArea = new __WEBPACK_IMPORTED_MODULE_1__models__["d" /* TextboxQuestion */](question);
                 cQuestion = textArea;
                 break;
             case 'dropdown':
-                let dropdownField = new __WEBPACK_IMPORTED_MODULE_2__models_form_questions_question_dropdown_model__["a" /* DropdownQuestion */](question);
+                let dropdownField = new __WEBPACK_IMPORTED_MODULE_1__models__["b" /* DropdownQuestion */](question);
                 cQuestion = dropdownField;
                 break;
             case 'toggle':
-                let toggle = new __WEBPACK_IMPORTED_MODULE_3__models_form_questions_question_toggle_model__["a" /* ToggleQuestion */](question);
+                let toggle = new __WEBPACK_IMPORTED_MODULE_1__models__["e" /* ToggleQuestion */](question);
                 cQuestion = toggle;
                 break;
             default:
-                cQuestion = new __WEBPACK_IMPORTED_MODULE_1__models_form_questions_question_model__["a" /* Question */](question);
+                cQuestion = new __WEBPACK_IMPORTED_MODULE_1__models__["c" /* Question */](question);
                 break;
         }
         return cQuestion;
@@ -1463,7 +1482,7 @@ QuestionMapper = __decorate([
 
 /***/ }),
 
-/***/ 334:
+/***/ 427:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1516,14 +1535,14 @@ QuestionControlService = __decorate([
 
 /***/ }),
 
-/***/ 335:
+/***/ 428:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DiagnosticsService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(81);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_server_connection__ = __webpack_require__(321);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_server_connection__ = __webpack_require__(163);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1567,7 +1586,7 @@ DiagnosticsService = __decorate([
 
 /***/ }),
 
-/***/ 336:
+/***/ 429:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1631,19 +1650,19 @@ QuestionEventMapper = __decorate([
 
 /***/ }),
 
-/***/ 337:
+/***/ 430:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WavRecorder; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Subject__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Subject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_rxjs_Subject__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__(94);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__(95);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models__ = __webpack_require__(429);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__recorder__ = __webpack_require__(430);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5____ = __webpack_require__(180);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models__ = __webpack_require__(94);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__recorder__ = __webpack_require__(431);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5____ = __webpack_require__(183);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ionic_angular__ = __webpack_require__(30);
 // Copyright (c) 2017 Tracktunes Inc
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1730,7 +1749,7 @@ let WavRecorder = class WavRecorder extends __WEBPACK_IMPORTED_MODULE_4__recorde
         console.log('saveWav(arr.size=' + arr.length + ', nSamples: ' + this.nRecordedSamples + ')');
         let src = __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__["Observable"].create((observer) => {
             if (this.nChunksSaved == 0) {
-                __WEBPACK_IMPORTED_MODULE_3__models__["b" /* WavFile */].createWavFile(this.filePath, arr, this.audioContext).subscribe((blob) => {
+                __WEBPACK_IMPORTED_MODULE_3__models__["f" /* WavFile */].createWavFile(this.filePath, arr, this.audioContext).subscribe((blob) => {
                     this.nChunksSaved = 1;
                     this.emit(blob);
                     observer.next(blob);
@@ -1740,7 +1759,7 @@ let WavRecorder = class WavRecorder extends __WEBPACK_IMPORTED_MODULE_4__recorde
                 });
             }
             else {
-                __WEBPACK_IMPORTED_MODULE_3__models__["b" /* WavFile */].appendToWavFile(arr, this.nRecordedSamples - arr.length).subscribe((blob) => {
+                __WEBPACK_IMPORTED_MODULE_3__models__["f" /* WavFile */].appendToWavFile(arr, this.nRecordedSamples - arr.length).subscribe((blob) => {
                     this.nChunksSaved++;
                     // emit blob every 100 chunks
                     // if(this.nChunksSaved % 2 == 0) {
@@ -1762,7 +1781,7 @@ let WavRecorder = class WavRecorder extends __WEBPACK_IMPORTED_MODULE_4__recorde
         return new Promise((resolve, reject) => {
             super.start().then(() => {
                 const dateCreated = Date.now();
-                const displayDateCreated = Object(__WEBPACK_IMPORTED_MODULE_3__models__["d" /* formatUnixTimestamp */])(dateCreated);
+                const displayDateCreated = Object(__WEBPACK_IMPORTED_MODULE_3__models__["h" /* formatUnixTimestamp */])(dateCreated);
                 const filePath = '/' + displayDateCreated;
                 this.filePath = filePath;
                 resolve();
@@ -1799,7 +1818,7 @@ let WavRecorder = class WavRecorder extends __WEBPACK_IMPORTED_MODULE_4__recorde
                         console.log('AUDIO CONTEXT SUSPENDED');
                     });
                 }
-                __WEBPACK_IMPORTED_MODULE_3__models__["b" /* WavFile */].clearBlob();
+                __WEBPACK_IMPORTED_MODULE_3__models__["f" /* WavFile */].clearBlob();
                 // observer.next(formDataFile);
                 observer.next();
                 observer.complete();
@@ -1819,39 +1838,16 @@ WavRecorder = __decorate([
 
 /***/ }),
 
-/***/ 429:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__wav_file_wav_file__ = __webpack_require__(835);
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__wav_file_wav_file__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__double_buffer_double_buffer__ = __webpack_require__(836);
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_1__double_buffer_double_buffer__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__filesystem_filesystem__ = __webpack_require__(837);
-/* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__misc_utils_misc_utils__ = __webpack_require__(838);
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_3__misc_utils_misc_utils__["a"]; });
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_3__misc_utils_misc_utils__["b"]; });
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_3__misc_utils_misc_utils__["c"]; });
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_3__misc_utils_misc_utils__["d"]; });
-
-
-
-
-//# sourceMappingURL=index.js.map
-
-/***/ }),
-
-/***/ 430:
+/***/ 431:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* unused harmony export RecordStatus */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WebAudioRecorder; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__(94);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__(95);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2____ = __webpack_require__(180);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2____ = __webpack_require__(183);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(30);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2273,15 +2269,15 @@ WebAudioRecorder = __decorate([
 
 /***/ }),
 
-/***/ 431:
+/***/ 432:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(432);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_web_animations_js_web_animations_min__ = __webpack_require__(436);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(433);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_web_animations_js_web_animations_min__ = __webpack_require__(437);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_web_animations_js_web_animations_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_web_animations_js_web_animations_min__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_module__ = __webpack_require__(437);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_module__ = __webpack_require__(438);
 
 
 
@@ -2290,7 +2286,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 437:
+/***/ 438:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2301,32 +2297,32 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(81);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_platform_browser__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser_animations__ = __webpack_require__(462);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser_animations__ = __webpack_require__(463);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ionic_angular__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_status_bar__ = __webpack_require__(291);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_splash_screen__ = __webpack_require__(295);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_ng_socket_io__ = __webpack_require__(296);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_status_bar__ = __webpack_require__(294);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_splash_screen__ = __webpack_require__(298);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_ng_socket_io__ = __webpack_require__(299);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_ng_socket_io__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_camera__ = __webpack_require__(158);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_file_transfer__ = __webpack_require__(526);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_text_to_speech__ = __webpack_require__(527);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_native_storage__ = __webpack_require__(312);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__app_service__ = __webpack_require__(159);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ionic_native_speech_recognition__ = __webpack_require__(313);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__app_component__ = __webpack_require__(528);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_about_about__ = __webpack_require__(315);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_contact_contact__ = __webpack_require__(316);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_home_home__ = __webpack_require__(317);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_chat_watson_chat__ = __webpack_require__(318);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_picture_analisys_picture_analisys__ = __webpack_require__(319);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_tabs_tabs__ = __webpack_require__(314);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_formbuilder_Form_FormBuilder_component__ = __webpack_require__(331);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_camera__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_file_transfer__ = __webpack_require__(527);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_text_to_speech__ = __webpack_require__(528);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_native_storage__ = __webpack_require__(315);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__app_service__ = __webpack_require__(161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ionic_native_speech_recognition__ = __webpack_require__(316);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__app_component__ = __webpack_require__(529);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_about_about__ = __webpack_require__(318);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_contact_contact__ = __webpack_require__(319);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_home_home__ = __webpack_require__(320);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_chat_watson_chat__ = __webpack_require__(321);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_picture_analisys_picture_analisys__ = __webpack_require__(322);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_tabs_tabs__ = __webpack_require__(317);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_formbuilder_Form_FormBuilder_component__ = __webpack_require__(333);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_formbuilder_Question_DynamicQuestion_component__ = __webpack_require__(845);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__providers_form_question_control_service__ = __webpack_require__(334);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__providers_form_question_service__ = __webpack_require__(332);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__providers__ = __webpack_require__(180);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__mappers_question_mapper_service__ = __webpack_require__(333);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__mappers_event_mapper_service__ = __webpack_require__(336);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__providers_form_question_control_service__ = __webpack_require__(427);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__providers_form_question_service__ = __webpack_require__(334);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__providers__ = __webpack_require__(183);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__mappers_question_mapper_service__ = __webpack_require__(335);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__mappers_event_mapper_service__ = __webpack_require__(429);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2430,26 +2426,26 @@ AppModule = __decorate([
 
 /***/ }),
 
-/***/ 523:
+/***/ 524:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 528:
+/***/ 529:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(291);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(295);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_tabs_tabs__ = __webpack_require__(314);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_cognitive_services_cognitive_service__ = __webpack_require__(160);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_web_audio_wav_recorder__ = __webpack_require__(337);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_service__ = __webpack_require__(159);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(294);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(298);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_tabs_tabs__ = __webpack_require__(317);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_cognitive_services_cognitive_service__ = __webpack_require__(162);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_web_audio_wav_recorder__ = __webpack_require__(430);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_service__ = __webpack_require__(161);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2599,7 +2595,7 @@ let MyApp = class MyApp {
     }
 };
 MyApp = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\ai_diagnosis\src\app\app.html"*/'<ion-nav [root]="rootPage">\n\n</ion-nav>\n\n<!-- <div class="speakerContainer">\n\n    <h4 id="debug">DEBUG LOG: {{debug}}</h4>\n\n    <h4 id="answer">Output: {{spokenMessage}}</h4>\n\n    <button (click)="speakStop()" [ngClass]="{\'active\': speaking}" class="floating" color="calm">\n\n        <ion-icon name="mic"></ion-icon>\n\n    </button>\n\n</div> -->\n\n'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\ai_diagnosis\src\app\app.html"*/
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\gabriel.freire\Documents\workspace\ai_diagnosis\src\app\app.html"*/'<ion-nav [root]="rootPage">\n\n</ion-nav>\n\n<div class="speakerContainer">\n\n    <h4 id="debug">DEBUG LOG: {{debug}}</h4>\n\n    <h4 id="answer">Output: {{spokenMessage}}</h4>\n\n    <button (click)="speakStop()" [ngClass]="{\'active\': speaking}" class="floating" color="calm">\n\n        <ion-icon name="mic"></ion-icon>\n\n    </button>\n\n</div>\n\n'/*ion-inline-end:"C:\Users\gabriel.freire\Documents\workspace\ai_diagnosis\src\app\app.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
         __WEBPACK_IMPORTED_MODULE_5__providers_cognitive_services_cognitive_service__["a" /* CognitiveService */],
@@ -2612,7 +2608,7 @@ MyApp = __decorate([
 
 /***/ }),
 
-/***/ 529:
+/***/ 530:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2628,7 +2624,7 @@ class ChatUser {
 
 /***/ }),
 
-/***/ 530:
+/***/ 531:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2661,11 +2657,11 @@ class ChatRoom {
 
 /***/ }),
 
-/***/ 835:
+/***/ 560:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__ = __webpack_require__(94);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__ = __webpack_require__(95);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__);
 
 /** @const {string} Mime type of wav file */
@@ -2815,7 +2811,7 @@ class WavFile {
 
 /***/ }),
 
-/***/ 836:
+/***/ 837:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2908,13 +2904,13 @@ class DoubleBufferSetter extends DoubleBuffer {
 
 /***/ }),
 
-/***/ 837:
+/***/ 838:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__ = __webpack_require__(94);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__ = __webpack_require__(95);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models__ = __webpack_require__(429);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models__ = __webpack_require__(94);
 // Copyright (c) 2017 Tracktunes Inc
 
 
@@ -3023,7 +3019,7 @@ class Filesystem {
      */
     static rename(fileSystem, parentDirectoryEntry, oldName, newName) {
         const src = __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__["Observable"].create((observer) => {
-            if (Object(__WEBPACK_IMPORTED_MODULE_1__models__["e" /* isFolder */])(oldName)) {
+            if (Object(__WEBPACK_IMPORTED_MODULE_1__models__["i" /* isFolder */])(oldName)) {
                 fileSystem.root.getDirectory(oldName, { create: false }, (entry) => {
                     entry.moveTo(parentDirectoryEntry, newName);
                     console.log('RENAME DIR SUCCESS ::: ' + newName);
@@ -3236,7 +3232,7 @@ class Filesystem {
     static getMetadata(fs, path) {
         console.log('getMetadata(fs, ' + path + ')');
         const src = __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__["Observable"].create((observer) => {
-            if (Object(__WEBPACK_IMPORTED_MODULE_1__models__["e" /* isFolder */])(path)) {
+            if (Object(__WEBPACK_IMPORTED_MODULE_1__models__["i" /* isFolder */])(path)) {
                 fs.root.getDirectory(path, { create: false }, (directoryEntry) => {
                     directoryEntry.getMetadata((metadata) => {
                         observer.next(metadata);
@@ -3272,10 +3268,10 @@ class Filesystem {
         const src = __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__["Observable"].create((observer) => {
             fs.root.getFile(path, { create: false }, (fileEntry) => {
                 fileEntry.file((file) => {
-                    const name = Object(__WEBPACK_IMPORTED_MODULE_1__models__["f" /* pathFileName */])(path);
+                    const name = Object(__WEBPACK_IMPORTED_MODULE_1__models__["j" /* pathFileName */])(path);
                     const len = name.length;
                     const bSuffix = name.slice(len - 4, len).toLowerCase() === '.wav';
-                    Object(__WEBPACK_IMPORTED_MODULE_1__models__["c" /* downloadBlob */])(file, bSuffix ? name : name + '.wav');
+                    Object(__WEBPACK_IMPORTED_MODULE_1__models__["g" /* downloadBlob */])(file, bSuffix ? name : name + '.wav');
                     observer.next();
                     observer.complete();
                 });
@@ -3407,7 +3403,7 @@ class Filesystem {
 
 /***/ }),
 
-/***/ 838:
+/***/ 839:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3734,7 +3730,95 @@ function simulateClick(element) {
 
 /***/ }),
 
-/***/ 839:
+/***/ 840:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__question_model__ = __webpack_require__(104);
+
+class DropdownQuestion extends __WEBPACK_IMPORTED_MODULE_0__question_model__["a" /* Question */] {
+    constructor(question) {
+        super(question);
+        this.controlType = 'dropdown';
+        this.options = [];
+        this.options = question['options'] || [];
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = DropdownQuestion;
+
+//# sourceMappingURL=question-dropdown.model.js.map
+
+/***/ }),
+
+/***/ 841:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__question_model__ = __webpack_require__(104);
+
+class TextboxQuestion extends __WEBPACK_IMPORTED_MODULE_0__question_model__["a" /* Question */] {
+    constructor(options = {}) {
+        super(options);
+        this.type = options['type'] !== "" ? options['type'] : 'text';
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = TextboxQuestion;
+
+//# sourceMappingURL=question-textbox.model.js.map
+
+/***/ }),
+
+/***/ 842:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__question_model__ = __webpack_require__(104);
+
+class ToggleQuestion extends __WEBPACK_IMPORTED_MODULE_0__question_model__["a" /* Question */] {
+    constructor(options) {
+        super(options);
+        this.controlType = 'toggle';
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = ToggleQuestion;
+
+//# sourceMappingURL=question-toggle.model.js.map
+
+/***/ }),
+
+/***/ 843:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+const LoaderConfigs = {
+    submit: {
+        spinner: 'bubbles',
+        content: `
+            <div class="custom-spinner-container">
+                <div class="custom-spinner-box">
+                    Analyzing, please wait...
+                </div>
+            </div>`,
+        duration: 100000
+    },
+    loading: {
+        spinner: 'bubbles',
+        content: `
+            <div class="custom-spinner-container">
+                <div class="custom-spinner-box">
+                    Loading...
+                </div>
+            </div>`,
+        duration: 100000
+    }
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = LoaderConfigs;
+
+//# sourceMappingURL=loaders.js.map
+
+/***/ }),
+
+/***/ 844:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3785,116 +3869,6 @@ AudioContextGenerator = __decorate([
 
 /***/ }),
 
-/***/ 840:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-class Question {
-    constructor(options) {
-        this.value = options.value || "";
-        this.key = options.key || '';
-        this.label = options.label || '';
-        this.required = !!options.required || false;
-        this.order = options.order === undefined ? 1 : options.order;
-        this.visibility = options.visibility || "visible";
-        this.event = options.event || null;
-        this.controlType = options.controlType || '';
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Question;
-
-//# sourceMappingURL=question.model.js.map
-
-/***/ }),
-
-/***/ 841:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__question_model__ = __webpack_require__(840);
-
-class DropdownQuestion extends __WEBPACK_IMPORTED_MODULE_0__question_model__["a" /* Question */] {
-    constructor(question) {
-        super(question);
-        this.controlType = 'dropdown';
-        this.options = [];
-        this.options = question['options'] || [];
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = DropdownQuestion;
-
-//# sourceMappingURL=question-dropdown.model.js.map
-
-/***/ }),
-
-/***/ 842:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__question_model__ = __webpack_require__(840);
-
-class ToggleQuestion extends __WEBPACK_IMPORTED_MODULE_0__question_model__["a" /* Question */] {
-    constructor(options) {
-        super(options);
-        this.controlType = 'toggle';
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = ToggleQuestion;
-
-//# sourceMappingURL=question-toggle.model.js.map
-
-/***/ }),
-
-/***/ 843:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__question_model__ = __webpack_require__(840);
-
-class TextboxQuestion extends __WEBPACK_IMPORTED_MODULE_0__question_model__["a" /* Question */] {
-    constructor(options = {}) {
-        super(options);
-        this.type = options['type'] !== "" ? options['type'] : 'text';
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = TextboxQuestion;
-
-//# sourceMappingURL=question-textbox.model.js.map
-
-/***/ }),
-
-/***/ 844:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-const LoaderConfigs = {
-    submit: {
-        spinner: 'bubbles',
-        content: `
-            <div class="custom-spinner-container">
-                <div class="custom-spinner-box">
-                    Analyzing, please wait...
-                </div>
-            </div>`,
-        duration: 100000
-    },
-    loading: {
-        spinner: 'bubbles',
-        content: `
-            <div class="custom-spinner-container">
-                <div class="custom-spinner-box">
-                    Loading...
-                </div>
-            </div>`,
-        duration: 100000
-    }
-};
-/* harmony export (immutable) */ __webpack_exports__["a"] = LoaderConfigs;
-
-//# sourceMappingURL=loaders.js.map
-
-/***/ }),
-
 /***/ 845:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3902,7 +3876,7 @@ const LoaderConfigs = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DynamicQuestionComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_form_questions_question_model__ = __webpack_require__(840);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models__ = __webpack_require__(94);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3938,7 +3912,7 @@ let DynamicQuestionComponent = class DynamicQuestionComponent {
 };
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_2__models_form_questions_question_model__["a" /* Question */])
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_2__models__["c" /* Question */])
 ], DynamicQuestionComponent.prototype, "question", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
@@ -3958,7 +3932,42 @@ DynamicQuestionComponent = __decorate([
 
 //# sourceMappingURL=DynamicQuestion.component.js.map
 
+/***/ }),
+
+/***/ 94:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__wav_file_wav_file__ = __webpack_require__(560);
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_0__wav_file_wav_file__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__double_buffer_double_buffer__ = __webpack_require__(837);
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_1__double_buffer_double_buffer__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__filesystem_filesystem__ = __webpack_require__(838);
+/* unused harmony namespace reexport */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__misc_utils_misc_utils__ = __webpack_require__(839);
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "g", function() { return __WEBPACK_IMPORTED_MODULE_3__misc_utils_misc_utils__["a"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "h", function() { return __WEBPACK_IMPORTED_MODULE_3__misc_utils_misc_utils__["b"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "i", function() { return __WEBPACK_IMPORTED_MODULE_3__misc_utils_misc_utils__["c"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "j", function() { return __WEBPACK_IMPORTED_MODULE_3__misc_utils_misc_utils__["d"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__form_questions_question_dropdown_model__ = __webpack_require__(840);
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_4__form_questions_question_dropdown_model__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__form_questions_question_textbox_model__ = __webpack_require__(841);
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_5__form_questions_question_textbox_model__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__form_questions_question_toggle_model__ = __webpack_require__(842);
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_6__form_questions_question_toggle_model__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__form_questions_question_model__ = __webpack_require__(104);
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_7__form_questions_question_model__["a"]; });
+
+
+
+
+
+
+
+
+//# sourceMappingURL=index.js.map
+
 /***/ })
 
-},[431]);
+},[432]);
 //# sourceMappingURL=main.js.map

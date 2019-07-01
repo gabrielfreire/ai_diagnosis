@@ -1,7 +1,6 @@
 import { Component, Input, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Question } from '../../../models/form/questions/question.model';
-import { EventBody } from '../../../models/eventbody.model';
+import { Question, EventBody } from '../../../models';
  
 @Component({
   selector: 'df-question',

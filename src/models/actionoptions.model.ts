@@ -1,4 +1,4 @@
-import { Question } from './../pages/home/formbuilder/questions/question.model';
+import { Question } from './form/questions/question.model';
 
 export interface ActionOptions {
     event: string;

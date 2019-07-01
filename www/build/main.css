@@ -30648,6 +30648,35 @@ app-form .label-result-watson-discovery strong {
   color: black;
 }
 
+df-question {
+  /* Class replacements */
+}
+
+df-question .question-label[stacked] {
+  color: #2b5b73;
+}
+
+df-question .question-label-sm[stacked] {
+  font-size: 1.0em;
+}
+
+df-question .question-label-md[stacked] {
+  font-size: 1.3em;
+}
+
+df-question .question-label-lg[stacked] {
+  font-size: 1.7em;
+}
+
+df-question .question-input {
+  background-color: transparent;
+}
+
+df-question .item-ios.item-label-stacked .text-input,
+df-question .item-ios.item-label-floating .text-input {
+  font-size: 1.7em;
+}
+
 app-chat .chat-baloon {
   width: 100%;
 }
