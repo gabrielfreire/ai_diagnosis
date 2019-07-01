@@ -416,7 +416,7 @@ export class Filesystem {
                 fileEntry.file((file: File) => {
                     const fileReader: FileReader = new FileReader();
                     fileReader.onloadend = (event: ProgressEvent) => {
-                        console.log('onloadend: filereader.result = ' + fileReader.result.byteLength);
+                        console.log('onloadend: filereader.result = ' + (fileReader.result as any).byteLength);
                         // console.dir(fileReader.result);
                         observer.next(fileReader.result);
                         observer.complete();

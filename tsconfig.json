@@ -4,6 +4,7 @@
     "declaration": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "skipLibCheck": true,
     "lib": [
       "dom",
       "es2015",
@@ -28,6 +29,5 @@
   "compileOnSave": false,
   "atom": {
     "rewriteTsconfig": false
-  },
-  "skipLibCheck": true
+  }
 }

@@ -74,7 +74,7 @@ interface AudioGainNode extends AudioNode {
  */
 @Injectable()
 export abstract class WebAudioRecorder {
-    private sourceNode: MediaElementAudioSourceNode;
+    private sourceNode: MediaStreamAudioSourceNode;
     private audioGainNode: AudioGainNode;
     private scriptProcessorNode: ScriptProcessorNode;
     private nPeaksAtMax: number;
