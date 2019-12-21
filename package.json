@@ -60,7 +60,7 @@
     "ionicons": "3.0.0",
     "microsoft-cognitiveservices-speech-sdk": "^1.6.0",
     "microsoft-speech-browser-sdk": "0.0.12",
-    "morgan": "^1.9.0",
+    "morgan": "^1.9.1",
     "ng-socket-io": "^0.2.0",
     "rxjs": "5.5.0",
     "socket.io": "^2.0.4",
